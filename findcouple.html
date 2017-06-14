@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Couplette Find A Couple</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<link href="https://fonts.googleapis.com/css?family=Archivo+Narrow|Passion+One" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">	
+</head>
+<body>
+	<nav class="navbar navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Couplette</a>
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavBar" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+
+			<div class="collapse navbar-collapse" id="myNavBar">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#" class="envelope hidden-xs"><span class="glyphicon glyphicon-envelope"></span></a></li>
+					<li><a href="#" class="hidden-md hidden-sm hidden-lg">Mail</a></li>
+					<li><a href="#">Profile</a></li>
+					<li><a href="#">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container mainContent">
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<h2>Find a Couple</h2>
+			</div>
+
+			<div class="col-xs-12 text-center">
+				<select>
+					<option value="DistanceDefault">Distance</option>
+					<option value="NoCare">No Preference</option>
+					<option value="5mi">10 Miles</option>
+					<option value="10mi">25 Miles</option>
+					<option value="15mi">50 Miles</option>
+				</select>
+			</div>
+
+			<div class="col-xs-12 text-center">
+				<select>
+					<option value="AgeDefault">Age</option>
+					<option value="NoCare">No Preference</option>
+					<option value="1825">18-25</option>
+					<option value="2535">25-35</option>
+					<option value="3545">35-45</option>
+					<option value="4555">45-55</option>
+					<option value="55+">55+</option>
+				</select>
+			</div>
+
+			<div class="col-xs-12 text-center">
+				<select>
+					<option value="GenderDefault">Gender</option>
+					<option value="NoCare">No Preference</option>
+					<option value="MF">Male/Female</option>
+					<option value="MM">Male/Male</option>
+					<option value="FF">Female/Female</option>
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-4 col-sm-3 text-center checkBox">
+				<label><input type="checkbox" name="film" value="Film"> Film<br></label>
+			</div>
+			<div class="col-xs-4 col-sm-3 text-center checkBox">
+				<label><input type="checkbox" name="sports" value="Sports"> Sports<br></label>
+			</div>
+			<div class="col-xs-4 col-sm-3 text-center checkBox">
+				<label><input type="checkbox" name="dining" value="Dining"> Dining<br></label>
+			</div>
+			<div class="col-xs-4 col-sm-3 text-center checkBox">
+				<label><input type="checkbox" name="music" value="Music"> Music<br></label>
+			</div>
+
+			<div class="col-xs-4 col-sm-3 text-center checkBox">
+				<label><input type="checkbox" name="travel" value="Travel"> Travel<br></label>
+			</div>
+			<div class="col-xs-4 col-sm-3 text-center checkBox">
+				<label><input type="checkbox" name="outdoors" value="Outdoor"> Outdoors<br></label>
+			</div>
+			<div class="col-xs-6 col-sm-3 text-center checkBox">
+				<label><input type="checkbox" name="arts" value="Arts"> Arts<br></label>
+			</div>
+			<div class="col-xs-6 col-sm-3 text-center checkBox">
+				<label><input type="checkbox" name="gaming" value="Gaming"> Gaming<br></label>
+			</div>
+		</div>
+
+
+		<div class="col-xs-12 text-center">
+			<button class="friendSubmitFinder">Submit</button>
+		</div>
+
+
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
+	<script src="assets/javascript/app.js"></script>
+</body>
+</html>
