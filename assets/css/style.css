@@ -141,6 +141,15 @@ label {
 	margin: auto;
 }
 
+#datetimepicker1 {
+	width: 200px;
+	margin: auto;
+}
+
+.form-group {
+	margin-bottom: 10px;
+}
+
 
 @media screen and (max-width: 767px){
 	.dashboardButtons {
