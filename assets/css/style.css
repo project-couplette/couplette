@@ -23,6 +23,7 @@ a, p, h2, h3, h4, .checkBox {
 
 p {
 	font-size: 18px;
+	margin: 10px;
 }
 
 .placeholderBlock:hover {
@@ -129,7 +130,7 @@ label {
 	border: none;
 	border-radius: 10px;
 	padding: 5px 10px;
-	margin: 10px;
+	margin: 15px;
 }
 
 .checkBox {
@@ -141,8 +142,54 @@ label {
 	margin: auto;
 }
 
+#datetimepicker1 {
+	width: 200px;
+	margin: auto;
+}
+
+.form-group {
+	margin-bottom: 10px;
+}
+
+.profileRow {
+	width: 600px;
+	margin: auto;
+}
+
+.profilePic {
+	width: 100%;
+	border: 3px double #c2c2c2;
+}
+
+.profileBubbles {
+	border: 1px solid #aeadad;
+	border-radius: 10px;
+	margin: 10px 0;
+}
+
+.profileBubbles:hover {
+	background: #edeaea;
+}
+
+textarea {
+	width: 100%;
+	border-radius: 15px;
+	height: 150px;
+	padding: 10px;
+}
+
+@media screen and (max-width: 991px){
+	.profileRow {
+		width: 80%;
+	}
+}
+
 
 @media screen and (max-width: 767px){
+	.profileRow {
+		width: 100%;
+	}
+
 	.dashboardButtons {
 		display: none;
 	}

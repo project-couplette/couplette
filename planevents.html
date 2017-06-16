@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Couplette Find A Couple</title>
+	<title>Couplette Plan an Event</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -40,79 +40,41 @@
 	<div class="container mainContent">
 		<div class="row">
 			<div class="col-xs-12 text-center">
-				<h2>Find a Couple</h2>
+				<h2>Plan an Event</h2>
+			</div>
+
+			<div class="col-xs-12 text-center">
+				<h3>Event Date</h3>
+				<div class="form-group">
+					<div class='input-group date' id='datetimepicker1'>
+						<input type='text' class="form-control" />
+						<span class="input-group-addon">
+						<span class="glyphicon glyphicon-calendar"></span>
+						</span>
+					</div>
+				</div>
 			</div>
 
 			<div class="col-xs-12 text-center">
 				<select>
-					<option value="DistanceDefault">Distance</option>
-					<option value="NoCare">No Preference</option>
-					<option value="5mi">10 Miles</option>
-					<option value="10mi">25 Miles</option>
-					<option value="15mi">50 Miles</option>
+					<option value="EventDefault">Event Type</option>
+					<option value="Film">Film</option>
+					<option value="Dining">Dining</option>
+					<option value="Other">Other</option>
 				</select>
 			</div>
 
 			<div class="col-xs-12 text-center">
 				<select>
-					<option value="AgeDefault">Age</option>
-					<option value="NoCare">No Preference</option>
-					<option value="1825">18-25</option>
-					<option value="2535">25-35</option>
-					<option value="3545">35-45</option>
-					<option value="4555">45-55</option>
-					<option value="55+">55+</option>
-				</select>
-			</div>
-
-			<div class="col-xs-12 text-center">
-				<select>
-					<option value="GenderDefault">Gender</option>
-					<option value="NoCare">No Preference</option>
-					<option value="MF">Male/Female</option>
-					<option value="MM">Male/Male</option>
-					<option value="FF">Female/Female</option>
+					<option value="Default"> </option>
 				</select>
 			</div>
 
 		</div>
-		<div class="row interestRow">
-			<div class="col-xs-12 text-center">
-				<h3>Interests</h3>
-			</div>
-
-			<div class="col-xs-6 col-sm-3 text-center checkBox">
-				<label><input type="checkbox" name="film" value="Film"> Film<br></label>
-			</div>
-			<div class="col-xs-6 col-sm-3 text-center checkBox">
-				<label><input type="checkbox" name="sports" value="Sports"> Sports<br></label>
-			</div>
-			<div class="col-xs-6 col-sm-3 text-center checkBox">
-				<label><input type="checkbox" name="dining" value="Dining"> Dining<br></label>
-			</div>
-			<div class="col-xs-6 col-sm-3 text-center checkBox">
-				<label><input type="checkbox" name="music" value="Music"> Music<br></label>
-			</div>
-
-			<div class="col-xs-6 col-sm-3 text-center checkBox">
-				<label><input type="checkbox" name="travel" value="Travel"> Travel<br></label>
-			</div>
-			<div class="col-xs-6 col-sm-3 text-center checkBox">
-				<label><input type="checkbox" name="outdoors" value="Outdoor"> Outdoors<br></label>
-			</div>
-			<div class="col-xs-6 col-sm-3 text-center checkBox">
-				<label><input type="checkbox" name="arts" value="Arts"> Arts<br></label>
-			</div>
-			<div class="col-xs-6 col-sm-3 text-center checkBox">
-				<label><input type="checkbox" name="gaming" value="Gaming"> Gaming<br></label>
-			</div>
-		</div>
-
 
 		<div class="col-xs-12 text-center">
 			<button class="friendFindSubmit">Submit</button>
 		</div>
-
 
 	</div>
 
