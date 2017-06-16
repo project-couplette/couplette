@@ -113,7 +113,11 @@ hr {
 select {
 	height: 40px;
 	border-radius: 19px;
+<<<<<<< HEAD
 	width: 200px;
+=======
+	width: 210px;
+>>>>>>> upstream/master
 	padding: 0 9px;
 	font-size: 25px;
 	margin: 10px;
