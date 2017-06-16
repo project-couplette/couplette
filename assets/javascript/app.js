@@ -58,26 +58,28 @@ $("#button").on("click", function(event) {
 	coupleUsername = $("#couple-username").val().trim();
 	// Code for the push
 	dataRef.ref().push({
-	firstName1: firstName1,
-	firstName2: firstName2,
-	lastName1: lastName1,
-	lastName2: lastName2,
-	coupleEmail: coupleEmail,
-	password: password,
-	confirmPassword: confirmPassword,
-	zipcode: zipcode,
-	description: description,
-	Arts: arts,
-	Dining: dining,
-	Films: films,
-	Music: music,
-	Gaming: gaming,
-	Outdoors: outdoor,
-	Travel: travel,
-	other: other,
-	age: age,
-	coupleUsername: coupleUsername,
-	comment: comment,
-	dateAdded: firebase.database.ServerValue.TIMESTAMP
+		firstName1: firstName1,
+		firstName2: firstName2,
+		lastName1: lastName1,
+		lastName2: lastName2,
+		coupleEmail: coupleEmail,
+		password: password,
+		confirmPassword: confirmPassword,
+		zipcode: zipcode,
+		description: description,
+		Interests: {
+			Arts: arts,
+			Dining: dining,
+			Films: films,
+			Music: music,
+			Gaming: gaming,
+			Outdoors: outdoor,
+			Travel: travel,
+			other: other,
+		}
+		age: age,
+		coupleUsername: coupleUsername,
+		comment: comment,
+		// dateAdded: firebase.database.ServerValue.TIMESTAMP
 	});
 });
