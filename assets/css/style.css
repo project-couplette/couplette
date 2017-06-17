@@ -211,7 +211,7 @@ select, .inputField {
 }
 
 .form-control {
-	border-radius: 20px 0 0 20px;
+	border-radius: 20px;
 	height: 40px;
 	width: 175px;
 }
