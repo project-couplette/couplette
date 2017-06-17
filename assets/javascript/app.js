@@ -1,4 +1,11 @@
-$(function(){
+
+
+
+
+
+
+
+// $(function(){
 	// Initialize Firebase
 	var config = {
 		apiKey: "AIzaSyD1UCXTw5xWE5WehTfqh0AK-K2asMyf4S4",
@@ -8,6 +15,7 @@ $(function(){
 	    storageBucket: "couplette-b67ce.appspot.com",
 	    messagingSenderId: "934836634497"
 	};
+
 	firebase.initializeApp(config);
 
 	var dataRef = firebase.database();
@@ -58,33 +66,75 @@ $(function(){
 		comment = $("#comment-input").val().trim();
 		coupleUsername = $("#couple-username").val().trim();
 		// Code for the push
-		dataRef.ref().push({
-			firstName1: firstName1,
-			firstName2: firstName2,
-			lastName1: lastName1,
-			lastName2: lastName2,
-			coupleEmail: coupleEmail,
-			password: password,
-			confirmPassword: confirmPassword,
-			zipcode: zipcode,
-			description: description,
-			Interests: {
-				Arts: arts,
-				Dining: dining,
-				Films: films,
-				Music: music,
-				Gaming: gaming,
-				Outdoors: outdoor,
-				Travel: travel,
-				other: other,
-			},
-			age: age,
-			coupleUsername: coupleUsername,
-			comment: comment,
-			// dateAdded: firebase.database.ServerValue.TIMESTAMP
-		});
+		// dataRef.ref().push({
+		// 	firstName1: firstName1,
+		// 	firstName2: firstName2,
+		// 	lastName1: lastName1,
+		// 	lastName2: lastName2,
+		// 	coupleEmail: coupleEmail,
+		// 	password: password,
+		// 	confirmPassword: confirmPassword,
+		// 	zipcode: 91384,
+		// 	description: description,
+		// 	Interests: {
+		// 		Arts: arts,
+		// 		Dining: dining,
+		// 		Films: films,
+		// 		Music: music,
+		// 		Gaming: gaming,
+		// 		Outdoors: outdoor,
+		// 		Travel: travel,
+		// 		other: other,
+		// 	},
+		// 	age: age,
+		// 	coupleUsername: coupleUsername,
+		// 	comment: comment,
+		// 	// dateAdded: firebase.database.ServerValue.TIMESTAMP
+		// });
 	});
 	
+	var origin1 = new google.maps.LatLng(55.930385, -3.118425);
+	var origin2 = 'Greenwich, England';
+	var destinationA = 'Stockholm, Sweden';
+	var destinationB = new google.maps.LatLng(50.087692, 14.421150);
+
+	var service = new google.maps.DistanceMatrixService();
+	service.getDistanceMatrix(
+	  {
+	    origins: [origin1, origin2],
+	    destinations: [destinationA, destinationB],
+	    travelMode: 'DRIVING',
+	    // transitOptions: TransitOptions,
+	    // drivingOptions: DrivingOptions,
+	    // unitSystem: UnitSystem,
+	    // avoidHighways: Boolean,
+	    // avoidTolls: Boolean,
+	  }, callback);
+
+	function callback(response, status) {
+		console.log(response, status);
+	}
+
+
+	// var googleQueryURL = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=91384&destinations=95050&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
+
+	// //Google Maps API Call
+	// $.ajax({
+	//   crossDomain: true,
+	//   url: googleQueryURL,
+	//   method: "GET"
+	// }).done(function(response) {
+	// 	console.log(response);
+	// })
+	function getFirebaseData() {
+		console.log("working");
+		dataRef.ref().on("value", function(childSnapshot) {
+      // Log everything that's coming out of snapshot
+      	console.log(childSnapshot.val().zipCode);
+      });
+	}
+	getFirebaseData();
+
 	//Sample User Criteria
 	var userCriteria = {
 	    ageLow: 18,
@@ -156,7 +206,7 @@ $(function(){
 	        console.log(namesThatMatch);
 	    })
 	}
-	collectUser(userCriteria);
+	// collectUser(userCriteria);
 
 	//add calendar date pick functionality to event page date input field
 	$("#dateEvent").datepicker({minDate: 0});
@@ -200,8 +250,9 @@ $(function(){
 			$(".filmEvent").slideUp("fast", function(){
 				$(".diningEvent").slideDown();
 			});
-			
 		}
 	})
+// })
 
-})
+
+
