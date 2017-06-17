@@ -179,6 +179,9 @@ $(function(){
 			$(".diningEvent").slideUp();
 			$(".filmEvent").slideUp();
 			$(".eventType").val(0);
+			$(".filmTimes").slideUp("fast");
+			$(".films").slideUp("fast");
+
 		}
 	})
 
@@ -187,20 +190,90 @@ $(function(){
 
 		if ($(this).val() === "EventDefault"){
 			$(".filmEvent").slideUp("fast");
+			$(".diningEvent").slideUp("fast");
 		}
 
 		else if ($(this).val() === "Film"){
-			$(".diningEvent").slideUp("fast", function(){
-				$(".filmEvent").slideDown();
+			var movieZipURL = 'https://data.tmsapi.com/v1.1/theatres?zip=' + $('.zipInp').val() + '&api_key=n9dzsauzmnxaps66hbyawcuz';
+			// var movieZipURL = "http://data.tmsapi.com/v1.1/theatres?zip=78701&api_key=turvtrjxt4n6b9skn4ahnpgx"
+			$.ajax({
+				url: movieZipURL,
+				method: "GET"
+			}).done(function(response){
+				console.log(response);
+				$(".diningEvent").slideUp("fast", function(){
+				$(".filmEvent").slideDown("normal");
 			});
+			})
+
+			
 			
 		}
 
 		else if ($(this).val() === "Dining"){
+			// var diningURL = "https://developers.zomato.com/api/v2.1" + $('.zipInp').val() + '&api_key=9f66ce02ce13cacef3eaaefa8cc3fab7';
+			// var clientKey = "2vD3lQM9gR9SrTBk9GlSCn22KwOsvQRxlvBGlnQCf0uHT623NnWpKYruvgX17Ozt";
+			// zipURL = "https://www.zipcodeapi.com/rest/"+clientKey+"/info.json/" + $('.zipInp').val() + "/radians";
+			// // var diningURL = "https://developers.zomato.com/api/v2.1" +  + '&api_key=9f66ce02ce13cacef3eaaefa8cc3fab7';
+			$.ajax({
+				url: zipURL,
+				method: "GET"
+			}).done(function(response){
+				console.log(response);
+			})
 			$(".filmEvent").slideUp("fast", function(){
-				$(".diningEvent").slideDown();
+				$(".diningEvent").slideDown("normal");
 			});
+		}
+	});
+
+	$(".filmEvent").on("change", function(){
+		if ($(this).val() === "EventDefault"){
+			$(".films").slideUp("fast");
+		}
+
+		else {
+			$(".films").slideDown("normal");
 			
+		}
+
+	});
+
+	$(".films").on("change", function(){
+		if ($(this).val() === "EventDefault"){
+			$(".filmTimes").slideUp("fast");
+		}
+
+		else {
+			$(".filmTimes").slideDown("normal");
+			
+		}
+
+	});
+
+	$(".filmTimes").on("change", function(){
+		if ($(this).val() === "EventDefault"){
+			$(".friendFindSubmit").slideUp("fast");
+		}
+
+		else {
+			$(".friendFindSubmit").slideDown("normal");
+			
+		}
+
+	});
+
+	$(".interest").on("click", function(){
+		if ($(this).attr("data-selected") === "false"){
+			$(this).css("background", "#ffa9be");
+			$(this).css("border", "1px solid #c4536f");
+			$(this).attr("data-selected", "true");
+		}
+
+		else {
+			$(this).css("background", "white");
+			$(this).css("border", "1px solid darkgrey");
+			$(this).attr("data-selected", "false");
 		}
 	})
 
