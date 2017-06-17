@@ -7,6 +7,85 @@ h2 {
 	color: #ff0040;
 	margin-top: 0;
 }
+/*  log-in page */
+.header-navbar {
+	width: 100%;
+	height: 75px;
+	background-color:#ff0040;
+	color: white;
+	margin-left: 30px;
+	font-size: 40px;
+	font-family: 'Passion One', cursive;
+}
+/**************** main pages ************** */	
+h3 {
+
+	padding-bottom: 20px;
+}	
+.wrap-login {
+	margin-top: 40px;
+	margin-bottom: 30px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 50px;
+	padding-right: 50px;
+	padding-bottom: 50px;
+	background-color: #ffffff;
+	border: solid 1px #d0d0d0;
+	-webkit-box-shadow: 0px -1px 20px -4px rgba(0,0,0,0.72);
+	-moz-box-shadow: 0px -1px 20px -4px rgba(0,0,0,0.72);
+	box-shadow: 0px -1px 20px -4px rgba(0,0,0,0.72);
+	border-radius: 20px;
+}
+.text-center {
+	margin-top:10px;
+
+}
+
+.btn {
+	margin-top: 10px;
+	float:right;
+	width: 33.3%
+	border: none;
+}
+.page-reset {
+	background: #f30c46;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    width: 100%;
+    height: 30px;
+}
+.center-page {
+margin: 0 auto;
+
+}
+ .main-btn{
+	background: #f30c46;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    width: 100%;
+    height: 30px;
+}
+
+/******sign up page ***********************/
+#drop {
+	border:2px dotted pink;
+	padding:20px;
+	margin-bottom: 20px;
+	width: 450px;
+	height: 100px;
+	color:#bdc3c7;
+}
+
+/******* add a box to the image file**********/
+
+h3 {
+	font-size: 24px;
+	margin-bottom: 2px;
+	margin-top: 10px;
+}
 
 .placeholderBlock {
 	background: #ff0040;
@@ -17,12 +96,13 @@ h2 {
 	border: 1px solid #efefef;
 }
 
-a, p, h2, h3, h4 {
+a, p, h2, h3, h4, .checkBox {
 	font-family: 'Archivo Narrow', sans-serif;
 }
 
 p {
 	font-size: 18px;
+	margin: 10px;
 }
 
 .placeholderBlock:hover {
@@ -109,8 +189,142 @@ hr {
 	background: #e9e9e9;
 }
 
+select, .inputField {
+	height: 40px;
+	border-radius: 19px;
+	width: 210px;
+	padding: 0 9px;
+	font-size: 25px;
+	margin: 10px;
+}
+
+.inputField {
+	border: 1px solid #bcbcbc;
+	margin-top: 3px;
+}
+
+.form-control {
+	border-radius: 20px 0 0 20px;
+	height: 40px;
+	width: 175px;
+}
+
+label {
+	font-weight: 100;
+}
+
+.friendFindSubmit {
+	background: #ff0040;
+	font-size: 25px;
+	color: white;
+	border: none;
+	border-radius: 10px;
+	padding: 5px 10px;
+	margin: 15px;
+}
+
+.checkBox {
+	font-size: 20px;
+}
+
+.interestRow {
+	width: 75%;
+	margin: auto;
+}
+
+#datetimepicker1 {
+	width: 210px;
+	margin: auto;
+}
+
+.filmEvent, .friendFindSubmit, .diningEvent, .eventZipcode, .eventTypeBlock {
+	display: none;
+}
+
+.minMargin {
+	margin-top: 3px;
+}
+
+.input-group-addon {
+	border-radius: 0 20px 20px 0;
+}
+
+.form-group {
+	margin-bottom: 10px;
+}
+
+.profileRow {
+	width: 600px;
+	margin: auto;
+}
+
+.profilePic {
+	width: 100%;
+	border: 3px double #c2c2c2;
+}
+
+.profileBubbles {
+	border: 1px solid #aeadad;
+	border-radius: 10px;
+	margin: 10px 0;
+}
+
+.profileBubbles:hover {
+	background: #edeaea;
+}
+
+textarea {
+	width: 100%;
+	border-radius: 15px;
+	height: 150px;
+	padding: 10px;
+}
+
+.placeholder {
+	height: 500px;
+	border: 1px solid #959595;
+	border-radius: 10px;
+}
+
+.chatContainer {
+	border: 1px solid #959595;
+	border-radius: 10px;
+}
+
+.chatBoxSpace {
+	text-align: center;
+	border: 1px solid #e9e9e9;
+	border-radius: 10px;
+	margin: 10px;
+}
+
+.chatBoxSpace:hover {
+	background: #efefef;
+}
+
+.chatTab {
+	border: 1px solid #a4a4a4;
+	border-radius: 10px;
+	padding: 10px;
+}
+
+.chatTab:hover {
+	background: #efefef;
+}
+
+
+@media screen and (max-width: 991px){
+	.profileRow {
+		width: 80%;
+	}
+}
+
 
 @media screen and (max-width: 767px){
+	.profileRow {
+		width: 100%;
+	}
+
 	.dashboardButtons {
 		display: none;
 	}
@@ -135,5 +349,13 @@ hr {
 	.navbar-inverse .navbar-nav>li>a {
 		text-align: center;
 		font-size: 30px;
+	}
+
+	.checkBox {
+		font-size: 18px;
+	}
+
+	.interestRow {
+		width: 100%;
 	}
 }
