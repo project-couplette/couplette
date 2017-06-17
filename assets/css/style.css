@@ -178,6 +178,39 @@ textarea {
 	padding: 10px;
 }
 
+.placeholder {
+	height: 500px;
+	border: 1px solid #959595;
+	border-radius: 10px;
+}
+
+.chatContainer {
+	border: 1px solid #959595;
+	border-radius: 10px;
+}
+
+.chatBoxSpace {
+	text-align: center;
+	border: 1px solid #e9e9e9;
+	border-radius: 10px;
+	margin: 10px;
+}
+
+.chatBoxSpace:hover {
+	background: #efefef;
+}
+
+.chatTab {
+	border: 1px solid #a4a4a4;
+	border-radius: 10px;
+	padding: 10px;
+}
+
+.chatTab:hover {
+	background: #efefef;
+}
+
+
 @media screen and (max-width: 991px){
 	.profileRow {
 		width: 80%;

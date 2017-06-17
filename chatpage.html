@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Couplette Dashboard</title>
-	<script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+	<title>Couplette Chat</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -39,58 +38,45 @@
 	</nav>
 
 	<div class="container mainContent">
-		<div class="row topRow">
-			<div class="col-xs-12 col-sm-6">
-			<a href="planevents.html">
-					<div class="placeholderBlock">
-						<img class=dashboardButtons src="assets/images/event.png">
-						<p class="dashboardImgP">Plan an Event</p>
+		<div class="fluid-container chatContainer">
+			<div class="row">
+				<div class="col-xs-3">
+					<div class="row">
+						<div class="col-xs-12 text-center">
+							<div id="chat" class="tabs">
+								<p class="chatTab">Messages</p>
+							</div>
+						</div>
+
+						<div class="col-xs-12 text-center">
+							<div id="Friends" class="tabs">
+								<p class="chatTab">Friend Requests</p>
+							</div>
+						</div>
+
+						<div class="col-xs-12 text-center">
+							<div id="Events" class="tabs">
+								<p class="chatTab">Event Updates</p>
+							</div>
+						</div>
 					</div>
-				</a>
-			</div>
-
-			<div class="col-xs-12 col-sm-6">
-				<a href="findcouple.html">
-					<div class="placeholderBlock">
-						<img class=dashboardButtons src="assets/images/couple.png">
-						<p class="dashboardImgP">Find a Couple</p>
-					</div>
-				</a>
-			</div>
-		</div>
-
-		<hr>
-
-		<div class="row">
-			<div class="col-md-12 text-center upcomingEvents">
-				<h2>Upcoming Events</h2>
-				<div class="col-xs-12 text-center eventSection">
-					<h3>Spiderman: Homecoming</h3>
-					<h4>18:00 - July 8, 2017</h4>
-					<h4>AMC Metreon</h4>
-					<p>Invite someone to join!</p>
+					
 				</div>
-			</div>
-		</div>
-
-		<hr>
-
-		<div class="row">
-			<div class="col-md-12 text-center upcomingEvents">
-				<h2>Past Events</h2>
-				<div class="col-xs-12 text-center eventSection">
-					<h3>Salsa Dancing</h3>
-					<h4>21:30 - July 8, 2017</h4>
-					<h4>House of Salsa</h4>
-					<p>Invite someone to join!</p>
+				<div class="col-xs-9">
+					<div class="placeholder">
+						<div class="chatBoxSpace">
+							<p>Text</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
 	<script src="assets/javascript/app.js"></script>
 </body>
 </html>

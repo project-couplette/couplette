@@ -77,7 +77,7 @@ $(function(){
 				Outdoors: outdoor,
 				Travel: travel,
 				other: other,
-			}
+			},
 			age: age,
 			coupleUsername: coupleUsername,
 			comment: comment,
@@ -144,7 +144,7 @@ $(function(){
 	    };
 	}
 	function collectUser(criteria){
-	    database.ref("users").once("value", function(snapshot){
+	    dataRef.ref("users").once("value", function(snapshot){
 	        var users = snapshot.val();
 	        var userNameArray = Object.keys(users);
 	        var namesThatMatch = []
