@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Couplette Plan an Event</title>
+	<title>Couplette Chat</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -39,68 +39,48 @@
 	</nav>
 
 	<div class="container mainContent">
-		<div class="row">
-			<div class="col-xs-12 text-center">
-				<h2>Plan an Event</h2>
+		<div class="fluid-container chatContainer">
+			<div class="row">
+				<div class="col-xs-3">
+					<div class="row">
+						<div class="col-xs-12 text-center">
+							<div id="chat" class="tabs">
+								<p class="chatTab">Messages</p>
+							</div>
+						</div>
+
+						<div class="col-xs-12 text-center">
+							<div id="Friends" class="tabs">
+								<p class="chatTab">Friend Requests</p>
+							</div>
+						</div>
+
+						<div class="col-xs-12 text-center">
+							<div id="Events" class="tabs">
+								<p class="chatTab">Event Updates</p>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<div class="col-xs-9">
+					<div class="placeholder">
+						<div class="chatBoxSpace">
+							<p>Username49: Last line of text.</p>
+						</div>
+						<div class="chatBoxSpace">
+							<p>Coolname3: Last line of text.</p>
+						</div>
+					</div>
+				</div>
 			</div>
-
-			<div class="col-xs-12 text-center">
-				<h3>Event Date</h3>
-				<input type="text" name="date" id="dateEvent" class="inputField" readonly>
-			</div>
-
-			<div class="col-xs-12 text-center eventZipcode">
-				<h3>Location of Event (Zipcode)</h3>
-				<input type="number" name="Zip" class="inputField zipInp">
-			</div>
-
-			<div class="col-xs-12 text-center eventTypeBlock">
-				<h3>Event Type</h3>
-				<select class="minMargin eventType">
-					<option value="EventDefault"></option>
-					<option value="Film">Film</option>
-					<option value="Dining">Dining</option>
-					<option value="Other">Other</option>
-				</select>
-			</div>
-
-			<div class="col-xs-12 text-center filmEvent">
-				<h3>Theaters in Zipcode</h3>
-				<select>
-					<option value="Default"></option>
-				</select>
-
-				<h3>Movies Playing</h3>
-				<select>
-					<option value="Default"></option>
-				</select>
-			</div>
-
-			<div class="col-xs-12 text-center diningEvent">
-				<h3>Dining in Zipcode</h3>
-				<select>
-					<option value="Default"></option>
-				</select>
-
-				<h3>Available Times</h3>
-				<select>
-					<option value="Default"></option>
-				</select>
-			</div>
-
 		</div>
-
-		<div class="col-xs-12 text-center">
-			<button class="friendFindSubmit">Submit</button>
-		</div>
-
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 	<script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
-
 	<script src="assets/javascript/jquery-ui.js"></script>
 	<script src="assets/javascript/app.js"></script>
 </body>
