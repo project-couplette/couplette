@@ -10,8 +10,9 @@ h2 {
 
 h3 {
 	font-size: 24px;
-	margin-bottom: 2px;
-	margin-top: 10px;
+	margin-bottom: 0px;
+	margin-top: 15px;
+	color: #6c6c6c;
 }
 
 .placeholderBlock {
@@ -140,7 +141,7 @@ label {
 	font-weight: 100;
 }
 
-.friendFindSubmit {
+.friendFindSubmit, .saveChanges {
 	background: #ff0040;
 	font-size: 25px;
 	color: white;
@@ -159,12 +160,36 @@ label {
 	margin: auto;
 }
 
+.interest {
+	border: 1px solid darkgrey;
+	border-radius: 15px;
+}
+
 #datetimepicker1 {
 	width: 210px;
 	margin: auto;
 }
 
-.filmEvent, .friendFindSubmit, .diningEvent, .eventZipcode, .eventTypeBlock {
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
+	border: 1px solid #ff0040;
+	background: #a01034;
+	font-weight: normal;
+	color: #fff;
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+	border: 1px solid #7f5761;
+	background: #d491a1;
+	color: #ffffff;
+}
+
+#ui-datepicker-div {
+	border-radius: 15px;
+	padding: 5px;
+}
+
+.filmEvent, .friendFindSubmit, .diningEvent, .eventZipcode, .eventTypeBlock,
+.diningTimes, .films, .filmTimes {
 	display: none;
 }
 
