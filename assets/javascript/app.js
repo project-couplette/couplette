@@ -158,4 +158,50 @@ $(function(){
 	}
 	collectUser(userCriteria);
 
+	//add calendar date pick functionality to event page date input field
+	$("#dateEvent").datepicker({minDate: 0});
+
+	$("#dateEvent").on("change", function(){
+		if ($(this).val() !== undefined){
+			$(".eventZipcode").slideDown();
+		}
+	});
+
+	$(".zipInp").on("keyup", function(){
+		var zipRegex = /^\d{5}(?:[-\s]\d{4})?$/;
+
+		if (zipRegex.test($(this).val())){
+			$(".eventTypeBlock").slideDown();
+		}
+
+		else {
+			$(".eventTypeBlock").slideUp();
+			$(".diningEvent").slideUp();
+			$(".filmEvent").slideUp();
+			$(".eventType").val(0);
+		}
+	})
+
+	//adding dynamic page updates based on event select dropdown option
+	$(".eventType").on("change", function(){
+
+		if ($(this).val() === "EventDefault"){
+			$(".filmEvent").slideUp("fast");
+		}
+
+		else if ($(this).val() === "Film"){
+			$(".diningEvent").slideUp("fast", function(){
+				$(".filmEvent").slideDown();
+			});
+			
+		}
+
+		else if ($(this).val() === "Dining"){
+			$(".filmEvent").slideUp("fast", function(){
+				$(".diningEvent").slideDown();
+			});
+			
+		}
+	})
+
 })
