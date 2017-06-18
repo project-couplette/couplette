@@ -307,12 +307,13 @@ $(function(){
 						$(".diningOptionsDrop").append("<option value=" + results[i].name + ">" + results[i].name + "</option");
 
 					}
+					$(".filmEvent").slideUp("fast", function(){
+					$(".diningEvent").slideDown("normal");
+				});
 				}
 			}
 
-			$(".filmEvent").slideUp("fast", function(){
-				$(".diningEvent").slideDown("normal");
-			});
+			
 
 			initialize();
 
@@ -367,7 +368,20 @@ $(function(){
 		}
 	})
 
+	function resetFields(){
+		$("input").val("");
+		$(".eventTypeBlock").hide();
+		$(".eventZipcode").hide();
+		$(".filmEvent").hide();
+		$(".films").hide();
+		$(".filmTimes").hide();
+		$(".diningEvent").hide();
+
+
+	}
+
 	$("body").on("click", ".eventButton", function(){
+
 		$(".dashboardBlock").hide("clip", 400, function(){
 			$(".planEventBlock").show("drop", {direction: "left"}, 500 );;
 		});
@@ -384,6 +398,7 @@ $(function(){
 		$(".planEventBlock").hide("clip", 400);
 		$(".profileBlock").hide("clip", 400);
 		$(".chatBlock").hide("clip", 400);
+		resetFields();
 
 		setTimeout(function(){
 			$(".dashboardBlock").show("drop", {direction: "down"}, 400 );;
@@ -395,6 +410,7 @@ $(function(){
 		$(".planEventBlock").hide("clip", 400);
 		$(".dashboardBlock").hide("clip", 400);
 		$(".chatBlock").hide("clip", 400);
+		resetFields();
 
 		setTimeout(function(){
 			$(".profileBlock").show("drop", {direction: "down"}, 400 );;
@@ -406,6 +422,7 @@ $(function(){
 		$(".planEventBlock").hide("clip", 400);
 		$(".dashboardBlock").hide("clip", 400);
 		$(".profileBlock").hide("clip", 400);
+		resetFields();
 
 		setTimeout(function(){
 			$(".chatBlock").show("drop", {direction: "down"}, 400 );;
