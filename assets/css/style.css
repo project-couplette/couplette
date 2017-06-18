@@ -259,7 +259,8 @@ label {
 }
 
 .filmEvent, .friendFindSubmit, .diningEvent, .eventZipcode, .eventTypeBlock,
-.diningTimes, .films, .filmTimes, .planEventBlock, .findCoupleBlock, .profileBlock, .chatBlock {
+.diningTimes, .films, .filmTimes, .planEventBlock, .findCoupleBlock, .profileBlock, .chatBlock,
+.diningType {
 	display: none;
 }
 

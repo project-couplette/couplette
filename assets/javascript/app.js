@@ -1,11 +1,7 @@
 
-
-
-
-
-
-
 $(function(){
+	var currentPage = "dashboard";
+
 	// Initialize Firebase
 
 
@@ -256,68 +252,102 @@ $(function(){
 	$(".eventType").on("change", function(){
 		if ($(this).val() === "EventDefault"){
 			$(".filmEvent").slideUp("fast");
-			$(".diningEvent").slideUp("fast");
+			$(".cuisine").slideUp("fast");
 		}
 
 		else if ($(this).val() === "Film"){
-			var movieZipURL = 'https://data.tmsapi.com/v1.1/theatres?zip=' + $('.zipInp').val() + '&api_key=n9dzsauzmnxaps66hbyawcuz';
-			// var movieZipURL = "http://data.tmsapi.com/v1.1/theatres?zip=78701&api_key=turvtrjxt4n6b9skn4ahnpgx"
-			$.ajax({
-				url: movieZipURL,
-				method: "GET"
-			}).done(function(response){
-				console.log(response);
-
-			})
-
-			$(".diningEvent").slideUp("fast", function(){
-				$(".filmEvent").slideDown("normal");
-			})
-		}
-
-		else if ($(this).val() === "Dining"){
-			function initialize() {
-			var queryURLLongLat = "https://maps.googleapis.com/maps/api/geocode/json?address=94612&key=AIzaSyA52ADkbHa1-oZzlIZuCk6PAACaPFOFe2A";
 			var longitudeOfZip, latOfZip;
+			function initialize() {
+			var queryURLLongLat = "https://maps.googleapis.com/maps/api/geocode/json?address=" + $(".zipInp").val() + "&key=AIzaSyA52ADkbHa1-oZzlIZuCk6PAACaPFOFe2A";
+
 			$.ajax({
 				url: queryURLLongLat,
 				method: "GET"
 			}).done(function(response){
-				longitudeOfZip = response["results"][0]["geometry"]["location"]["lng"];
-				latOfZip = response["results"][0]["geometry"]["location"]["lat"];
-			})
+				console.log(response["results"][0]["geometry"]["location"]);
+				longitudeOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lat"]);
+				latOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lng"]);
+
+				var location = new google.maps.LatLng(longitudeOfZip, latOfZip);
+
+				var request = {
+					location: location,
+					radius: '1000',
+					query: 'cinema',
+				};
+
+				var service = new google.maps.places.PlacesService(document.createElement('div'));
+				service.textSearch(request, callback);
+
+				function callback(results, status) {
+					if (status == google.maps.places.PlacesServiceStatus.OK) {
+						console.log(results);
+						$(".theaterDrop").empty().append("<option  value='Default'>")
+						for (var i = 0; i < results.length; i++) {
+							$(".theaterDrop").append("<option value=" + results[i].name + ">" + results[i].name + "</option");
+
+						}
+						$(".diningEvent").slideUp("fast", function(){
+						$(".filmEvent").slideDown("normal");
+					});
+					}
+				}
+			});
+	
+		}
+		initialize();
+	}
+		else if ($(this).val() === "Dining"){
+
+			$(".filmEvent").slideUp("fast", function(){
+				$(".diningType").slideDown("normal");
+				});
+		}
+	});
+
+	$(".cuisine").on("change", function(){
+		if ($(this).val() === "EventDefault"){
+
+		}
+		var longitudeOfZip, latOfZip;
+		function initialize() {
+		var queryURLLongLat = "https://maps.googleapis.com/maps/api/geocode/json?address=" + $(".zipInp").val() + "&key=AIzaSyA52ADkbHa1-oZzlIZuCk6PAACaPFOFe2A";
+
+		$.ajax({
+			url: queryURLLongLat,
+			method: "GET"
+		}).done(function(response){
+			console.log(response["results"][0]["geometry"]["location"]);
+			longitudeOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lat"]);
+			latOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lng"]);
 
 			var location = new google.maps.LatLng(longitudeOfZip, latOfZip);
 
 			var request = {
 				location: location,
-				radius: '500',
-				query: 'restaurant',
-				type: 'chinese'
+				radius: '1000',
+				query: 'chinese' +  ' restaurant',
 			};
 
 			var service = new google.maps.places.PlacesService(document.createElement('div'));
 			service.textSearch(request, callback);
-			}
 
 			function callback(results, status) {
 				if (status == google.maps.places.PlacesServiceStatus.OK) {
 					$(".diningOptionsDrop").empty().append("<option  value='Default'>")
-					for (var i = 0; i < 10; i++) {
+					for (var i = 0; i < results.length; i++) {
 						$(".diningOptionsDrop").append("<option value=" + results[i].name + ">" + results[i].name + "</option");
-
+						$(".diningEvent").slideDown("normal");
 					}
-					$(".filmEvent").slideUp("fast", function(){
-					$(".diningEvent").slideDown("normal");
-				});
+
+					
 				}
 			}
-
-			
-
-			initialize();
+		});
 
 		}
+
+		initialize();
 	});
 
 	$(".filmEvent").on("change", function(){
@@ -376,33 +406,37 @@ $(function(){
 		$(".films").hide();
 		$(".filmTimes").hide();
 		$(".diningEvent").hide();
-
-
+		$(".diningType").hide();
 	}
 
 	$("body").on("click", ".eventButton", function(){
-
 		$(".dashboardBlock").hide("clip", 400, function(){
-			$(".planEventBlock").show("drop", {direction: "left"}, 500 );;
+			$(".planEventBlock").show("drop", {direction: "left"}, 500);
+			currentPage = "event";
 		});
 	})
 
 	$("body").on("click", ".findCoupleButton", function(){
 		$(".dashboardBlock").hide("clip", 400, function(){
-			$(".findCoupleBlock").show("drop", {direction: "right"}, 500 );;
+			$(".findCoupleBlock").show("drop", {direction: "right"}, 500);
+			currentPage = "couple";
 		});
 	})
 
 	$("body").on("click", ".navbar-brand", function(){
-		$(".findCoupleBlock").hide("clip", 400);
-		$(".planEventBlock").hide("clip", 400);
-		$(".profileBlock").hide("clip", 400);
-		$(".chatBlock").hide("clip", 400);
-		resetFields();
+		if ("currentPage" !== "dashboard"){
+			$(".findCoupleBlock").hide("clip", 400);
+			$(".planEventBlock").hide("clip", 400);
+			$(".profileBlock").hide("clip", 400);
+			$(".chatBlock").hide("clip", 400);
+			resetFields();
 
-		setTimeout(function(){
-			$(".dashboardBlock").show("drop", {direction: "down"}, 400 );;
-		}, 500);
+			setTimeout(function(){
+				$(".dashboardBlock").show("drop", {direction: "down"}, 400);
+				currentPage = "dashboard";
+			}, 500);
+		}
+
 	});
 
 	$("body").on("click", ".profileNavButton", function(){
@@ -413,7 +447,8 @@ $(function(){
 		resetFields();
 
 		setTimeout(function(){
-			$(".profileBlock").show("drop", {direction: "down"}, 400 );;
+			$(".profileBlock").show("drop", {direction: "down"}, 400 );
+			currentPage = "profile";
 		}, 500);
 	});
 
@@ -425,7 +460,8 @@ $(function(){
 		resetFields();
 
 		setTimeout(function(){
-			$(".chatBlock").show("drop", {direction: "down"}, 400 );;
+			$(".chatBlock").show("drop", {direction: "down"}, 400 );
+			currentPage = "mail";
 		}, 500);
 	});
 })
