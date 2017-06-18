@@ -1,5 +1,14 @@
-$(function(){
+
+
+
+
+
+
+
+// $(function(){
 	// Initialize Firebase
+
+
 	var config = {
 		apiKey: "AIzaSyD1UCXTw5xWE5WehTfqh0AK-K2asMyf4S4",
 	    authDomain: "couplette-b67ce.firebaseapp.com",
@@ -8,6 +17,7 @@ $(function(){
 	    storageBucket: "couplette-b67ce.appspot.com",
 	    messagingSenderId: "934836634497"
 	};
+
 	firebase.initializeApp(config);
 
 	var dataRef = firebase.database();
@@ -58,33 +68,81 @@ $(function(){
 		comment = $("#comment-input").val().trim();
 		coupleUsername = $("#couple-username").val().trim();
 		// Code for the push
-		dataRef.ref().push({
-			firstName1: firstName1,
-			firstName2: firstName2,
-			lastName1: lastName1,
-			lastName2: lastName2,
-			coupleEmail: coupleEmail,
-			password: password,
-			confirmPassword: confirmPassword,
-			zipcode: zipcode,
-			description: description,
-			Interests: {
-				Arts: arts,
-				Dining: dining,
-				Films: films,
-				Music: music,
-				Gaming: gaming,
-				Outdoors: outdoor,
-				Travel: travel,
-				other: other,
-			},
-			age: age,
-			coupleUsername: coupleUsername,
-			comment: comment,
-			// dateAdded: firebase.database.ServerValue.TIMESTAMP
-		});
+		// dataRef.ref().push({
+		// 	firstName1: firstName1,
+		// 	firstName2: firstName2,
+		// 	lastName1: lastName1,
+		// 	lastName2: lastName2,
+		// 	coupleEmail: coupleEmail,
+		// 	password: password,
+		// 	confirmPassword: confirmPassword,
+		// 	zipcode: 91384,
+		// 	description: description,
+		// 	Interests: {
+		// 		Arts: arts,
+		// 		Dining: dining,
+		// 		Films: films,
+		// 		Music: music,
+		// 		Gaming: gaming,
+		// 		Outdoors: outdoor,
+		// 		Travel: travel,
+		// 		other: other,
+		// 	},
+		// 	age: age,
+		// 	coupleUsername: coupleUsername,
+		// 	comment: comment,
+		// 	// dateAdded: firebase.database.ServerValue.TIMESTAMP
+		// });
 	});
-	
+	var testZip1 = 91384;
+	var googleQueryURL = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + testZip1 + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
+
+	//Google Maps API Call
+	$.ajax({
+	  crossDomain: true,
+	  url: googleQueryURL,
+	  method: "GET"
+	}).done(function(response) {
+		console.log(response.results[0].address_components[1].long_name);
+		var city = response.results[0].address_components[1].long_name;
+		var state = response.results[0].address_components[2].long_name;
+		var testLatitude = parseInt(response.results[0].geometry.location.lat);
+		var testLongitude = parseInt(response.results[0].geometry.location.lng);
+		console.log(city,state,testLongitude,testLatitude)
+		// function zipCodeMatcher(){
+			// var testZipCodeArray = [95050, 91350, 91390];
+			console.log("working");
+			// for (var i=0; i<testZipCodeArray.length; i++) {
+			var origin1 = new google.maps.LatLng(testLatitude, testLongitude);
+			var origin2 = "" + city + "," + "" + state;
+			var destinationA = 'Santa Clara, California';
+			var destinationB = new google.maps.LatLng(37.3541, 121.9552);
+			var service = new google.maps.DistanceMatrixService();
+			service.getDistanceMatrix(
+			  {
+			  	origins: [origin1, origin2],
+    			destinations: [destinationA, destinationB],
+			    travelMode: 'DRIVING',
+			    // s
+			  }, callback);
+
+			function callback(response, status) {
+				console.log(response, status);
+				// distance.push(response);
+			// }
+			}
+		// });
+		// zipCodeMatcher();
+	});
+
+	function getFirebaseData() {
+		var fireBaseZipCodes = [];
+		dataRef.ref().on("value", function(childSnapshot) {	
+	      	// Log everything that's coming out of snapshot
+	      	fireBaseZipCodes.push(childSnapshot.val().zipCode);
+	      });
+		}
+
 	//Sample User Criteria
 	var userCriteria = {
 	    ageLow: 18,
@@ -136,6 +194,15 @@ $(function(){
 	            match = false;
 	        }
 	    }
+
+	    // var = codeformyzyip;
+
+	    // Var distance = 
+
+	    // if (distance > criteria.distance){
+	    // 	match = false;
+	    // }
+
 	    if (match){
 	        return true;
 	    }
@@ -156,7 +223,7 @@ $(function(){
 	        console.log(namesThatMatch);
 	    })
 	}
-	collectUser(userCriteria);
+	// collectUser(userCriteria);
 
 	//add calendar date pick functionality to event page date input field
 	$("#dateEvent").datepicker({minDate: 0});
@@ -224,6 +291,7 @@ $(function(){
 			$(".filmEvent").slideUp("fast", function(){
 				$(".diningEvent").slideDown("normal");
 			});
+
 		}
 	});
 
@@ -276,5 +344,7 @@ $(function(){
 			$(this).attr("data-selected", "false");
 		}
 	})
+// })
 
-})
+
+
