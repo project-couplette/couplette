@@ -5,7 +5,7 @@
 
 
 
-// $(function(){
+$(function(){
 	// Initialize Firebase
 
 
@@ -254,7 +254,6 @@
 
 	//adding dynamic page updates based on event select dropdown option
 	$(".eventType").on("change", function(){
-
 		if ($(this).val() === "EventDefault"){
 			$(".filmEvent").slideUp("fast");
 			$(".diningEvent").slideUp("fast");
@@ -268,29 +267,54 @@
 				method: "GET"
 			}).done(function(response){
 				console.log(response);
-				$(".diningEvent").slideUp("fast", function(){
-				$(".filmEvent").slideDown("normal");
-			});
+
 			})
 
-			
-			
+			$(".diningEvent").slideUp("fast", function(){
+				$(".filmEvent").slideDown("normal");
+			})
 		}
 
 		else if ($(this).val() === "Dining"){
-			// var diningURL = "https://developers.zomato.com/api/v2.1" + $('.zipInp').val() + '&api_key=9f66ce02ce13cacef3eaaefa8cc3fab7';
-			// var clientKey = "2vD3lQM9gR9SrTBk9GlSCn22KwOsvQRxlvBGlnQCf0uHT623NnWpKYruvgX17Ozt";
-			// zipURL = "https://www.zipcodeapi.com/rest/"+clientKey+"/info.json/" + $('.zipInp').val() + "/radians";
-			// // var diningURL = "https://developers.zomato.com/api/v2.1" +  + '&api_key=9f66ce02ce13cacef3eaaefa8cc3fab7';
+			function initialize() {
+			var queryURLLongLat = "https://maps.googleapis.com/maps/api/geocode/json?address=94612&key=AIzaSyA52ADkbHa1-oZzlIZuCk6PAACaPFOFe2A";
+			var longitudeOfZip, latOfZip;
 			$.ajax({
-				url: zipURL,
+				url: queryURLLongLat,
 				method: "GET"
 			}).done(function(response){
-				console.log(response);
+				longitudeOfZip = response["results"][0]["geometry"]["location"]["lng"];
+				latOfZip = response["results"][0]["geometry"]["location"]["lat"];
 			})
+
+			var location = new google.maps.LatLng(longitudeOfZip, latOfZip);
+
+			var request = {
+				location: location,
+				radius: '500',
+				query: 'restaurant',
+				type: 'chinese'
+			};
+
+			var service = new google.maps.places.PlacesService(document.createElement('div'));
+			service.textSearch(request, callback);
+			}
+
+			function callback(results, status) {
+				if (status == google.maps.places.PlacesServiceStatus.OK) {
+					$(".diningOptionsDrop").empty().append("<option  value='Default'>")
+					for (var i = 0; i < 10; i++) {
+						$(".diningOptionsDrop").append("<option value=" + results[i].name + ">" + results[i].name + "</option");
+
+					}
+				}
+			}
+
 			$(".filmEvent").slideUp("fast", function(){
 				$(".diningEvent").slideDown("normal");
 			});
+
+			initialize();
 
 		}
 	});
@@ -302,7 +326,6 @@
 
 		else {
 			$(".films").slideDown("normal");
-			
 		}
 
 	});
@@ -314,7 +337,6 @@
 
 		else {
 			$(".filmTimes").slideDown("normal");
-			
 		}
 
 	});
@@ -344,7 +366,7 @@
 			$(this).attr("data-selected", "false");
 		}
 	})
-// })
+})
 
 
 
