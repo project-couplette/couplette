@@ -7,6 +7,8 @@
 
 // $(function(){
 	// Initialize Firebase
+
+
 	var config = {
 		apiKey: "AIzaSyD1UCXTw5xWE5WehTfqh0AK-K2asMyf4S4",
 	    authDomain: "couplette-b67ce.firebaseapp.com",
@@ -92,48 +94,54 @@
 		// 	// dateAdded: firebase.database.ServerValue.TIMESTAMP
 		// });
 	});
-	
-	var origin1 = new google.maps.LatLng(55.930385, -3.118425);
-	var origin2 = 'Greenwich, England';
-	var destinationA = 'Stockholm, Sweden';
-	var destinationB = new google.maps.LatLng(50.087692, 14.421150);
+	var testZip1 = 91384;
+	var googleQueryURL = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + testZip1 + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
 
-	var service = new google.maps.DistanceMatrixService();
-	service.getDistanceMatrix(
-	  {
-	    origins: [origin1, origin2],
-	    destinations: [destinationA, destinationB],
-	    travelMode: 'DRIVING',
-	    // transitOptions: TransitOptions,
-	    // drivingOptions: DrivingOptions,
-	    // unitSystem: UnitSystem,
-	    // avoidHighways: Boolean,
-	    // avoidTolls: Boolean,
-	  }, callback);
+	//Google Maps API Call
+	$.ajax({
+	  crossDomain: true,
+	  url: googleQueryURL,
+	  method: "GET"
+	}).done(function(response) {
+		console.log(response.results[0].address_components[1].long_name);
+		var city = response.results[0].address_components[1].long_name;
+		var state = response.results[0].address_components[2].long_name;
+		var testLatitude = parseInt(response.results[0].geometry.location.lat);
+		var testLongitude = parseInt(response.results[0].geometry.location.lng);
+		console.log(city,state,testLongitude,testLatitude)
+		// function zipCodeMatcher(){
+			// var testZipCodeArray = [95050, 91350, 91390];
+			console.log("working");
+			// for (var i=0; i<testZipCodeArray.length; i++) {
+			var origin1 = new google.maps.LatLng(testLatitude, testLongitude);
+			var origin2 = "" + city + "," + "" + state;
+			var destinationA = 'Santa Clara, California';
+			var destinationB = new google.maps.LatLng(37.3541, 121.9552);
+			var service = new google.maps.DistanceMatrixService();
+			service.getDistanceMatrix(
+			  {
+			  	origins: [origin1, origin2],
+    			destinations: [destinationA, destinationB],
+			    travelMode: 'DRIVING',
+			    // s
+			  }, callback);
 
-	function callback(response, status) {
-		console.log(response, status);
-	}
+			function callback(response, status) {
+				console.log(response, status);
+				// distance.push(response);
+			// }
+			}
+		// });
+		// zipCodeMatcher();
+	});
 
-
-	// var googleQueryURL = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=91384&destinations=95050&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
-
-	// //Google Maps API Call
-	// $.ajax({
-	//   crossDomain: true,
-	//   url: googleQueryURL,
-	//   method: "GET"
-	// }).done(function(response) {
-	// 	console.log(response);
-	// })
 	function getFirebaseData() {
-		console.log("working");
-		dataRef.ref().on("value", function(childSnapshot) {
-      // Log everything that's coming out of snapshot
-      	console.log(childSnapshot.val().zipCode);
-      });
-	}
-	getFirebaseData();
+		var fireBaseZipCodes = [];
+		dataRef.ref().on("value", function(childSnapshot) {	
+	      	// Log everything that's coming out of snapshot
+	      	fireBaseZipCodes.push(childSnapshot.val().zipCode);
+	      });
+		}
 
 	//Sample User Criteria
 	var userCriteria = {
@@ -186,6 +194,15 @@
 	            match = false;
 	        }
 	    }
+
+	    // var = codeformyzyip;
+
+	    // Var distance = 
+
+	    // if (distance > criteria.distance){
+	    // 	match = false;
+	    // }
+
 	    if (match){
 	        return true;
 	    }
