@@ -176,7 +176,6 @@ $(function(){
 	            }
 	        }
 	        else {
-	            // console.log(((criteria.ageLow <= userToComp.Age2 <= criteria.ageHigh)));
 	            if (!(criteria.ageLow <= userToComp.age1 && userToComp.age1 <= criteria.ageHigh)){
 	            match = false
 	            }
@@ -264,7 +263,6 @@ $(function(){
 				url: queryURLLongLat,
 				method: "GET"
 			}).done(function(response){
-				console.log(response["results"][0]["geometry"]["location"]);
 				longitudeOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lat"]);
 				latOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lng"]);
 
@@ -281,7 +279,6 @@ $(function(){
 
 				function callback(results, status) {
 					if (status == google.maps.places.PlacesServiceStatus.OK) {
-						console.log(results);
 						$(".theaterDrop").empty().append("<option  value='Default'>")
 						for (var i = 0; i < results.length; i++) {
 							$(".theaterDrop").append("<option value=" + results[i].name + ">" + results[i].name + "</option");
@@ -317,7 +314,6 @@ $(function(){
 			url: queryURLLongLat,
 			method: "GET"
 		}).done(function(response){
-			console.log(response["results"][0]["geometry"]["location"]);
 			longitudeOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lat"]);
 			latOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lng"]);
 
@@ -326,7 +322,7 @@ $(function(){
 			var request = {
 				location: location,
 				radius: '1000',
-				query: 'chinese' +  ' restaurant',
+				query: $(".cuisine").val() +  ' restaurant',
 			};
 
 			var service = new google.maps.places.PlacesService(document.createElement('div'));
@@ -336,11 +332,10 @@ $(function(){
 				if (status == google.maps.places.PlacesServiceStatus.OK) {
 					$(".diningOptionsDrop").empty().append("<option  value='Default'>")
 					for (var i = 0; i < results.length; i++) {
-						$(".diningOptionsDrop").append("<option value=" + results[i].name + ">" + results[i].name + "</option");
+						var diningOption = $("<option>").attr("value", results[i].name).text(results[i].name);
+						$(".diningOptionsDrop").append(diningOption);
 						$(".diningEvent").slideDown("normal");
-					}
-
-					
+					}					
 				}
 			}
 		});

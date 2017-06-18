@@ -335,6 +335,24 @@ textarea {
 	background: #efefef;
 }
 
+.chatInput{
+	width: 80%;
+	bottom: 0;
+	position: absolute;
+	height: 40px;
+}
+
+.chatSubmit {
+	width: 15.7%;
+	bottom: 0;
+	position: absolute;
+	right: 14px;
+	border-radius: 0 0 10px 0;
+	border: 1px solid black;
+	background: #b82b4e;
+	height: 40px;
+}
+
 
 @media screen and (max-width: 991px){
 	.profileRow {
