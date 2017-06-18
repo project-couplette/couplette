@@ -366,6 +366,51 @@ $(function(){
 			$(this).attr("data-selected", "false");
 		}
 	})
+
+	$("body").on("click", ".eventButton", function(){
+		$(".dashboardBlock").hide("clip", 400, function(){
+			$(".planEventBlock").show("drop", {direction: "left"}, 500 );;
+		});
+	})
+
+	$("body").on("click", ".findCoupleButton", function(){
+		$(".dashboardBlock").hide("clip", 400, function(){
+			$(".findCoupleBlock").show("drop", {direction: "right"}, 500 );;
+		});
+	})
+
+	$("body").on("click", ".navbar-brand", function(){
+		$(".findCoupleBlock").hide("clip", 400);
+		$(".planEventBlock").hide("clip", 400);
+		$(".profileBlock").hide("clip", 400);
+		$(".chatBlock").hide("clip", 400);
+
+		setTimeout(function(){
+			$(".dashboardBlock").show("drop", {direction: "down"}, 400 );;
+		}, 500);
+	});
+
+	$("body").on("click", ".profileNavButton", function(){
+		$(".findCoupleBlock").hide("clip", 400);
+		$(".planEventBlock").hide("clip", 400);
+		$(".dashboardBlock").hide("clip", 400);
+		$(".chatBlock").hide("clip", 400);
+
+		setTimeout(function(){
+			$(".profileBlock").show("drop", {direction: "down"}, 400 );;
+		}, 500);
+	});
+
+	$("body").on("click", ".mailButton", function(){
+		$(".findCoupleBlock").hide("clip", 400);
+		$(".planEventBlock").hide("clip", 400);
+		$(".dashboardBlock").hide("clip", 400);
+		$(".profileBlock").hide("clip", 400);
+
+		setTimeout(function(){
+			$(".chatBlock").show("drop", {direction: "down"}, 400 );;
+		}, 500);
+	});
 })
 
 
