@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reset</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+ 
+  <link href="https://fonts.googleapis.com/css?family=Archivo+Narrow|Passion+One" rel="stylesheet">
+
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css"> 
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand">Couplette</a>
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavBar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+    <!--  <div class="collapse navbar-collapse" id="myNavBar">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#" class="envelope hidden-xs"><span class="glyphicon glyphicon-envelope"></span></a></li>
+          <li><a href="#" class="hidden-md hidden-sm hidden-lg">Mail</a></li>
+          <li><a href="#">Profile</a></li>
+          <li><a href="#">Logout</a></li>
+        </ul>
+      </div>-->
+    </div>
+  </nav>
+<!-- my code -->
+  <div class="container mainContent center-page">
+    <form>
+      <div class="row">
+      <div class="wrap-login col-xs-6 col-md-4 .col-md-offset-4">
+        <!--<div class="col-xs-6 col-md-4 .col-md-offset-3"> -->
+        <h3 class="text-center">Password Reset </h3>
+          <div class="form-group">
+
+            <input type="email" class="form-control" id="email-input" placeholder="Email" required>
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" id="newPass-input" placeholder="New Password" required>
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" id="confirm-pass" placeholder="Re-type Password" required>
+          </div>
+          <button type="submit" class=" page-reset" >Submit</button>
+        </div> <!-- col col -->
+      </div><!--- end of row -->
+      
+</form>
+
+
+  </div><!--  end of main content -->             
+  
+
+<!-- script -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
+  <script src="assets/javascript/app.js"></script>
+</body>
+</html>
