@@ -305,13 +305,13 @@ textarea {
 
 .placeholder {
 	height: 500px;
-	border: 1px solid #959595;
-	border-radius: 10px;
+	border-left: 1px solid #959595;
 }
 
 .chatContainer {
-	border: 1px solid #959595;
+	border: 2px solid #cccccc;
 	border-radius: 10px;
+	background: #ededed;
 }
 
 .chatBoxSpace {
@@ -340,10 +340,13 @@ textarea {
 	bottom: 0;
 	position: absolute;
 	height: 40px;
+	padding: 0px 21px 0 8px;
+	border-left: 0;
+	border-top: 1px solid #959595;
 }
 
 .chatSubmit {
-	width: 15.7%;
+	width: 18.5%;
 	bottom: 0;
 	position: absolute;
 	right: 14px;
@@ -352,6 +355,19 @@ textarea {
 	background: #b82b4e;
 	height: 40px;
 }
+
+.chatSpace {
+	background: white;
+}
+
+.noPadLeft {
+	padding-left: 0;
+}
+
+.noPadRight {
+	padding-right: 0;
+}
+
 
 
 @media screen and (max-width: 991px){

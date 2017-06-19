@@ -32,7 +32,7 @@
 
 			<div class="collapse navbar-collapse" id="myNavBar">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#" class="mailButton" class="envelope hidden-xs"><span class="glyphicon glyphicon-envelope"></span></a></li>
+					<li><a href="#" class="envelope hidden-xs mailButton"><span class="glyphicon glyphicon-envelope"></span></a></li>
 					<li><a href="#" class="hidden-md hidden-sm hidden-lg mailButton">Mail</a></li>
 					<li><a href="#" class="profileNavButton">Profile</a></li>
 					<li><a href="#">Logout</a></li>
@@ -344,7 +344,7 @@
 	<div class="container mainContent chatBlock">
 		<div class="fluid-container chatContainer">
 			<div class="row">
-				<div class="col-xs-3">
+				<div class="col-xs-3 noPadRight">
 					<div class="row">
 						<div class="col-xs-12 text-center">
 							<div id="chat" class="tabs">
@@ -366,7 +366,7 @@
 					</div>
 					
 				</div>
-				<div class="col-xs-9">
+				<div class="col-xs-9 noPadLeft">
 					<div class="placeholder chatSpace">
 					<!-- 	<div class="chatBoxSpace">
 							<p>Username49: Last line of text.</p>
@@ -375,7 +375,7 @@
 							<p>Coolname3: Last line of text.</p>
 						</div> -->
 					<form class="chatInputSubmit">
-						<input type="text" name="chatInput" class="chatInput"><input type="submit" class="chatSubmit" value="Submit">
+						<input type="text" name="chatInput" class="chatInput"><input type="submit" class="chatSubmit" name="submit" value="submit">
 					</form>
 					
 
@@ -391,6 +391,7 @@
 
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA52ADkbHa1-oZzlIZuCk6PAACaPFOFe2A&libraries=places"></script>
 
+	<script src="assets/javascript/moment.js"></script>
 	<script src="assets/javascript/jquery-ui.js"></script>
 	<script src="assets/javascript/app.js"></script>
 </body>
