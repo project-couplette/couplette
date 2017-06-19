@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Couplette Find A Couple</title>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE"></script>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -45,8 +46,9 @@
 			</div>
 
 			<div class="col-xs-12 text-center">
+				<h3>Max Distance of Couple</h3>
 				<select>
-					<option value="DistanceDefault">Distance</option>
+					<option value="DistanceDefault"></option>
 					<option value="NoCare">No Preference</option>
 					<option value="5mi">10 Miles</option>
 					<option value="10mi">25 Miles</option>
@@ -55,8 +57,9 @@
 			</div>
 
 			<div class="col-xs-12 text-center">
+				<h3>Age Range of Couple</h3>
 				<select>
-					<option value="AgeDefault">Age</option>
+					<option value="AgeDefault"></option>
 					<option value="NoCare">No Preference</option>
 					<option value="1825">18-25</option>
 					<option value="2535">25-35</option>
@@ -67,8 +70,9 @@
 			</div>
 
 			<div class="col-xs-12 text-center">
+				<h3>Gender of Couple</h3>
 				<select>
-					<option value="GenderDefault">Gender</option>
+					<option value="GenderDefault"></option>
 					<option value="NoCare">No Preference</option>
 					<option value="MF">Male/Female</option>
 					<option value="MM">Male/Male</option>
@@ -83,30 +87,30 @@
 			</div>
 
 			<div class="col-xs-6 col-sm-3 text-center checkBox">
-				<label><input type="checkbox" name="film" value="Film"> Film<br></label>
+				<p data-interest="film" data-selected=false class="interest">Film</p>
 			</div>
 			<div class="col-xs-6 col-sm-3 text-center checkBox">
-				<label><input type="checkbox" name="sports" value="Sports"> Sports<br></label>
+				<p data-interest="sport" data-selected=false class="interest">Sports</p>
 			</div>
 			<div class="col-xs-6 col-sm-3 text-center checkBox">
-				<label><input type="checkbox" name="dining" value="Dining"> Dining<br></label>
+				<p data-interest="dining" data-selected=false class="interest">Dining</p>
 			</div>
 			<div class="col-xs-6 col-sm-3 text-center checkBox">
-				<label><input type="checkbox" name="music" value="Music"> Music<br></label>
+				<p data-interest="music" data-selected=false class="interest">Music</p>
+			</div>
+			<div class="col-xs-6 col-sm-3 text-center checkBox">
+				<p data-interest="travel" data-selected=false class="interest">Travel</p>
+			</div>
+			<div class="col-xs-6 col-sm-3 text-center checkBox">
+				<p data-interest="outdoors" data-selected=false class="interest">Outdoors</p>
+			</div>
+			<div class="col-xs-6 col-sm-3 text-center checkBox">
+				<p data-interest="arts" data-selected=false class="interest">Arts</p>
+			</div>
+			<div class="col-xs-6 col-sm-3 text-center checkBox">
+				<p data-interest="gaming" data-selected=false class="interest">Gaming</p>
 			</div>
 
-			<div class="col-xs-6 col-sm-3 text-center checkBox">
-				<label><input type="checkbox" name="travel" value="Travel"> Travel<br></label>
-			</div>
-			<div class="col-xs-6 col-sm-3 text-center checkBox">
-				<label><input type="checkbox" name="outdoors" value="Outdoor"> Outdoors<br></label>
-			</div>
-			<div class="col-xs-6 col-sm-3 text-center checkBox">
-				<label><input type="checkbox" name="arts" value="Arts"> Arts<br></label>
-			</div>
-			<div class="col-xs-6 col-sm-3 text-center checkBox">
-				<label><input type="checkbox" name="gaming" value="Gaming"> Gaming<br></label>
-			</div>
 		</div>
 
 
