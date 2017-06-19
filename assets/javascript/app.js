@@ -1,11 +1,7 @@
 
+$(function(){
+	var currentPage = "dashboard";
 
-
-
-
-
-
-// $(function(){
 	// Initialize Firebase
 
 
@@ -180,7 +176,6 @@
 	            }
 	        }
 	        else {
-	            // console.log(((criteria.ageLow <= userToComp.Age2 <= criteria.ageHigh)));
 	            if (!(criteria.ageLow <= userToComp.age1 && userToComp.age1 <= criteria.ageHigh)){
 	            match = false
 	            }
@@ -254,45 +249,100 @@
 
 	//adding dynamic page updates based on event select dropdown option
 	$(".eventType").on("change", function(){
-
 		if ($(this).val() === "EventDefault"){
 			$(".filmEvent").slideUp("fast");
-			$(".diningEvent").slideUp("fast");
+			$(".cuisine").slideUp("fast");
 		}
 
 		else if ($(this).val() === "Film"){
-			var movieZipURL = 'https://data.tmsapi.com/v1.1/theatres?zip=' + $('.zipInp').val() + '&api_key=n9dzsauzmnxaps66hbyawcuz';
-			// var movieZipURL = "http://data.tmsapi.com/v1.1/theatres?zip=78701&api_key=turvtrjxt4n6b9skn4ahnpgx"
+			var longitudeOfZip, latOfZip;
+			function initialize() {
+			var queryURLLongLat = "https://maps.googleapis.com/maps/api/geocode/json?address=" + $(".zipInp").val() + "&key=AIzaSyA52ADkbHa1-oZzlIZuCk6PAACaPFOFe2A";
+
 			$.ajax({
-				url: movieZipURL,
+				url: queryURLLongLat,
 				method: "GET"
 			}).done(function(response){
-				console.log(response);
-				$(".diningEvent").slideUp("fast", function(){
-				$(".filmEvent").slideDown("normal");
+				longitudeOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lat"]);
+				latOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lng"]);
+
+				var location = new google.maps.LatLng(longitudeOfZip, latOfZip);
+
+				var request = {
+					location: location,
+					radius: '1000',
+					query: 'cinema',
+				};
+
+				var service = new google.maps.places.PlacesService(document.createElement('div'));
+				service.textSearch(request, callback);
+
+				function callback(results, status) {
+					if (status == google.maps.places.PlacesServiceStatus.OK) {
+						$(".theaterDrop").empty().append("<option  value='Default'>")
+						for (var i = 0; i < results.length; i++) {
+							$(".theaterDrop").append("<option value=" + results[i].name + ">" + results[i].name + "</option");
+
+						}
+						$(".diningEvent").slideUp("fast", function(){
+						$(".filmEvent").slideDown("normal");
+					});
+					}
+				}
 			});
-			})
-
-			
-			
+	
 		}
-
+		initialize();
+	}
 		else if ($(this).val() === "Dining"){
-			// var diningURL = "https://developers.zomato.com/api/v2.1" + $('.zipInp').val() + '&api_key=9f66ce02ce13cacef3eaaefa8cc3fab7';
-			// var clientKey = "2vD3lQM9gR9SrTBk9GlSCn22KwOsvQRxlvBGlnQCf0uHT623NnWpKYruvgX17Ozt";
-			// zipURL = "https://www.zipcodeapi.com/rest/"+clientKey+"/info.json/" + $('.zipInp').val() + "/radians";
-			// // var diningURL = "https://developers.zomato.com/api/v2.1" +  + '&api_key=9f66ce02ce13cacef3eaaefa8cc3fab7';
-			$.ajax({
-				url: zipURL,
-				method: "GET"
-			}).done(function(response){
-				console.log(response);
-			})
+
 			$(".filmEvent").slideUp("fast", function(){
-				$(".diningEvent").slideDown("normal");
-			});
+				$(".diningType").slideDown("normal");
+				});
+		}
+	});
+
+	$(".cuisine").on("change", function(){
+		if ($(this).val() === "EventDefault"){
 
 		}
+		var longitudeOfZip, latOfZip;
+		function initialize() {
+		var queryURLLongLat = "https://maps.googleapis.com/maps/api/geocode/json?address=" + $(".zipInp").val() + "&key=AIzaSyA52ADkbHa1-oZzlIZuCk6PAACaPFOFe2A";
+
+		$.ajax({
+			url: queryURLLongLat,
+			method: "GET"
+		}).done(function(response){
+			longitudeOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lat"]);
+			latOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lng"]);
+
+			var location = new google.maps.LatLng(longitudeOfZip, latOfZip);
+
+			var request = {
+				location: location,
+				radius: '1000',
+				query: $(".cuisine").val() +  ' restaurant',
+			};
+
+			var service = new google.maps.places.PlacesService(document.createElement('div'));
+			service.textSearch(request, callback);
+
+			function callback(results, status) {
+				if (status == google.maps.places.PlacesServiceStatus.OK) {
+					$(".diningOptionsDrop").empty().append("<option  value='Default'>")
+					for (var i = 0; i < results.length; i++) {
+						var diningOption = $("<option>").attr("value", results[i].name).text(results[i].name);
+						$(".diningOptionsDrop").append(diningOption);
+						$(".diningEvent").slideDown("normal");
+					}					
+				}
+			}
+		});
+
+		}
+
+		initialize();
 	});
 
 	$(".filmEvent").on("change", function(){
@@ -302,7 +352,6 @@
 
 		else {
 			$(".films").slideDown("normal");
-			
 		}
 
 	});
@@ -314,7 +363,6 @@
 
 		else {
 			$(".filmTimes").slideDown("normal");
-			
 		}
 
 	});
@@ -344,7 +392,74 @@
 			$(this).attr("data-selected", "false");
 		}
 	})
-// })
+
+	function resetFields(){
+		$("input").val("");
+		$(".eventTypeBlock").hide();
+		$(".eventZipcode").hide();
+		$(".filmEvent").hide();
+		$(".films").hide();
+		$(".filmTimes").hide();
+		$(".diningEvent").hide();
+		$(".diningType").hide();
+	}
+
+	$("body").on("click", ".eventButton", function(){
+		$(".dashboardBlock").hide("clip", 400, function(){
+			$(".planEventBlock").show("drop", {direction: "left"}, 500);
+			currentPage = "event";
+		});
+	})
+
+	$("body").on("click", ".findCoupleButton", function(){
+		$(".dashboardBlock").hide("clip", 400, function(){
+			$(".findCoupleBlock").show("drop", {direction: "right"}, 500);
+			currentPage = "couple";
+		});
+	})
+
+	$("body").on("click", ".navbar-brand", function(){
+		if ("currentPage" !== "dashboard"){
+			$(".findCoupleBlock").hide("clip", 400);
+			$(".planEventBlock").hide("clip", 400);
+			$(".profileBlock").hide("clip", 400);
+			$(".chatBlock").hide("clip", 400);
+			resetFields();
+
+			setTimeout(function(){
+				$(".dashboardBlock").show("drop", {direction: "down"}, 400);
+				currentPage = "dashboard";
+			}, 500);
+		}
+
+	});
+
+	$("body").on("click", ".profileNavButton", function(){
+		$(".findCoupleBlock").hide("clip", 400);
+		$(".planEventBlock").hide("clip", 400);
+		$(".dashboardBlock").hide("clip", 400);
+		$(".chatBlock").hide("clip", 400);
+		resetFields();
+
+		setTimeout(function(){
+			$(".profileBlock").show("drop", {direction: "down"}, 400 );
+			currentPage = "profile";
+		}, 500);
+	});
+
+	$("body").on("click", ".mailButton", function(){
+		$(".findCoupleBlock").hide("clip", 400);
+		$(".planEventBlock").hide("clip", 400);
+		$(".dashboardBlock").hide("clip", 400);
+		$(".profileBlock").hide("clip", 400);
+		resetFields();
+
+		setTimeout(function(){
+			$(".chatBlock").show("drop", {direction: "down"}, 400 );
+			currentPage = "mail";
+		}, 500);
+	});
+})
 
 
 

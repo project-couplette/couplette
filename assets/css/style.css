@@ -18,10 +18,7 @@ h2 {
 	font-family: 'Passion One', cursive;
 }
 /**************** main pages ************** */	
-h3 {
 
-	padding-bottom: 20px;
-}	
 .wrap-login {
 	margin-top: 40px;
 	margin-bottom: 30px;
@@ -80,12 +77,6 @@ margin: 0 auto;
 }
 
 /******* add a box to the image file**********/
-
-h3 {
-	font-size: 24px;
-	margin-bottom: 2px;
-	margin-top: 10px;
-}
 
 h3 {
 	font-size: 24px;
@@ -268,7 +259,8 @@ label {
 }
 
 .filmEvent, .friendFindSubmit, .diningEvent, .eventZipcode, .eventTypeBlock,
-.diningTimes, .films, .filmTimes {
+.diningTimes, .films, .filmTimes, .planEventBlock, .findCoupleBlock, .profileBlock, .chatBlock,
+.diningType {
 	display: none;
 }
 
@@ -313,13 +305,13 @@ textarea {
 
 .placeholder {
 	height: 500px;
-	border: 1px solid #959595;
-	border-radius: 10px;
+	border-left: 1px solid #959595;
 }
 
 .chatContainer {
-	border: 1px solid #959595;
+	border: 2px solid #cccccc;
 	border-radius: 10px;
+	background: #ededed;
 }
 
 .chatBoxSpace {
@@ -342,6 +334,40 @@ textarea {
 .chatTab:hover {
 	background: #efefef;
 }
+
+.chatInput{
+	width: 80%;
+	bottom: 0;
+	position: absolute;
+	height: 40px;
+	padding: 0px 21px 0 8px;
+	border-left: 0;
+	border-top: 1px solid #959595;
+}
+
+.chatSubmit {
+	width: 18.5%;
+	bottom: 0;
+	position: absolute;
+	right: 14px;
+	border-radius: 0 0 10px 0;
+	border: 1px solid black;
+	background: #b82b4e;
+	height: 40px;
+}
+
+.chatSpace {
+	background: white;
+}
+
+.noPadLeft {
+	padding-left: 0;
+}
+
+.noPadRight {
+	padding-right: 0;
+}
+
 
 
 @media screen and (max-width: 991px){
