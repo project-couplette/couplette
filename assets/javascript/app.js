@@ -39,6 +39,12 @@ $(function(){
 	var age = 0;
 	var comment = "";
 	var coupleUsername = "";
+	var cityArray = [];
+	var stateArray = [];
+	var latArray = [];
+	var lngarray = [];
+	var distanceArray = [];
+	var potentialMatch = [];
 
 	$("#button").on("click", function(event) {
 		event.preventDefault();
@@ -92,105 +98,100 @@ $(function(){
 	});
 
 	var testZip1 = 91384;
+	
 	var googleQueryURL = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + testZip1 + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
 
 	//Google Maps API Call
-	$.ajax({
-	  crossDomain: true,
-	  url: googleQueryURL,
-	  method: "GET"
-	}).done(function(response) {
-		console.log(response.results[0].address_components[1].long_name);
-		var city = response.results[0].address_components[1].long_name;
-		var state = response.results[0].address_components[2].long_name;
-		var testLatitude = parseInt(response.results[0].geometry.location.lat);
-		var testLongitude = parseInt(response.results[0].geometry.location.lng);
-		console.log(city,state,testLongitude,testLatitude)
-    
+	function distanceMatrixCall() {
+		
+		$.ajax({
+		  crossDomain: true,
+		  url: googleQueryURL,
+		  method: "GET"
+		}).done(function(response) {
+			var city = response.results[0].address_components[1].long_name;
+			var state = response.results[0].address_components[2].long_name;
+			var testLatitude = parseInt(response.results[0].geometry.location.lat);
+			var testLongitude = parseInt(response.results[0].geometry.location.lng);
+			console.log(cityArray);
+			
+			zipCodeConverter()
+			  .then(function() {
+				// zipCodeMatcher();
+				// function zipCodeMatcher()
+				for (var j=0; j < cityArray.length; j++) {
+					console.log(cityArray[j]);
+					console.log("working");
+					var origin1 = new google.maps.LatLng(testLatitude, testLongitude);
+					var origin2 = "" + city + "," + "" + state;
+					var destinationA = "" + cityArray[j] + "," + "" + stateArray[j];
+					var destinationB = new google.maps.LatLng(lngarray[j], latArray[j]);
+					var service = new google.maps.DistanceMatrixService();
+					console.log(origin1, origin2, destinationB, destinationA);
+					service.getDistanceMatrix(
+					  {
+					  	origins: [origin1, origin2],
+		    			destinations: [destinationA, destinationB],
+					    travelMode: 'DRIVING',
+					    // s
+					  }, callback);
 
-		zipCodeMatcher();
-		function zipCodeMatcher(){
-			var testZipCodeArray = [95050, 91350, 91390];
-			console.log("working");
-			for (var i=0; i<testZipCodeArray.length; i++) {
-				var origin1 = new google.maps.LatLng(testLatitude, testLongitude);
-				var origin2 = "" + city + "," + "" + state;
-				var destinationA = 'Santa Clara, California';
-				var destinationB = new google.maps.LatLng(37.3541, 121.9552);
-				var service = new google.maps.DistanceMatrixService();
-				service.getDistanceMatrix(
-				  {
-				  	origins: [origin1, origin2],
-	    			destinations: [destinationA, destinationB],
-				    travelMode: 'DRIVING',
-				    // s
-				  }, callback);
-
-				function callback(response, status) {
-					console.log(response, status);
-					// distance.push(response);
-				// }
+					function callback(response, status) {
+						console.log(response, status);
+						var num = response.rows[0].elements[0].distance.text.replace(/[^0-9]/g,'');
+						distance.push(parseInt(num));
+					};
 				}
-			};
-		};
+			});
+				
+		});
+	};
+
+	distanceMatrixCall();
+
+	function isDistanceMatch(){
+		for (var i=0; i<distanceArray.length; i++) {
+			if distanceArray[i] > searchCriteria.distance {
+				match = false;
+			} else {
+				match= true;
+			}
+		}
+	};
+
+	isDistanceMatch();
 
 	function zipCodeConverter() {
 		// getFirebaseData();
-		var testZipCodeArray = [95050, 91350, 91390];
-		var cityArray = [];
-		var stateArray = [];
-		var latArray = [];
-		var lngarray = [];
-
+		var testZipCodeArray = [95050, 91350, 94110];
+		var zipPromises = [];
+		
 		for (var i=0; i<testZipCodeArray.length; i++) {
 			var googleQueryURLLoop = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + testZipCodeArray[i] + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
-			console.log(googleQueryURLLoop)
+		// sconsole.log(googleQueryURLLoop)
 		//Google Maps API Call
-			$.ajax({
+			zip = $.ajax({
 			  crossDomain: true,
 			  url: googleQueryURLLoop,
 			  method: "GET"
 			}).done(function(response) {
-				console.log(response.results[0].address_components[1].long_name);
-				var city = response.results[0].address_components[1].long_name;
-				var state = response.results[0].address_components[2].long_name;
-				var testLatitude = parseInt(response.results[0].geometry.location.lat);
-				var testLongitude = parseInt(response.results[0].geometry.location.lng);
-				cityArray.push(city);
-				stateArray.push(state);
-				latArray.push(testLatitude);
-				lngarray.push(testLongitude);
+				var cityConverted = response.results[0].address_components[1].long_name;
+				var stateConverted = response.results[0].address_components[2].long_name;
+				var testLatitudeConverted = parseInt(response.results[0].geometry.location.lat);
+				var testLongitudeConverted = parseInt(response.results[0].geometry.location.lng);
+				cityArray.push(cityConverted);
+				stateArray.push(stateConverted);
+				latArray.push(testLatitudeConverted);
+				lngarray.push(testLongitudeConverted);
 			});
+			zipPromises.push(zip);
 		};
+
+		return Promise.all(zipPromises);
+
 	};
+
 	zipCodeConverter();
-
-		// function zipCodeMatcher(){
-			// var testZipCodeArray = [95050, 91350, 91390];
-			console.log("working");
-			// for (var i=0; i<testZipCodeArray.length; i++) {
-			var origin1 = new google.maps.LatLng(testLatitude, testLongitude);
-			var origin2 = "" + city + "," + "" + state;
-			var destinationA = 'Santa Clara, California';
-			var destinationB = new google.maps.LatLng(37.3541, 121.9552);
-			var service = new google.maps.DistanceMatrixService();
-			service.getDistanceMatrix(
-			  {
-			  	origins: [origin1, origin2],
-    			destinations: [destinationA, destinationB],
-			    travelMode: 'DRIVING',
-			    // s
-			  }, callback);
-
-			function callback(response, status) {
-				console.log(response, status);
-				// distance.push(response);
-			// }
-			}
-		// });
-		// zipCodeMatcher();
-	});
-
 
 	function getFirebaseData() {
 		var fireBaseZipCodes = [];
