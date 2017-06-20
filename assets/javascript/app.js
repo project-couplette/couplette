@@ -1,10 +1,5 @@
-
 $(function(){
-	var currentPage = "dashboard";
-
 	// Initialize Firebase
-
-
 	var config = {
 		apiKey: "AIzaSyD1UCXTw5xWE5WehTfqh0AK-K2asMyf4S4",
 	    authDomain: "couplette-b67ce.firebaseapp.com",
@@ -14,9 +9,138 @@ $(function(){
 	    messagingSenderId: "934836634497"
 	};
 
+
+	// Jberry testing firebase
+	// var config = {
+	// 	apiKey: "AIzaSyDA-yVtB_lDDz6BiVDmC7Dm1BMACJdWFXQ",
+	// 	authDomain: "berrytendo.firebaseapp.com",
+	// 	databaseURL: "https://berrytendo.firebaseio.com",
+	// 	projectId: "berrytendo",
+	// 	storageBucket: "berrytendo.appspot.com",
+	// 	messagingSenderId: "328422244178"
+	// };
+
+
 	firebase.initializeApp(config);
 
-	var dataRef = firebase.database();
+	var dataRef = firebase.database(event);
+
+	// $(".loginEmailTest").on("click", function(){
+	// 	event.preventDefault();
+	// 	// firebase.auth().createUserWithEmailAndPassword($("#username").val(), $("#pass").val()).catch(function(error) {
+	// 	//   // Handle Errors here.
+	// 	//   var errorCode = error.code;
+	// 	//   var errorMessage = error.message;
+	// 	//   // ...
+
+	// 	// });
+
+	// 	firebase.auth().signInWithEmailAndPassword($("#username").val(), $("#pass").val()).catch(function(error) {
+	// 	  // Handle Errors here.
+	// 	  var errorCode = error.code;
+	// 	  var errorMessage = error.message;
+	// 	  // ...
+	// 	});
+	// })
+
+
+
+	// var myUserID;
+
+	// firebase.auth().onAuthStateChanged((user) => {
+	//   if (user) {
+	//     myUserID = user.uid;
+
+	//     dataRef.ref("Users/" + myUserID + "/events").on("child_added", function(snapshot){
+	//     	//adds events to user's dashboard
+	//     	var eventDiv = $("<div>").addClass("eventSection")
+	//     	.append("<h3>" + snapshot.val().eventName + "</h3>")
+	//     	.append("<h4>" + snapshot.val().eventDate + "</h4>")
+	//     	.append("<h4>" + snapshot.val().eventTime + "</h4>")
+	//     	.append("<h4>" + snapshot.val().eventAddress + "</h4>")
+	//     	.attr("data-UID", snapshot.key);
+	//     	$(".upcomingEventSection").append(eventDiv);
+	//     })
+
+	//     dataRef.ref("Users/" + myUserID).once("value").then(function(snapshot){
+	//     	//adds events to user's dashboard
+	//     	$(".myUsername").text(snapshot.val().coupleUsername);
+	//     	$(".myEmail").text(snapshot.val().coupleEmail);
+	//     	$(".myZip").text(snapshot.val().zipcode);
+	//     	$(".partner1Name").text(snapshot.val().firstName1 + " " + snapshot.val().lastName1);
+	//     	$(".partner1Age").text(snapshot.val().age1);
+	//     	$(".partner2Name").text(snapshot.val().firstName2 + " " + snapshot.val().lastName2);
+	//     	$(".partner2Age").text(snapshot.val().age2);
+	//     	$(".coupleDescription").text(snapshot.val().description);
+
+	//     	var interestsKeys = Object.keys(snapshot.val().interests)
+
+	//     	for (var i = 0; i < interestsKeys.length; i++){
+	//     		console.log(interestsKeys[i] + ": " + snapshot.val().interests[interestsKeys[i]]);
+	//     		console.log()
+	//     		$("#profile" + interestsKeys[i]).attr("data-selected", snapshot.val().interests[interestsKeys[i]])
+	//     		if (snapshot.val().interests[interestsKeys[i]] === true){
+	// 	  			$("#profile" + interestsKeys[i]).css("background", "#ffa9be")
+	// 				.css("border", "1px solid #c4536f")
+	// 				.attr("data-selected", true);
+	//     		}
+	//     	}
+	//     })
+	//   }
+	// });
+
+	$("body").on("click", ".eventSection", function(){
+		var eventModal = $("<div>").addClass("modals");
+		var modalContent = $("<div>").addClass("modalContent").append("<span class='close'>&times;</span>")
+		dataRef.ref("Users/" + myUserID + "/events/" + $(this).attr("data-UID")).once("value").then(function(snapshot){
+			modalContent.append("<h3>"+ snapshot.val().eventName + "</h3>")
+			.appendTo(eventModal);
+			eventModal.appendTo("body");
+			eventModal.fadeIn("fast", function(){
+				modalContent.show("clip", "fast");
+			})
+		})
+	
+	})
+
+	$("body").on("click", ".close", function(){
+		$(this).closest(".modalContent").hide("clip", "fast", function(){
+			$(this).closest(".modals").fadeOut("fast", function(){
+				$(this).closest(".modals").remove();
+			})
+		});
+
+		
+	})
+
+
+ 	// dataRef.ref("Users/8hzc7ctaLHf4g6tvYXT6aprss2K2").set({
+		// 	firstName1: "Jib",
+		// 	firstName2: "Val",
+		// 	lastName1: "B",
+		// 	lastName2: "B",
+		// 	coupleEmail: "jonpber@gmail.com",
+		// 	zipcode: 94612,
+		// 	description: "blah blah blah",
+		// 	Interests: {
+		// 		Arts: true,
+		// 		Dining: true,
+		// 		Films: true,
+		// 		Music: true,
+		// 		Gaming: true,
+		// 		Outdoors: false,
+		// 		Travel: true,
+		// 		sports: false,
+		// 	},
+		// 	age1: 29,
+		// 	age2: 30,
+		// 	coupleUsername: "theBerrys",
+		// 	comment: "comment",
+		// 	// dateAdded: firebase.database.ServerValue.TIMESTAMP
+		// });
+
+
+
 	// Initial Values
 	var firstName1 = "";
 	var firstName2 = "";
@@ -70,33 +194,34 @@ $(function(){
 		comment = $("#comment-input").val().trim();
 		coupleUsername = $("#couple-username").val().trim();
 		// Code for the push
-		// dataRef.ref().push({
-		// 	firstName1: firstName1,
-		// 	firstName2: firstName2,
-		// 	lastName1: lastName1,
-		// 	lastName2: lastName2,
-		// 	coupleEmail: coupleEmail,
-		// 	password: password,
-		// 	confirmPassword: confirmPassword,
-		// 	zipcode: 91384,
-		// 	description: description,
-		// 	Interests: {
-		// 		Arts: arts,
-		// 		Dining: dining,
-		// 		Films: films,
-		// 		Music: music,
-		// 		Gaming: gaming,
-		// 		Outdoors: outdoor,
-		// 		Travel: travel,
-		// 		other: other,
-		// 	},
-		// 	age: age,
-		// 	coupleUsername: coupleUsername,
-		// 	comment: comment,
-		// 	// dateAdded: firebase.database.ServerValue.TIMESTAMP
-		// });
+		dataRef.ref().push({
+			firstName1: firstName1,
+			firstName2: firstName2,
+			lastName1: lastName1,
+			lastName2: lastName2,
+			coupleEmail: coupleEmail,
+			password: password,
+			confirmPassword: confirmPassword,
+			zipcode: zipcode,
+			description: description,
+			Interests: {
+				Arts: arts,
+				Dining: dining,
+				Films: films,
+				Music: music,
+				Gaming: gaming,
+				Outdoors: outdoor,
+				Travel: travel,
+				other: other,
+			},
+			age: age,
+			coupleUsername: coupleUsername,
+			comment: comment,
+			// dateAdded: firebase.database.ServerValue.TIMESTAMP
+		});
 	});
 
+	
 	var testZip1 = 91384;
 	
 	var googleQueryURL = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + testZip1 + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
@@ -147,6 +272,10 @@ $(function(){
 		});
 	};
 
+
+	distanceMatrixCall();
+
+
 	distanceMatrixCall();
 
 	function isDistanceMatch(){
@@ -157,9 +286,15 @@ $(function(){
 				match= true;
 			}
 		}
+
 	};
 
 	isDistanceMatch();
+
+	}
+	isDistanceMatch();
+	
+
 
 	function zipCodeConverter() {
 		// getFirebaseData();
@@ -187,17 +322,24 @@ $(function(){
 			zipPromises.push(zip);
 		};
 
+
 		return Promise.all(zipPromises);
 
 	};
 
 	zipCodeConverter();
 
+
+		return Promise.all(zipPromises);
+
+	};
+
+
 	function getFirebaseData() {
 		var fireBaseZipCodes = [];
 		dataRef.ref().on("value", function(childSnapshot) {	
 	      	// Log everything that's coming out of snapshot
-	      	fireBaseZipCodes.push(childSnapshot.val().zipCode);
+		    fireBaseZipCodes.push(childSnapshot.val().zipCode);
 	      });
 		}
 
@@ -238,6 +380,7 @@ $(function(){
 	            }
 	        }
 	        else {
+	            // console.log(((criteria.ageLow <= userToComp.Age2 <= criteria.ageHigh)));
 	            if (!(criteria.ageLow <= userToComp.age1 && userToComp.age1 <= criteria.ageHigh)){
 	            match = false
 	            }
@@ -251,22 +394,14 @@ $(function(){
 	            match = false;
 	        }
 	    }
-
-	    // var = codeformyzyip;
-
-	    // Var distance = 
-
-	    // if (distance > criteria.distance){
-	    // 	match = false;
-	    // }
-
 	    if (match){
 	        return true;
 	    }
 	    else {
 	        return false;
 	    };
-	}
+	};
+
 	function collectUser(criteria){
 	    dataRef.ref("users").once("value", function(snapshot){
 	        var users = snapshot.val();
@@ -279,7 +414,7 @@ $(function(){
 	        }
 	        console.log(namesThatMatch);
 	    })
-	}
+	};
 	// collectUser(userCriteria);
 
 	//add calendar date pick functionality to event page date input field
@@ -303,224 +438,57 @@ $(function(){
 			$(".diningEvent").slideUp();
 			$(".filmEvent").slideUp();
 			$(".eventType").val(0);
-			$(".filmTimes").slideUp("fast");
-			$(".films").slideUp("fast");
-
 		}
 	})
 
 	//adding dynamic page updates based on event select dropdown option
 	$(".eventType").on("change", function(){
+
 		if ($(this).val() === "EventDefault"){
 			$(".filmEvent").slideUp("fast");
-			$(".cuisine").slideUp("fast");
 		}
 
 		else if ($(this).val() === "Film"){
-			var longitudeOfZip, latOfZip;
-			function initialize() {
-			var queryURLLongLat = "https://maps.googleapis.com/maps/api/geocode/json?address=" + $(".zipInp").val() + "&key=AIzaSyA52ADkbHa1-oZzlIZuCk6PAACaPFOFe2A";
-
-			$.ajax({
-				url: queryURLLongLat,
-				method: "GET"
-			}).done(function(response){
-				longitudeOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lat"]);
-				latOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lng"]);
-
-				var location = new google.maps.LatLng(longitudeOfZip, latOfZip);
-
-				var request = {
-					location: location,
-					radius: '1000',
-					query: 'cinema',
-				};
-
-				var service = new google.maps.places.PlacesService(document.createElement('div'));
-				service.textSearch(request, callback);
-
-				function callback(results, status) {
-					if (status == google.maps.places.PlacesServiceStatus.OK) {
-						$(".theaterDrop").empty().append("<option  value='Default'>")
-						for (var i = 0; i < results.length; i++) {
-							$(".theaterDrop").append("<option value=" + results[i].name + ">" + results[i].name + "</option");
-
-						}
-						$(".diningEvent").slideUp("fast", function(){
-						$(".filmEvent").slideDown("normal");
-					});
-					}
-				}
+			$(".diningEvent").slideUp("fast", function(){
+				$(".filmEvent").slideDown();
 			});
-	
-		}
-		initialize();
-	}
-		else if ($(this).val() === "Dining"){
-
-			$(".filmEvent").slideUp("fast", function(){
-				$(".diningType").slideDown("normal");
-				});
-		}
-	});
-
-	$(".cuisine").on("change", function(){
-		if ($(this).val() === "EventDefault"){
-
-		}
-		var longitudeOfZip, latOfZip;
-		function initialize() {
-		var queryURLLongLat = "https://maps.googleapis.com/maps/api/geocode/json?address=" + $(".zipInp").val() + "&key=AIzaSyA52ADkbHa1-oZzlIZuCk6PAACaPFOFe2A";
-
-		$.ajax({
-			url: queryURLLongLat,
-			method: "GET"
-		}).done(function(response){
-			longitudeOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lat"]);
-			latOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lng"]);
-
-			var location = new google.maps.LatLng(longitudeOfZip, latOfZip);
-
-			var request = {
-				location: location,
-				radius: '1000',
-				query: $(".cuisine").val() +  ' restaurant',
-			};
-
-			var service = new google.maps.places.PlacesService(document.createElement('div'));
-			service.textSearch(request, callback);
-
-			function callback(results, status) {
-				if (status == google.maps.places.PlacesServiceStatus.OK) {
-					$(".diningOptionsDrop").empty().append("<option  value='Default'>")
-					for (var i = 0; i < results.length; i++) {
-						var diningOption = $("<option>").attr("value", results[i].name).text(results[i].name);
-						$(".diningOptionsDrop").append(diningOption);
-						$(".diningEvent").slideDown("normal");
-					}					
-				}
-			}
-		});
-
-		}
-
-		initialize();
-	});
-
-	$(".filmEvent").on("change", function(){
-		if ($(this).val() === "EventDefault"){
-			$(".films").slideUp("fast");
-		}
-
-		else {
-			$(".films").slideDown("normal");
-		}
-
-	});
-
-	$(".films").on("change", function(){
-		if ($(this).val() === "EventDefault"){
-			$(".filmTimes").slideUp("fast");
-		}
-
-		else {
-			$(".filmTimes").slideDown("normal");
-		}
-
-	});
-
-	$(".filmTimes").on("change", function(){
-		if ($(this).val() === "EventDefault"){
-			$(".friendFindSubmit").slideUp("fast");
-		}
-
-		else {
-			$(".friendFindSubmit").slideDown("normal");
 			
 		}
 
+		else if ($(this).val() === "Dining"){
+			$(".filmEvent").slideUp("fast", function(){
+				$(".diningEvent").slideDown();
+			});
+			
+		};
 	});
 
-	$(".interest").on("click", function(){
-		if ($(this).attr("data-selected") === "false"){
-			$(this).css("background", "#ffa9be");
-			$(this).css("border", "1px solid #c4536f");
-			$(this).attr("data-selected", "true");
+});
+
+
+	$(".friendFindSubmit").on("click", function(){
+		var distance = $(".distanceCriteriaSelect").val();
+		var age = $(".ageCriteriaSelect").val();
+		var gender = $(".genderCriteriaSelect").val().toLowerCase();
+		var interests = $(".interestsSelect").children().children();
+		var interestsObj = {}
+
+		for (var i = 0; i < interests.length; i++){
+			interestsObj[$(interests[i]).text().toLowerCase()] = $(interests[i]).attr("data-selected");
 		}
 
-		else {
-			$(this).css("background", "white");
-			$(this).css("border", "1px solid darkgrey");
-			$(this).attr("data-selected", "false");
-		}
-	})
-
-	function resetFields(){
-		$("input").val("");
-		$(".eventTypeBlock").hide();
-		$(".eventZipcode").hide();
-		$(".filmEvent").hide();
-		$(".films").hide();
-		$(".filmTimes").hide();
-		$(".diningEvent").hide();
-		$(".diningType").hide();
-	}
-
-	$("body").on("click", ".eventButton", function(){
-		$(".dashboardBlock").hide("clip", 400, function(){
-			$(".planEventBlock").show("drop", {direction: "left"}, 500);
-			currentPage = "event";
-		});
-	})
-
-	$("body").on("click", ".findCoupleButton", function(){
-		$(".dashboardBlock").hide("clip", 400, function(){
-			$(".findCoupleBlock").show("drop", {direction: "right"}, 500);
-			currentPage = "couple";
-		});
-	})
-
-	$("body").on("click", ".navbar-brand", function(){
-		if ("currentPage" !== "dashboard"){
-			$(".findCoupleBlock").hide("clip", 400);
-			$(".planEventBlock").hide("clip", 400);
-			$(".profileBlock").hide("clip", 400);
-			$(".chatBlock").hide("clip", 400);
-			resetFields();
-
-			setTimeout(function(){
-				$(".dashboardBlock").show("drop", {direction: "down"}, 400);
-				currentPage = "dashboard";
-			}, 500);
+		var searchCriteria = {
+			ageLow: age[0] + age[1],
+			ageHigh: age[2] + age[3],
+			gender: gender,
+			distance: distance,
+			interest: interestsObj
 		}
 
-	});
+		console.log(searchCriteria);
+		
+	})
 
-	$("body").on("click", ".profileNavButton", function(){
-		$(".findCoupleBlock").hide("clip", 400);
-		$(".planEventBlock").hide("clip", 400);
-		$(".dashboardBlock").hide("clip", 400);
-		$(".chatBlock").hide("clip", 400);
-		resetFields();
-
-		setTimeout(function(){
-			$(".profileBlock").show("drop", {direction: "down"}, 400 );
-			currentPage = "profile";
-		}, 500);
-	});
-
-	$("body").on("click", ".mailButton", function(){
-		$(".findCoupleBlock").hide("clip", 400);
-		$(".planEventBlock").hide("clip", 400);
-		$(".dashboardBlock").hide("clip", 400);
-		$(".profileBlock").hide("clip", 400);
-		resetFields();
-
-		setTimeout(function(){
-			$(".chatBlock").show("drop", {direction: "down"}, 400 );
-			currentPage = "mail";
-		}, 500);
-	});
 })
 
 

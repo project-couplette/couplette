@@ -211,7 +211,7 @@ label {
 	font-weight: 100;
 }
 
-.friendFindSubmit, .saveChanges {
+.friendFindSubmit, .saveChanges, .eventSubmit {
 	background: #ff0040;
 	font-size: 25px;
 	color: white;
@@ -258,9 +258,9 @@ label {
 	padding: 5px;
 }
 
-.filmEvent, .friendFindSubmit, .diningEvent, .eventZipcode, .eventTypeBlock,
+.filmEvent, .diningEvent, .eventZipcode, .eventTypeBlock,
 .diningTimes, .films, .filmTimes, .planEventBlock, .findCoupleBlock, .profileBlock, .chatBlock,
-.diningType {
+.diningType, .eventSubmit {
 	display: none;
 }
 
@@ -368,6 +368,29 @@ textarea {
 	padding-right: 0;
 }
 
+.modals {
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
+	left: 0;
+	display: none;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modalContent {
+	background-color: #fefefe;
+	margin: 30vh auto;
+	padding: 20px;
+	border: 1px solid #888;
+    width: 600px;
+    border-radius: 15px;
+	display: none;
+}
 
 
 @media screen and (max-width: 991px){
