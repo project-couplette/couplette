@@ -271,7 +271,13 @@ $(function(){
 				
 		});
 	};
+
+
 	distanceMatrixCall();
+
+
+	distanceMatrixCall();
+
 	function isDistanceMatch(){
 		for (var i=0; i<distanceArray.length; i++) {
 			if distanceArray[i] > searchCriteria.distance {
@@ -280,9 +286,15 @@ $(function(){
 				match= true;
 			}
 		}
+
+	};
+
+	isDistanceMatch();
+
 	}
 	isDistanceMatch();
 	
+
 
 	function zipCodeConverter() {
 		// getFirebaseData();
@@ -310,9 +322,18 @@ $(function(){
 			zipPromises.push(zip);
 		};
 
+
 		return Promise.all(zipPromises);
 
 	};
+
+	zipCodeConverter();
+
+
+		return Promise.all(zipPromises);
+
+	};
+
 
 	function getFirebaseData() {
 		var fireBaseZipCodes = [];
