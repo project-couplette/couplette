@@ -64,6 +64,7 @@ $(function(){
 
 	//     dataRef.ref("Users/" + myUserID).once("value").then(function(snapshot){
 	//     	//adds events to user's dashboard
+	//     	ohSnap('Welcome back, ' + snapshot.val().coupleUsername, {color: 'red'});
 	//     	$(".myUsername").text(snapshot.val().coupleUsername);
 	//     	$(".myEmail").text(snapshot.val().coupleEmail);
 	//     	$(".myZip").text(snapshot.val().zipcode);
@@ -92,8 +93,10 @@ $(function(){
 	$("body").on("click", ".eventSection", function(){
 		var eventModal = $("<div>").addClass("modals");
 		var modalContent = $("<div>").addClass("modalContent").append("<span class='close'>&times;</span>")
-		dataRef.ref("Users/" + myUserID + "/events/" + $(this).attr("data-UID")).once("value").then(function(snapshot){
+		var uid = $(this).attr("data-uid");
+		dataRef.ref("Users/" + myUserID + "/events/" + uid).once("value").then(function(snapshot){
 			modalContent.append("<h3>"+ snapshot.val().eventName + "</h3>")
+			.append("<button class='buttonStyle removeButton' data-eventID='" + uid + "'>Remove Event</button>")
 			.appendTo(eventModal);
 			eventModal.appendTo("body");
 			eventModal.fadeIn("fast", function(){
@@ -109,8 +112,17 @@ $(function(){
 				$(this).closest(".modals").remove();
 			})
 		});
+	})
 
-		
+	$("body").on("click", ".removeButton", function(){
+		// dataRef.ref("Users/" + myUserID + "/events/" + $(this).attr("data-eventID")).remove();
+		// $(".upcomingEventSection").find("[data-uid='" +  $(this).attr("data-eventID") + "']").remove()
+		ohSnap('This event has been deleted!', {color: 'red'});
+		// $(this).closest(".modalContent").hide("clip", "fast", function(){
+		// 	$(this).closest(".modals").fadeOut("fast", function(){
+		// 		$(this).closest(".modals").remove();
+		// 	})
+		// });
 	})
 
 
@@ -280,7 +292,7 @@ $(function(){
 
 	function isDistanceMatch(){
 		for (var i=0; i<distanceArray.length; i++) {
-			if distanceArray[i] > searchCriteria.distance {
+			if (distanceArray[i] > searchCriteria.distance) {
 				match = false;
 			} else {
 				match= true;
@@ -291,7 +303,6 @@ $(function(){
 
 	isDistanceMatch();
 
-	}
 	isDistanceMatch();
 	
 
@@ -330,9 +341,9 @@ $(function(){
 	zipCodeConverter();
 
 
-		return Promise.all(zipPromises);
+	// 	return Promise.all(zipPromises);
 
-	};
+	// };
 
 
 	function getFirebaseData() {
