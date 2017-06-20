@@ -84,14 +84,42 @@ margin: 0 auto;
 
 /******sign up page ***********************/
 #drop {
-	border:2px dotted pink;
-	padding:20px;
+	/*background-color: #eee;
+	border:2px dotted pink;*/
+	padding:10px;
 	margin-bottom: 20px;
-	width: 450px;
-	height: 100px;
-	color:#bdc3c7;
+	width: 200px;
+	height:200px;
+	/*color:#bdc3c7;*/
+}
+#drop-2 {
+	/*background-color: #eee;
+	border:2px dotted pink;
+	color:#bdc3c7;*/
+	padding:10px;
+	margin-bottom: 20px;
+	width: 200px;
+	height:200px;
+}
+.comment-input {
+	width: auto;
+	margin-left: 10px;
+	padding-left: 5px;
+	border:2px dotted pink;
+
+}
+.sign-image {
+	width: 500px;
+	height:150px;
+	margin: 0 auto;
+	border-radius: 15px;
+	padding-top: 10px
+	padding-bottom:10px;
 }
 
+.p2 {
+	float: right;
+}
 /******* add a box to the image file**********/
 
 
