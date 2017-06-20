@@ -33,6 +33,12 @@ $(function(){
 	var age = 0;
 	var comment = "";
 	var coupleUsername = "";
+	var cityArray = [];
+	var stateArray = [];
+	var latArray = [];
+	var lngarray = [];
+	var distanceArray = [];
+	var potentialMatch = [];
 
 	$("#button").on("click", function(event) {
 		event.preventDefault();
@@ -84,16 +90,15 @@ $(function(){
 			// dateAdded: firebase.database.ServerValue.TIMESTAMP
 		});
 	});
+
 	
 	var testZip1 = 91384;
-	var cityArray = [];
-	var stateArray = [];
-	var latArray = [];
-	var lngarray = [];
+	
 	var googleQueryURL = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + testZip1 + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
 
 	//Google Maps API Call
 	function distanceMatrixCall() {
+		
 		$.ajax({
 		  crossDomain: true,
 		  url: googleQueryURL,
@@ -104,47 +109,61 @@ $(function(){
 			var testLatitude = parseInt(response.results[0].geometry.location.lat);
 			var testLongitude = parseInt(response.results[0].geometry.location.lng);
 			console.log(cityArray);
-			zipCodeConverter();
-			// zipCodeMatcher();
-			// function zipCodeMatcher(){
-			console.log("working");
-			for (var j=0; j < cityArray.length; j++) {
-				console.log("working");
-				var origin1 = new google.maps.LatLng(testLatitude, testLongitude);
-				var origin2 = "" + city + "," + "" + state;
-				var destinationA = "" + cityArray[j] + "," + "" + stateArray[j];
-				var destinationB = new google.maps.LatLng(lngarray[j], latArray[]);
-				var service = new google.maps.DistanceMatrixService();
-				console.log(origin1, origin2, destinationB, destinationA);
-				service.getDistanceMatrix(
-				  {
-				  	origins: [origin1, origin2],
-	    			destinations: [destinationA, destinationB],
-				    travelMode: 'DRIVING',
-				    // s
-				  }, callback);
+			
+			zipCodeConverter()
+			  .then(function() {
+				// zipCodeMatcher();
+				// function zipCodeMatcher()
+				for (var j=0; j < cityArray.length; j++) {
+					console.log(cityArray[j]);
+					console.log("working");
+					var origin1 = new google.maps.LatLng(testLatitude, testLongitude);
+					var origin2 = "" + city + "," + "" + state;
+					var destinationA = "" + cityArray[j] + "," + "" + stateArray[j];
+					var destinationB = new google.maps.LatLng(lngarray[j], latArray[j]);
+					var service = new google.maps.DistanceMatrixService();
+					console.log(origin1, origin2, destinationB, destinationA);
+					service.getDistanceMatrix(
+					  {
+					  	origins: [origin1, origin2],
+		    			destinations: [destinationA, destinationB],
+					    travelMode: 'DRIVING',
+					    // s
+					  }, callback);
 
-				function callback(response, status) {
-					console.log(response, status);
-					// distance.push(response);
-				// }
-				};
-			};
-			// };
+					function callback(response, status) {
+						console.log(response, status);
+						var num = response.rows[0].elements[0].distance.text.replace(/[^0-9]/g,'');
+						distance.push(parseInt(num));
+					};
+				}
+			});
+				
 		});
 	};
 	distanceMatrixCall();
+	function isDistanceMatch(){
+		for (var i=0; i<distanceArray.length; i++) {
+			if distanceArray[i] > searchCriteria.distance {
+				match = false;
+			} else {
+				match= true;
+			}
+		}
+	}
+	isDistanceMatch();
 	
 
 	function zipCodeConverter() {
 		// getFirebaseData();
-		var testZipCodeArray = [95050, 91350, 91390];
+		var testZipCodeArray = [95050, 91350, 94110];
+		var zipPromises = [];
 		
 		for (var i=0; i<testZipCodeArray.length; i++) {
 			var googleQueryURLLoop = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + testZipCodeArray[i] + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
-			// sconsole.log(googleQueryURLLoop)
-			//Google Maps API Call
-			$.ajax({
+		// sconsole.log(googleQueryURLLoop)
+		//Google Maps API Call
+			zip = $.ajax({
 			  crossDomain: true,
 			  url: googleQueryURLLoop,
 			  method: "GET"
@@ -158,7 +177,11 @@ $(function(){
 				latArray.push(testLatitudeConverted);
 				lngarray.push(testLongitudeConverted);
 			});
+			zipPromises.push(zip);
 		};
+
+		return Promise.all(zipPromises);
+
 	};
 
 	function getFirebaseData() {
