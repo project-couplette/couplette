@@ -459,54 +459,54 @@ $(function(){
 				longitudeOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lat"]);
 				latOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lng"]);
 
-				console.log(latOfZip + "," + longitudeOfZip);
+				// console.log(latOfZip + "," + longitudeOfZip);
 
-				$.ajax({
-					url: "https://api.cinepass.de/v4/cinemas/",
-					type: "GET",
-					data: {
-					// "location": latOfZip + "," + longitudeOfZip,
-					"location": "-122.26,37.81",
-					"distance": "500"
-					},
-					headers: {
-					"X-API-Key": "cZXFWHhuyCzLTfxJmLt5BHpNNNwXDdYW",
-					},
-				})
-				.done(function(data, textStatus, jqXHR) {
-					console.log("HTTP Request Succeeded: " + jqXHR.status);
-					console.log(data);
-				})
-				.fail(function(jqXHR, textStatus, errorThrown) {
-				console.log("HTTP Request Failed" + errorThrown);
-				})
-				.always(function() {
-				/* ... */
-				});
+				// $.ajax({
+				// 	url: "https://api.cinepass.de/v4/cinemas/",
+				// 	type: "GET",
+				// 	data: {
+				// 	// "location": latOfZip + "," + longitudeOfZip,
+				// 	"location": "-122.26,37.81",
+				// 	"distance": "500"
+				// 	},
+				// 	headers: {
+				// 	"X-API-Key": "cZXFWHhuyCzLTfxJmLt5BHpNNNwXDdYW",
+				// 	},
+				// })
+				// .done(function(data, textStatus, jqXHR) {
+				// 	console.log("HTTP Request Succeeded: " + jqXHR.status);
+				// 	console.log(data);
+				// })
+				// .fail(function(jqXHR, textStatus, errorThrown) {
+				// console.log("HTTP Request Failed" + errorThrown);
+				// })
+				// .always(function() {
+				// /* ... */
+				// });
 
-				// var location = new google.maps.LatLng(longitudeOfZip, latOfZip);
+				var location = new google.maps.LatLng(longitudeOfZip, latOfZip);
 
-				// var request = {
-				// 	location: location,
-				// 	radius: '1000',
-				// 	query: 'cinema',
-				// };
+				var request = {
+					location: location,
+					radius: '1000',
+					query: 'cinema',
+				};
 
-				// var service = new google.maps.places.PlacesService(document.createElement('div'));
-				// service.textSearch(request, callback);
+				var service = new google.maps.places.PlacesService(document.createElement('div'));
+				service.textSearch(request, callback);
 
-				// function callback(results, status) {
-				// 	if (status == google.maps.places.PlacesServiceStatus.OK) {
-				// 		$(".theaterDrop").empty().append("<option  value='Default'>")
-				// 		for (var i = 0; i < results.length; i++) {
-				// 			$(".theaterDrop").append("<option value=" + results[i].name + ">" + results[i].name + "</option");
+				function callback(results, status) {
+					if (status == google.maps.places.PlacesServiceStatus.OK) {
+						$(".theaterDrop").empty().append("<option  value='Default'>")
+						for (var i = 0; i < results.length; i++) {
+							$(".theaterDrop").append("<option value=" + results[i].name + ">" + results[i].name + "</option");
 
-				// 		}
-				// 		$(".diningEvent").slideUp("fast", function(){
-				// 		$(".filmEvent").slideDown("normal");
-				// 	});
-				// 	}
-				// }
+						}
+						$(".diningEvent").slideUp("fast", function(){
+						$(".filmEvent").slideDown("normal");
+					});
+					}
+				}
 			});
 	
 		}

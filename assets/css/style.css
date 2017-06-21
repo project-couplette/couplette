@@ -269,7 +269,7 @@ label {
 
 .filmEvent, .diningEvent, .eventZipcode, .eventTypeBlock,
 .diningTimes, .films, .filmTimes, .planEventBlock, .findCoupleBlock, .profileBlock, .chatBlock,
-.diningType, .eventSubmit {
+.diningType, .eventSubmit, .meetingTimes {
 	display: none;
 }
 
