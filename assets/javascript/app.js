@@ -50,23 +50,22 @@ $(function(){
 	    	//update profile page to latest version of profile
 	    	$(".myUsername").text(snapshot.val().coupleUsername);
 	    	$(".myEmail").text(snapshot.val().coupleEmail);
-	    	$(".myZip").html(94612);
-	    	// $(".partner1Name").attr("value", snapshot.val().firstName1 + " " + snapshot.val().lastName1);
-	    	// $(".partner1Age").text(snapshot.val().age1);
-	    	// $(".partner2Name").val(snapshot.val().firstName2 + " " + snapshot.val().lastName2);
-	    	$(".partner2Age").text(snapshot.val().age2);
+	    	$(".myZip").val("94612");
+	    	$(".partner1FName").val(snapshot.val().firstName1);
+	    	$(".partner1LName").val(snapshot.val().lastName1);
+	    	$(".partner1Age").val(snapshot.val().age1);
+	    	$(".partner2FName").val(snapshot.val().firstName2);
+	    	$(".partner2LName").val(snapshot.val().lastName2);
+	    	$(".partner2Age").val(snapshot.val().age2);
 	    	$(".coupleDescription").text(snapshot.val().description);
 
 	    	var interestsKeys = Object.keys(snapshot.val().interests)
 
 	    	for (var i = 0; i < interestsKeys.length; i++){
-	    		console.log(interestsKeys[i] + ": " + snapshot.val().interests[interestsKeys[i]]);
-	    		console.log()
 	    		$("#profile" + interestsKeys[i]).attr("data-selected", snapshot.val().interests[interestsKeys[i]])
-	    		if (snapshot.val().interests[interestsKeys[i]] === true){
+	    		if ($("#profile" + interestsKeys[i]).attr("data-selected") === "true"){
 		  			$("#profile" + interestsKeys[i]).css("background", "#ffa9be")
 					.css("border", "1px solid #c4536f")
-					.attr("data-selected", true);
 	    		}
 	    	}
 	    })
@@ -388,6 +387,7 @@ $(function(){
 	            match = false;
 	        }
 	    }
+
 	    if (match){
 	        return true;
 	    }
@@ -695,7 +695,6 @@ $(function(){
 		$(".planEventBlock").hide("clip", 400);
 		$(".dashboardBlock").hide("clip", 400);
 		$(".chatBlock").hide("clip", 400);
-		resetFields();
 
 		setTimeout(function(){
 			$(".profileBlock").show("drop", {direction: "down"}, 400 );
@@ -736,6 +735,34 @@ $(function(){
 		}
 
 		console.log(searchCriteria);
+	})
+
+	$("body").on("click", ".saveChanges", function(){
+		dataRef.ref("Users/" + myUserID).once("value").then(function(snapshot){
+
+			var interests = $(".profileInterests").children().children();
+			var interestsObj = {}
+
+			for (var i = 0; i < interests.length; i++){
+				interestsObj[$(interests[i]).text().toLowerCase()] = $(interests[i]).attr("data-selected");
+			}
+
+			var updateProfileInfo = {
+				coupleUsername: snapshot.val().coupleUsername,
+				coupleEmail: snapshot.val().coupleEmail,
+				age1: $(".partner1Age").val(),
+				age2: $(".partner2Age").val(),
+				description: $(".coupleDescription").val(),
+				firstName1: $(".partner1FName").val(),
+				lastName1: $(".partner1LName").val(),
+				firstName2: $(".partner2FName").val(),
+				lastName2: $(".partner2LName").val(),
+				interests: interestsObj,
+				zipcode: $(".myZip").val()
+			}
+			dataRef.ref("Users/" + myUserID).set(updateProfileInfo);
+		})
+		
 	})
 
 })
