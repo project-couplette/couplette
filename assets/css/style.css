@@ -306,7 +306,7 @@ label {
 }
 
 textarea {
-	width: 100%;
+	width: 50%;
 	border-radius: 15px;
 	height: 150px;
 	padding: 10px;
@@ -438,6 +438,14 @@ textarea {
 	background-color: #E9573F;
 }
 
+.input-line {
+ 	margin-left: 175px;
+    margin-right: auto;
+    text-align: center;
+    padding-left: 20px;
+    width: 250px;
+}
+}
 
 @media screen and (max-width: 991px){
 	.profileRow {
