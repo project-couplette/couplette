@@ -18,7 +18,6 @@ h2 {
 	font-family: 'Passion One', cursive;
 }
 /**************** main pages ************** */	
-
 .wrap-login {
 	margin-top: 40px;
 	margin-bottom: 30px;
@@ -27,18 +26,32 @@ h2 {
 	padding: 50px;
 	padding-right: 50px;
 	padding-bottom: 50px;
-	background-color: #ffffff;
+	background-color: rgba(246, 168, 94, 0.31);
 	border: solid 1px #d0d0d0;
 	-webkit-box-shadow: 0px -1px 20px -4px rgba(0,0,0,0.72);
 	-moz-box-shadow: 0px -1px 20px -4px rgba(0,0,0,0.72);
 	box-shadow: 0px -1px 20px -4px rgba(0,0,0,0.72);
 	border-radius: 20px;
 }
-.text-center {
-	margin-top:10px;
-
+.wrap-reset {
+	margin-top: 40px;
+	margin-bottom: 30px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 50px;
+	padding-right: 50px;
+	padding-bottom: 50px;
+	background-color: rgba(246, 168, 94, 0.31);
+	border: solid 1px #d0d0d0;
+	-webkit-box-shadow: 0px -1px 20px -4px rgba(0,0,0,0.72);
+	-moz-box-shadow: 0px -1px 20px -4px rgba(0,0,0,0.72);
+	box-shadow: 0px -1px 20px -4px rgba(0,0,0,0.72);
+	border-radius: 20px;
 }
-
+a {
+	color:#ff0040;
+}
+ 
 .btn {
 	margin-top: 10px;
 	float:right;
@@ -62,25 +75,62 @@ margin: 0 auto;
     border: none;
     border-radius: 4px;
     color: white;
+    font-weight: bold;
+    font-size: 18px;
     width: 100%;
     height: 30px;
 }
 
 /******sign up page ***********************/
 #drop {
-	border:2px dotted pink;
-	padding:20px;
+	/*background-color: #eee;
+	border:2px dotted pink;*/
+	padding:10px;
 	margin-bottom: 20px;
-	width: 450px;
-	height: 100px;
-	color:#bdc3c7;
+	width: 200px;
+	height:200px;
+	/*color:#bdc3c7;*/
+}
+#drop-2 {
+	/*background-color: #eee;
+	border:2px dotted pink;
+	color:#bdc3c7;*/
+	padding:10px;
+	margin-bottom: 20px;
+	width: 200px;
+	height:200px;
+}
+.comment-input {
+	width: auto;
+	margin-left: 10px;
+	padding-left: 5px;
+	border:2px dotted pink;
+
+}
+.sign-image {
+	width: 500px;
+	height:150px;
+	margin: 0 auto;
+	border-radius: 15px;
+	padding-top: 10px
+	padding-bottom:10px;
 }
 
+<<<<<<< HEAD
+.p2 {
+	float: right;
+}
 /******* add a box to the image file**********/
+
 
 h3 {
 	font-size: 24px;
+	margin-bottom: 15px;
+=======
+h3 {
+	font-size: 24px;
 	margin-bottom: 0px;
+>>>>>>> upstream/master
 	margin-top: 15px;
 	color: #6c6c6c;
 }

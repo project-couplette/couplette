@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
-	<title>Couplette Dashboard--- Index-2</title>
+	<title>Couplette</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -29,35 +29,39 @@
 <!-- my code -->
 
 	<div class="container">
-		<div class="col-xs-12">
+		<div class="col-md-offset-3 col-sm-6 text-center col-sm-6">
 			<div class="wrap-login">
-				<h3 class="text-center"> Member Login </h3>
+				<p class="text-right"><a href="signUp.html">Create account</a> </p>
+				<h3 class="text-center"> Member Login</h3>
 				<form>
-					<div class="form-group">
+					
+					<div class="form-group input-group">
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-user"></span>
+						</span>
 						<input type="text" class="form-control" id="username" required placeholder="Username">
-					</div> 
-					
-					<div class="form-group">
+					</div>
+							
+					<div class="form-group input-group">
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-lock"></span>
+						</span>
 						<input type="password" class="form-control" id="pass" placeholder="Password" required >
-					</div> <!-- end of form-group -->
-					   			 
-					<div class="checkbox">
-						<label>
-							<input type="checkbox"> Remember me
-						</label>
+					</div>
+								
+					<div class="checkbox" align="left">
+					    <label>
+					      <input type="checkbox"> Remember me
+					    </label>
 					</div> <!-- end of checkbox -->
+						
 					
-					<div class="row">
-						<p class="text-center">
-						<a href="signUp.html">Create account</a> <br>
-						<a href="recovery.html"> Forgot Password?</a></p>
-					</div><!-- end of class row -->
-
 					<button type="submit" class="main-btn">Log In</button> 
-			</div>
-			
-		</div> <!-- end of wrap-->
-		</form>	
-	</div> <!-- end of container-->
+					<p class="text-center">
+						<a href="recovery.html"> Forgot Password?</a>
+					</p>
+				</form>
+			</div> <!-- end of wrap-->
+		</div> <!-- end of container-->
 </body>
 </html>
