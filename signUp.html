@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+
   <title>Test-Sign UP</title>
+
+  <title>Sign UP</title>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,9 +13,16 @@
   <!-- Optional theme -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
+
   <link href="https://fonts.googleapis.com/css?family=Archivo+Narrow|Passion+One" rel="stylesheet">
 
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+ 
+  <link href="https://fonts.googleapis.com/css?family=Archivo+Narrow|Passion+One" rel="stylesheet">
+
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css"> 
+
 </head>
 <body>
 <nav class="navbar navbar-inverse">
@@ -38,6 +49,7 @@
   </nav>
 <!-- my code -->
   <div class="container mainContent">
+
     <form>
     <div class="row">
       <div class="col-xs-6 col-sm-6 col-md-6">
@@ -187,11 +199,127 @@
 
   </div><!--  end of main content -->
 
+
+    <div class="wrap-signUp">
+    </div> <!--end of wrap-signUp -->
+      <div id="sign-image" class="text-center">
+      <img src="assets/images/friendship-1.jpg" alt="Friendship Image" />
+    </div>
+
+    <div class="row text-center">
+      <h3> Sign Up</h3> 
+    </div>
+      
+    <div class="col-xs-6 col-xs-offset-3">
+      <form class="form-horizontal">
+        <div class="row">
+          <h3>Partner-1 Details</h3>
+        </div><!-- end of class row5 -->
+  
+        <div class="form-group">
+          <label for="username" class="col-sm-2 control-label">Username</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="username" placeholder="Username" required>
+          </div><!-- end col-->
+        </div> <!-- end of form-group -->
+
+        <div class="form-group">
+          <label for="email-address" class="col-sm-2 control-label">Email:</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="email-address" placeholder="Email" required>
+          </div><!-- end col-->
+        </div> <!-- end of form-group -->
+        
+        <div class="form-group">
+          <label for="pass" class="col-sm-2 control-label">Password</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="pass" placeholder="Password">
+          </div><!-- end col-->
+        </div> <!-- end of form-group -->
+
+        <div class="form-group">
+         <label for="confirmpass" class="col-sm-2 control-label">Confirm Password</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="confirmpass" placeholder="Confirm  Password">
+          </div><!-- end col-->
+        </div> <!-- end of form-group -->
+
+        <div class="form-group">
+          <label for="partner1-first" class="col-sm-2 control-label">Name:</label>
+          <div class="col-sm-10">  
+            <input type="text" class="form-control" id="partner1-first" placeholder="Partner-1 Firstname">
+          </div>
+        </div> <!-- end form Group --> 
+
+        <div class="form-group">
+          <label for="partner1-last" class="col-sm-2 control-label">Lastname:</label>
+          <div class="col-sm-10">   
+            <input type="text" class="form-control" id="partner1-last" placeholder="Partner-1 Lastname">
+          </div>
+        </div> <!-- end form group -->     
+
+        <div class="form-group">
+         <label for="city-input" class="col-sm-2 control-label">City</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="city-input" placeholder="City">
+          </div><!-- end col-->
+        </div> <!-- end of form-group -->
+        
+        <div class="form-group">
+         <label for="state-input" class="col-sm-2 control-label">State</label>
+          <div class="col-sm-2">
+           <input type="text" class="form-control" id="state-input" placeholder="State">
+          </div><!-- end col-->
+        </div> <!-- end of form-group -->
+    
+        <div class="row">
+          <h3>Partner-2 Details</h3>
+        </div><!-- end of class row5 -->
+       
+        <div class="form-group">
+          <label for="partner2-first" class="col-sm-2 control-label">Name:</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="partner2-first" placeholder="Partner-2 Firstname">
+          </div><!-- end col-->
+        </div> <!-- end of form-group -->
+
+        <div class="form-group">
+          <label for="partner1-last" class="col-sm-2 control-label">Last:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="partner2-last" placeholder="Partner-2 Lastname">
+            </div><!-- end col-->
+        </div> <!-- end of form-group -->
+                  
+       <div class="form-group">
+          <label for="" class="col-sm-2 control-label">Upload Image </label>
+          <div class="col-sm-10">
+           <!--  <input type="file" accept="image/*" 
+            onchange="document.getElementById('upload-img').src = window.URL.createObjectURL(this.files[0])">
+            <div id="drop-2"  > 
+              <img id="upload-img" width="360" height="200"> -->
+              <input type="text" name="" class="imgURLSubmit inputField">
+            </div>
+          </div><!-- end col-->
+        </div> <!-- end of form-group -->
+            
+          <div>
+            <label for="comment" class="col-sm-2 control-label">Description </label>
+            <textarea type="text" name="" cols="55" rows=""  class="comment-input">Text Input</textarea>
+         </div>
+        <button type="submit" class="btn btn-primary signUpButton">Join Us</button>
+       </form>
+    </div>
+ 
+
+  </div><!--  end of main content -->             
+  
+
   <!-- script -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
   <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+
   <script src="assets/javascript/signup.js"></script>
   <script type="text/javascript">
   $(document).on('ready', function() {
@@ -203,3 +331,14 @@
   </script>
 </body>
 </html>
+
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA52ADkbHa1-oZzlIZuCk6PAACaPFOFe2A&libraries=places"></script>
+
+  <script src="assets/javascript/ohsnap.js"></script>
+  <script src="assets/javascript/moment.js"></script>
+  <script src="assets/javascript/jquery-ui.js"></script>
+  <script src="assets/javascript/app.js"></script>
+  
+</body>
+</html>
+

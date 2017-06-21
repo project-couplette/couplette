@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Couplette Profile</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<link href="https://fonts.googleapis.com/css?family=Archivo+Narrow|Passion+One" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="assets/css/jquery-ui.min.css">	
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">	
+</head>
+<body>
+	<nav class="navbar navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="dashboard.html">Couplette</a>
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavBar" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+
+			<div class="collapse navbar-collapse" id="myNavBar">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="chatpage.html" class="envelope hidden-xs"><span class="glyphicon glyphicon-envelope"></span></a></li>
+					<li><a href="chatpage.html" class="hidden-md hidden-sm hidden-lg">Mail</a></li>
+					<li><a href="profile.html">Profile</a></li>
+					<li><a href="#">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container mainContent">
+		<div class="row profileRow">
+			<div class="col-xs-12 text-center">
+				<h2>Profile</h2>
+			</div>
+
+			<div class="col-xs-12 text-center">
+				<img class="profilePic" src="assets/images/tempCup1.jpeg">
+			</div>
+
+			<div class="col-xs-12 text-center profileBubbles">
+				<p>Username: testName</p>
+			</div>
+
+			<div class="col-xs-12 text-center profileBubbles">
+				<p>Email: test@gmail.com</p>
+			</div>
+
+			<div class="col-xs-12 text-center profileBubbles">
+				<p>Address:</p>
+				<p>123 Street</p>
+				<p>San Francisco</p>
+			</div>
+
+			<div class="col-xs-6 text-center profileBubbles">
+				<h3>Partner 1</h3>
+				<p>Jon Smith</p>
+				<p>25</p>
+			</div>
+
+			<div class="col-xs-6 text-center profileBubbles">
+				<h3>Partner 2</h3>
+				<p>Jane Smith</p>
+				<p>20</p>
+			</div>
+
+			<div class="col-xs-12 text-center">
+				<h3>Couple Description</h3>
+				<textarea></textarea>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12 text-center">
+					<h3>Interests</h3>
+				</div>
+
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="film" data-selected=false class="interest">Film</p>
+				</div>
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="sport" data-selected=false class="interest">Sports</p>
+				</div>
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="dining" data-selected=false class="interest">Dining</p>
+				</div>
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="music" data-selected=false class="interest">Music</p>
+				</div>
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="travel" data-selected=false class="interest">Travel</p>
+				</div>
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="outdoors" data-selected=false class="interest">Outdoors</p>
+				</div>
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="arts" data-selected=false class="interest">Arts</p>
+				</div>
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="gaming" data-selected=false class="interest">Gaming</p>
+				</div>
+			</div>
+
+			<div class="col-xs-12 text-center">
+				<button class="saveChanges">Click To Save Changes</button>
+			</div>
+
+		</div>
+
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
+
+	<script src="assets/javascript/jquery-ui.js"></script>
+	<script src="assets/javascript/app.js"></script>
+
+</body>
+</html>

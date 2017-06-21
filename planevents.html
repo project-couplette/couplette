@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Couplette Plan an Event</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<link href="https://fonts.googleapis.com/css?family=Archivo+Narrow|Passion+One" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="assets/css/jquery-ui.min.css">	
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">	
+</head>
+<body>
+	<nav class="navbar navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="dashboard.html">Couplette</a>
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavBar" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+
+			<div class="collapse navbar-collapse" id="myNavBar">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="chatpage.html" class="envelope hidden-xs"><span class="glyphicon glyphicon-envelope"></span></a></li>
+					<li><a href="chatpage.html" class="hidden-md hidden-sm hidden-lg">Mail</a></li>
+					<li><a href="profile.html">Profile</a></li>
+					<li><a href="#">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container mainContent">
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<h2>Plan an Event</h2>
+			</div>
+
+			<div class="col-xs-12 text-center">
+				<h3>Event Date</h3>
+				<input type="text" name="date" id="dateEvent" class="inputField" readonly>
+			</div>
+
+			<div class="col-xs-12 text-center eventZipcode">
+				<h3>Location of Event (Zipcode)</h3>
+				<input type="number" name="Zip" class="inputField zipInp">
+			</div>
+
+			<div class="col-xs-12 text-center eventTypeBlock">
+				<h3>Event Type</h3>
+				<select class="minMargin eventType">
+					<option value="EventDefault"></option>
+					<option value="Film">Film</option>
+					<option value="Dining">Dining</option>
+					<option value="Other">Other</option>
+				</select>
+			</div>
+
+			<div class="col-xs-12 text-center">
+				<div class="filmEvent">
+					<h3>Theaters in Zipcode</h3>
+					<select>
+						<option value="Default"></option>
+						<option value="TestTheater">Test Theater</option>
+					</select>
+				</div>
+				
+				<div class="films">
+					<h3>Movies Playing</h3>
+					<select>
+						<option value="Default"></option>
+						<option value="TestFilm">Test Film</option>
+					</select>
+				</div>
+
+				<div class="filmTimes">
+					<h3>Film Times</h3>
+					<select>
+						<option value="Default"></option>
+						<option value="TestTime">Test Film Time</option>
+					</select>
+				</div>
+				
+			</div>
+
+			<div class="col-xs-12 text-center">
+				<div class="diningEvent">
+					<h3>Dining in Zipcode</h3>
+					<select class="diningOptionsDrop">
+						<option value="Default"></option>
+					</select>
+				</div>
+				
+				<div class="diningTimes">
+					<h3>Available Times</h3>
+					<select>
+						<option value="Default"></option>
+					</select>
+				</div>
+
+				<div class="mapDiv">
+					
+				</div>
+				
+			</div>
+
+		</div>
+
+		<div class="col-xs-12 text-center">
+			<button class="friendFindSubmit">Submit</button>
+		</div>
+
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
+
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA52ADkbHa1-oZzlIZuCk6PAACaPFOFe2A&libraries=places"></script>
+
+	<script src="assets/javascript/jquery-ui.js"></script>
+	<script src="assets/javascript/app.js"></script>
+</body>
+</html>
