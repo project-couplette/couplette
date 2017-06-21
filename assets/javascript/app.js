@@ -26,7 +26,8 @@ $(function(){
 	var dataRef = firebase.database(event);
 
 
-	// var myUserID;
+	var myUserID;
+	var myZipCode;
 
 	firebase.auth().onAuthStateChanged((user) => {
 	  if (user) {
@@ -46,6 +47,7 @@ $(function(){
 	    dataRef.ref("Users/" + myUserID).once("value").then(function(snapshot){
 	    	//adds events to user's dashboard
 	    	ohSnap('Welcome back, ' + snapshot.val().coupleUsername, {color: 'red'});
+	    	myZipCode = snapshot.val().zipcode;
 
 	    	//update profile page to latest version of profile
 	    	$(".myUsername").text(snapshot.val().coupleUsername);
@@ -765,6 +767,7 @@ $(function(){
 			}
 			dataRef.ref("Users/" + myUserID).update(updateProfileInfo);
 			$(".profilePic").attr("src", $(".profileIMGURL").val());
+			myZipCode = $(".myZip").val();
 		})
 		ohSnap('Profile Updated!', {color: 'red'});
 		
