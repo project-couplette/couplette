@@ -301,10 +301,6 @@ label {
 	margin: 10px 0;
 }
 
-.profileBubbles:hover {
-	background: #edeaea;
-}
-
 textarea {
 	width: 50%;
 	border-radius: 15px;
