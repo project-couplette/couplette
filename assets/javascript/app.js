@@ -50,7 +50,8 @@ $(function(){
 	    	//update profile page to latest version of profile
 	    	$(".myUsername").text(snapshot.val().coupleUsername);
 	    	$(".myEmail").text(snapshot.val().coupleEmail);
-	    	$(".myZip").val("94612");
+	    	$(".myZip").val(snapshot.val().zipcode);
+	    	$(".profilePic").attr("src", snapshot.val().imgURL);
 	    	$(".partner1FName").val(snapshot.val().firstName1);
 	    	$(".partner1LName").val(snapshot.val().lastName1);
 	    	$(".partner1Age").val(snapshot.val().age1);
@@ -79,6 +80,7 @@ $(function(){
 		dataRef.ref("Users/" + myUserID + "/events/" + uid).once("value").then(function(snapshot){
 			modalContent.append("<h3>"+ snapshot.val().eventName + "</h3>")
 			.append("<button class='buttonStyle removeButton' data-eventID='" + uid + "'>Remove Event</button>")
+			.append("<button class='buttonStyle inviteButton' data-eventID='" + uid + "'>Invite Couple</button>")
 			.appendTo(eventModal);
 			eventModal.appendTo("body");
 			eventModal.fadeIn("fast", function(){
@@ -758,10 +760,23 @@ $(function(){
 				firstName2: $(".partner2FName").val(),
 				lastName2: $(".partner2LName").val(),
 				interests: interestsObj,
-				zipcode: $(".myZip").val()
+				zipcode: $(".myZip").val(),
+				imgURL: $(".profileIMGURL").val()
 			}
-			dataRef.ref("Users/" + myUserID).set(updateProfileInfo);
+			dataRef.ref("Users/" + myUserID).update(updateProfileInfo);
+			$(".profilePic").attr("src", $(".profileIMGURL").val());
 		})
+		ohSnap('Profile Updated!', {color: 'red'});
+		
+	})
+
+	$(".signUpButton").on("click", function(event){
+		event.preventDefault();
+
+		dataRef.ref("Users/" + myUserID).update({
+			imgURL: $(".inputField").val()
+		})
+
 		
 	})
 
