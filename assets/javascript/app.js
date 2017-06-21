@@ -1,94 +1,77 @@
 $(function(){
 	// Initialize Firebase
 	var config = {
-		apiKey: "AIzaSyD1UCXTw5xWE5WehTfqh0AK-K2asMyf4S4",
-	    authDomain: "couplette-b67ce.firebaseapp.com",
-	    databaseURL: "https://couplette-b67ce.firebaseio.com",
-	    projectId: "couplette-b67ce",
-	    storageBucket: "couplette-b67ce.appspot.com",
-	    messagingSenderId: "934836634497"
+		// apiKey: "AIzaSyD1UCXTw5xWE5WehTfqh0AK-K2asMyf4S4",
+	 //    authDomain: "couplette-b67ce.firebaseapp.com",
+	 //    databaseURL: "https://couplette-b67ce.firebaseio.com",
+	 //    projectId: "couplette-b67ce",
+	 //    storageBucket: "couplette-b67ce.appspot.com",
+	 //    messagingSenderId: "934836634497"
 	};
 
 
 	// Jberry testing firebase
-	// var config = {
-	// 	apiKey: "AIzaSyDA-yVtB_lDDz6BiVDmC7Dm1BMACJdWFXQ",
-	// 	authDomain: "berrytendo.firebaseapp.com",
-	// 	databaseURL: "https://berrytendo.firebaseio.com",
-	// 	projectId: "berrytendo",
-	// 	storageBucket: "berrytendo.appspot.com",
-	// 	messagingSenderId: "328422244178"
-	// };
+	var config = {
+		apiKey: "AIzaSyDA-yVtB_lDDz6BiVDmC7Dm1BMACJdWFXQ",
+		authDomain: "berrytendo.firebaseapp.com",
+		databaseURL: "https://berrytendo.firebaseio.com",
+		projectId: "berrytendo",
+		storageBucket: "berrytendo.appspot.com",
+		messagingSenderId: "328422244178"
+	};
 
 
 	firebase.initializeApp(config);
 
 	var dataRef = firebase.database(event);
 
-	// $(".loginEmailTest").on("click", function(){
-	// 	event.preventDefault();
-	// 	// firebase.auth().createUserWithEmailAndPassword($("#username").val(), $("#pass").val()).catch(function(error) {
-	// 	//   // Handle Errors here.
-	// 	//   var errorCode = error.code;
-	// 	//   var errorMessage = error.message;
-	// 	//   // ...
-
-	// 	// });
-
-	// 	firebase.auth().signInWithEmailAndPassword($("#username").val(), $("#pass").val()).catch(function(error) {
-	// 	  // Handle Errors here.
-	// 	  var errorCode = error.code;
-	// 	  var errorMessage = error.message;
-	// 	  // ...
-	// 	});
-	// })
-
-
 
 	// var myUserID;
 
-	// firebase.auth().onAuthStateChanged((user) => {
-	//   if (user) {
-	//     myUserID = user.uid;
+	firebase.auth().onAuthStateChanged((user) => {
+	  if (user) {
+	    myUserID = user.uid;
 
-	//     dataRef.ref("Users/" + myUserID + "/events").on("child_added", function(snapshot){
-	//     	//adds events to user's dashboard
-	//     	var eventDiv = $("<div>").addClass("eventSection")
-	//     	.append("<h3>" + snapshot.val().eventName + "</h3>")
-	//     	.append("<h4>" + snapshot.val().eventDate + "</h4>")
-	//     	.append("<h4>" + snapshot.val().eventTime + "</h4>")
-	//     	.append("<h4>" + snapshot.val().eventAddress + "</h4>")
-	//     	.attr("data-UID", snapshot.key);
-	//     	$(".upcomingEventSection").append(eventDiv);
-	//     })
+	    dataRef.ref("Users/" + myUserID + "/events").on("child_added", function(snapshot){
+	    	//adds events to user's dashboard
+	    	var eventDiv = $("<div>").addClass("eventSection")
+	    	.append("<h3>" + snapshot.val().eventName + "</h3>")
+	    	.append("<h4>" + snapshot.val().eventDate + "</h4>")
+	    	.append("<h4>" + snapshot.val().eventTime + "</h4>")
+	    	.append("<h4>" + snapshot.val().eventAddress + "</h4>")
+	    	.attr("data-UID", snapshot.key);
+	    	$(".upcomingEventSection").append(eventDiv);
+	    })
 
-	//     dataRef.ref("Users/" + myUserID).once("value").then(function(snapshot){
-	//     	//adds events to user's dashboard
-	//     	ohSnap('Welcome back, ' + snapshot.val().coupleUsername, {color: 'red'});
-	//     	$(".myUsername").text(snapshot.val().coupleUsername);
-	//     	$(".myEmail").text(snapshot.val().coupleEmail);
-	//     	$(".myZip").text(snapshot.val().zipcode);
-	//     	$(".partner1Name").text(snapshot.val().firstName1 + " " + snapshot.val().lastName1);
-	//     	$(".partner1Age").text(snapshot.val().age1);
-	//     	$(".partner2Name").text(snapshot.val().firstName2 + " " + snapshot.val().lastName2);
-	//     	$(".partner2Age").text(snapshot.val().age2);
-	//     	$(".coupleDescription").text(snapshot.val().description);
+	    dataRef.ref("Users/" + myUserID).once("value").then(function(snapshot){
+	    	//adds events to user's dashboard
+	    	ohSnap('Welcome back, ' + snapshot.val().coupleUsername, {color: 'red'});
 
-	//     	var interestsKeys = Object.keys(snapshot.val().interests)
+	    	//update profile page to latest version of profile
+	    	$(".myUsername").text(snapshot.val().coupleUsername);
+	    	$(".myEmail").text(snapshot.val().coupleEmail);
+	    	$(".myZip").html(94612);
+	    	// $(".partner1Name").attr("value", snapshot.val().firstName1 + " " + snapshot.val().lastName1);
+	    	// $(".partner1Age").text(snapshot.val().age1);
+	    	// $(".partner2Name").val(snapshot.val().firstName2 + " " + snapshot.val().lastName2);
+	    	$(".partner2Age").text(snapshot.val().age2);
+	    	$(".coupleDescription").text(snapshot.val().description);
 
-	//     	for (var i = 0; i < interestsKeys.length; i++){
-	//     		console.log(interestsKeys[i] + ": " + snapshot.val().interests[interestsKeys[i]]);
-	//     		console.log()
-	//     		$("#profile" + interestsKeys[i]).attr("data-selected", snapshot.val().interests[interestsKeys[i]])
-	//     		if (snapshot.val().interests[interestsKeys[i]] === true){
-	// 	  			$("#profile" + interestsKeys[i]).css("background", "#ffa9be")
-	// 				.css("border", "1px solid #c4536f")
-	// 				.attr("data-selected", true);
-	//     		}
-	//     	}
-	//     })
-	//   }
-	// });
+	    	var interestsKeys = Object.keys(snapshot.val().interests)
+
+	    	for (var i = 0; i < interestsKeys.length; i++){
+	    		console.log(interestsKeys[i] + ": " + snapshot.val().interests[interestsKeys[i]]);
+	    		console.log()
+	    		$("#profile" + interestsKeys[i]).attr("data-selected", snapshot.val().interests[interestsKeys[i]])
+	    		if (snapshot.val().interests[interestsKeys[i]] === true){
+		  			$("#profile" + interestsKeys[i]).css("background", "#ffa9be")
+					.css("border", "1px solid #c4536f")
+					.attr("data-selected", true);
+	    		}
+	    	}
+	    })
+	  }
+	});
 
 	$("body").on("click", ".eventSection", function(){
 		var eventModal = $("<div>").addClass("modals");
@@ -115,14 +98,14 @@ $(function(){
 	})
 
 	$("body").on("click", ".removeButton", function(){
-		// dataRef.ref("Users/" + myUserID + "/events/" + $(this).attr("data-eventID")).remove();
-		// $(".upcomingEventSection").find("[data-uid='" +  $(this).attr("data-eventID") + "']").remove()
+		dataRef.ref("Users/" + myUserID + "/events/" + $(this).attr("data-eventID")).remove();
+		$(".upcomingEventSection").find("[data-uid='" +  $(this).attr("data-eventID") + "']").remove()
 		ohSnap('This event has been deleted!', {color: 'red'});
-		// $(this).closest(".modalContent").hide("clip", "fast", function(){
-		// 	$(this).closest(".modals").fadeOut("fast", function(){
-		// 		$(this).closest(".modals").remove();
-		// 	})
-		// });
+		$(this).closest(".modalContent").hide("clip", "fast", function(){
+			$(this).closest(".modals").fadeOut("fast", function(){
+				$(this).closest(".modals").remove();
+			})
+		});
 	})
 
 
@@ -457,16 +440,18 @@ $(function(){
 
 	//adding dynamic page updates based on event select dropdown option
 	$(".eventType").on("change", function(){
+		$(".filmEvent").slideUp("fast");
+		$(".meetingTimes").slideUp("fast");
+		$(".diningType").slideUp("fast");
+		$(".eventSubmit").slideUp();
 		if ($(this).val() === "EventDefault"){
-			$(".filmEvent").slideUp("fast");
-			$(".cuisine").slideUp("fast");
 		}
 
 		else if ($(this).val() === "Film"){
 			var longitudeOfZip, latOfZip;
 			function initialize() {
 			var queryURLLongLat = "https://maps.googleapis.com/maps/api/geocode/json?address=" + $(".zipInp").val() + "&key=AIzaSyA52ADkbHa1-oZzlIZuCk6PAACaPFOFe2A";
-
+			
 			$.ajax({
 				url: queryURLLongLat,
 				method: "GET"
@@ -474,36 +459,60 @@ $(function(){
 				longitudeOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lat"]);
 				latOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lng"]);
 
-				var location = new google.maps.LatLng(longitudeOfZip, latOfZip);
+				console.log(latOfZip + "," + longitudeOfZip);
 
-				var request = {
-					location: location,
-					radius: '1000',
-					query: 'cinema',
-				};
+				$.ajax({
+					url: "https://api.cinepass.de/v4/cinemas/",
+					type: "GET",
+					data: {
+					// "location": latOfZip + "," + longitudeOfZip,
+					"location": "-122.26,37.81",
+					"distance": "500"
+					},
+					headers: {
+					"X-API-Key": "cZXFWHhuyCzLTfxJmLt5BHpNNNwXDdYW",
+					},
+				})
+				.done(function(data, textStatus, jqXHR) {
+					console.log("HTTP Request Succeeded: " + jqXHR.status);
+					console.log(data);
+				})
+				.fail(function(jqXHR, textStatus, errorThrown) {
+				console.log("HTTP Request Failed" + errorThrown);
+				})
+				.always(function() {
+				/* ... */
+				});
 
-				var service = new google.maps.places.PlacesService(document.createElement('div'));
-				service.textSearch(request, callback);
+				// var location = new google.maps.LatLng(longitudeOfZip, latOfZip);
 
-				function callback(results, status) {
-					if (status == google.maps.places.PlacesServiceStatus.OK) {
-						$(".theaterDrop").empty().append("<option  value='Default'>")
-						for (var i = 0; i < results.length; i++) {
-							$(".theaterDrop").append("<option value=" + results[i].name + ">" + results[i].name + "</option");
+				// var request = {
+				// 	location: location,
+				// 	radius: '1000',
+				// 	query: 'cinema',
+				// };
 
-						}
-						$(".diningEvent").slideUp("fast", function(){
-						$(".filmEvent").slideDown("normal");
-					});
-					}
-				}
+				// var service = new google.maps.places.PlacesService(document.createElement('div'));
+				// service.textSearch(request, callback);
+
+				// function callback(results, status) {
+				// 	if (status == google.maps.places.PlacesServiceStatus.OK) {
+				// 		$(".theaterDrop").empty().append("<option  value='Default'>")
+				// 		for (var i = 0; i < results.length; i++) {
+				// 			$(".theaterDrop").append("<option value=" + results[i].name + ">" + results[i].name + "</option");
+
+				// 		}
+				// 		$(".diningEvent").slideUp("fast", function(){
+				// 		$(".filmEvent").slideDown("normal");
+				// 	});
+				// 	}
+				// }
 			});
 	
 		}
 		initialize();
 	}
 		else if ($(this).val() === "Dining"){
-
 			$(".filmEvent").slideUp("fast", function(){
 				$(".diningType").slideDown("normal");
 				});
@@ -553,39 +562,40 @@ $(function(){
 		initialize();
 	});
 
-	$(".filmEvent").on("change", function(){
+	$(".theaterDrop").on("change", function(){
 		if ($(this).val() === "EventDefault"){
-			$(".films").slideUp("fast");
+			$(".meetingTimes").slideUp("fast");
 		}
 
 		else {
-			$(".films").slideDown("normal");
+			$(".meetingTimes").slideDown("normal");
 		}
 
 	});
 
-	$(".films").on("change", function(){
+	$(".diningOptionsDrop").on("change", function(){
 		if ($(this).val() === "EventDefault"){
-			$(".filmTimes").slideUp("fast");
+			$(".meetingTimes").slideUp("fast");
 		}
 
 		else {
-			$(".filmTimes").slideDown("normal");
+			$(".meetingTimes").slideDown("normal");
 		}
 
 	});
 
-	$(".filmTimes").on("change", function(){
-		if ($(this).val() === "EventDefault"){
-			$(".friendFindSubmit").slideUp("fast");
+	$(".meetingTimeInput").on("keyup", function(){
+		var timeRegex = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+
+		if (timeRegex.test($(this).val())){
+			$(".eventSubmit").slideDown();
 		}
 
 		else {
-			$(".friendFindSubmit").slideDown("normal");
-			
+			$(".eventSubmit").slideUp();
 		}
+	})
 
-	});
 
 	$(".interest").on("click", function(){
 		if ($(this).attr("data-selected") === "false"){
@@ -601,15 +611,53 @@ $(function(){
 		}
 	})
 
+	$("body").on("click", ".eventSubmit", function(){
+		var time = $(".meetingTimeInput").val();
+		var address;
+		var date = $("#dateEvent").val();
+		var name;
+		if ($(".eventType").val() === "Film"){
+			address = $(".theaterDrop").val();
+			name = "Film night!";
+		}
+
+		else {
+			address = $(".diningOptionsDrop").val();
+			name = "Dining out!";
+		}
+
+		dataRef.ref("Users/" + myUserID + "/events").push({
+			eventTime: time,
+			eventDate: date,
+			eventAddress: address,
+			eventName: name
+		});
+
+		$(".findCoupleBlock").hide("clip", 400);
+		$(".planEventBlock").hide("clip", 400);
+		$(".profileBlock").hide("clip", 400);
+		$(".chatBlock").hide("clip", 400);
+		resetFields();
+
+		setTimeout(function(){
+			$(".dashboardBlock").show("drop", {direction: "down"}, 400);
+			currentPage = "dashboard";
+		}, 500);
+
+		ohSnap("Event Added!", {color: 'red'});
+
+
+	})
+
 	function resetFields(){
 		$("input").val("");
 		$(".eventTypeBlock").hide();
 		$(".eventZipcode").hide();
 		$(".filmEvent").hide();
-		$(".films").hide();
-		$(".filmTimes").hide();
 		$(".diningEvent").hide();
 		$(".diningType").hide();
+		$(".meetingTimes").hide();
+		$(".eventSubmit").hide()
 	}
 
 	$("body").on("click", ".eventButton", function(){

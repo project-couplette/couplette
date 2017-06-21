@@ -74,7 +74,7 @@
 		<div class="row">
 			<div class="col-md-12 text-center upcomingEvents">
 				<h2>Past Events</h2>
-				<div class="col-xs-12 text-center eventSection">
+				<div class="col-xs-12 text-center pastEventSection">
 				</div>
 			</div>
 		</div>
@@ -184,7 +184,6 @@
 					<option value="EventDefault"></option>
 					<option value="Film">Film</option>
 					<option value="Dining">Dining</option>
-					<option value="Other">Other</option>
 				</select>
 			</div>
 
@@ -236,14 +235,9 @@
 					</select>
 				</div>
 				
-				<div class="diningTimes">
-					<h3>Available Times</h3>
-					<select>
-						<option value="Default"></option>
-					</select>
-				</div>
-
-				<div class="mapDiv">
+				<div class="meetingTimes">
+					<h3>Meeting Time</h3>
+					<input type="text" name="meetingTime" class="inputField meetingTimeInput">
 					
 				</div>
 				
@@ -277,19 +271,19 @@
 
 			<div class="col-xs-12 text-center profileBubbles">
 				<p>Zipcode:</p>
-				<p class="myZip">00000</p>
+				<input type="numbers" name="Zip" class="inputField myZip" value="0">
 				
 			</div>
 
 			<div class="col-xs-6 text-center profileBubbles">
 				<h3>Partner 1</h3>
-				<p class="partner1Name">Jon Smith</p>
+				<input type="text" class="partner1Name inputField"></p>
 				<p class="partner1Age">25</p>
 			</div>
 
 			<div class="col-xs-6 text-center profileBubbles">
 				<h3>Partner 2</h3>
-				<p class="partner2Name">Jane Smith</p>
+				<input type="text" class="partner2Name inputField"></p>
 				<p class="partner2Age">20</p>
 			</div>
 
