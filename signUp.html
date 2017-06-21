@@ -30,8 +30,8 @@
         <ul class="nav navbar-nav navbar-right">
           <li><a href="#" class="envelope hidden-xs"><span class="glyphicon glyphicon-envelope"></span></a></li>
           <li><a href="#" class="hidden-md hidden-sm hidden-lg">Mail</a></li>
-          <li><a href="#">Profile</a></li>
-          <li><a href="#">Logout</a></li>
+          <li><a href="profile.html">Profile</a></li>
+          <li><a href="index.html">Logout</a></li>
         </ul>
       </div>
     </div>
@@ -42,7 +42,7 @@
              
     <div class="col-xs-12 col-xs-offset-3">
       <form class="form-horizontal">
-        <div id="sign-image" class="text-center">
+        <div id="sign-image" class="center-block">
           <img src="assets/images/friendship-1.jpg" class="img-responsive text-center" alt="Friendship Image" />
          </div>
         
@@ -65,13 +65,13 @@
         
         <div class="form-group">
           <div class="col-xs-12">
-            <input type="password" class="input-line form-control" id="pass" placeholder="Password">
+            <input type="password" class="input-line form-control" id="pass" placeholder="Password" required>
           </div><!-- end col-->
         </div> <!-- end of form-group -->
 
         <div class="form-group">
           <div class="col-xs-12">
-            <input type="password" class="input-line form-control" id="confirmpass" placeholder="Confirm  Password">
+            <input type="password" class="input-line form-control" id="confirmpass" placeholder="Confirm  Password" required>
           </div><!-- end col-->
         </div> <!-- end of form-group -->
 
@@ -81,13 +81,13 @@
 
         <div class="form-group">
           <div class="col-xs-12">  
-            <input type="text" class=" input-line form-control" id="partner1-first" placeholder="Partner-1 Firstname">
+            <input type="text" class=" input-line form-control" id="partner1-first" placeholder="Partner-1 Firstname" required>
           </div>
         </div> <!-- end form Group --> 
 
         <div class="form-group">
           <div class="col-xs-12">   
-            <input type="text" class="input-line form-control" id="partner1-last" placeholder="Partner-1 Lastname">
+            <input type="text" class="input-line form-control" id="partner1-last" placeholder="Partner-1 Lastname" required>
           </div>
         </div> <!-- end form group -->   
 
@@ -103,13 +103,13 @@
        
         <div class="form-group">
           <div class="col-xs-12">
-            <input type="text" class=" input-line form-control" id="partner2-first" placeholder="Partner-2 Firstname">
+            <input type="text" class=" input-line form-control" id="partner2-first" placeholder="Partner-2 Firstname" required>
           </div><!-- end col-->
         </div> <!-- end of form-group -->
 
         <div class="form-group">
           <div class="col-xs-12">
-            <input type="text" class="input-line form-control" id="partner2-last" placeholder="Partner-2 Lastname">
+            <input type="text" class="input-line form-control" id="partner2-last" placeholder="Partner-2 Lastname" required>
           </div><!-- end col-->
         </div> <!-- end of form-group -->
        
@@ -125,13 +125,13 @@
 
        <div class="form-group">
           <div class="col-xs-12">
-            <input type="text" class="input-line form-control" id="city-input" placeholder="City">
+            <input type="text" class="input-line form-control" id="city-input" placeholder="City" required>
           </div><!-- end col-->
         </div> <!-- end of form-group -->
         
         <div class="form-group">
           <div class="col-sm-12">
-           <input type="text" class="input-line form-control" id="state-input" placeholder="State">
+           <input type="text" class="input-line form-control" id="state-input" placeholder="State" required>
           </div><!-- end col-->
         </div> <!-- end of form-group -->
     
@@ -148,10 +148,13 @@
         <div class="row">
           <h3>Description</h3>
         </div><!-- end of class row5 -->
-              <textarea type="text" name="" cols="" rows=""  class="comment-input">Text Input</textarea>
-            
-          
-         <button type="submit" class="btn btn-primary">Join Us</button>
+        <div>  
+            <textarea type="text" name="" cols="" rows=""  class="comment-input">Text Input</textarea>
+        </div>  
+         
+         <div class= "text-center"> 
+          <button type="submit" class="btn btn-primary">Join Us</button>
+         </div>
        </form>
     </div>
   </div>
