@@ -1,0 +1,230 @@
+body {
+	background-image: url("../images/tempCup1.jpeg")
+}
+
+h2 {
+	font-size: 50px;
+	color: #ff0040;
+	margin-top: 0;
+}
+
+.placeholderBlock {
+	background: #ff0040;
+	width: 100%;
+	height: 300px;
+	border-radius: 25px;
+	text-align: center;
+	border: 1px solid #efefef;
+}
+
+a, p, h2, h3, h4, .checkBox {
+	font-family: 'Archivo Narrow', sans-serif;
+}
+
+p {
+	font-size: 18px;
+	margin: 10px;
+}
+
+.placeholderBlock:hover {
+	background: #c20031;
+}
+
+.navbar-inverse {
+	background: none;
+	background-color: #ff0040;
+	border: 0;
+	border-bottom: 1px solid #b6143d;
+	border-radius: 0;
+	margin-bottom: 0;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+	color: #ffffff;
+	font-size: 20px;
+}
+
+.navbar-inverse .navbar-nav>li>a:hover {
+	color: #ffcbcb;
+}
+
+.navbar-inverse .navbar-brand {
+	color: white;
+	margin-left: 30px;
+	font-size: 40px;
+	font-family: 'Passion One', cursive;
+}
+.navbar-inverse .navbar-toggle {
+	border: none;
+}
+
+
+.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover {
+    background-color: #b6113b;
+
+}
+
+.smallImage {
+	width: 162px;
+    background: #ff0040;
+    float: right;
+	height: 156px;
+}
+
+.dashboardImgP {
+	margin: 0 0 10px;
+	position: absolute;
+	bottom: 10px;
+	font-size: 35px;
+	text-align: center;
+	width: 95%;
+	color: white;
+}
+
+
+.dashboardButtons {
+	margin-top: 35px
+}
+
+hr {
+	margin-top: 40px;
+	margin-bottom: 20px;
+	border: 0;
+	border-top: 2px dotted rgba(255, 0, 64, 0.36);
+	width: 85%;
+}
+
+.mainContent {
+	border-left: 2px solid #ededed;
+	border-right: 2px solid #ededed;
+	background: white;
+	padding: 30px;
+	box-shadow: 0 0px 10px 5px rgba(0, 0, 0, 0.18);
+}
+
+.envelope {
+	font-size: 18px;
+}
+
+.eventSection:hover{
+	background: #e9e9e9;
+}
+
+select {
+	height: 40px;
+	border-radius: 19px;
+<<<<<<< HEAD
+	width: 200px;
+=======
+	width: 210px;
+>>>>>>> upstream/master
+	padding: 0 9px;
+	font-size: 25px;
+	margin: 10px;
+}
+
+label {
+	font-weight: 100;
+}
+
+.friendFindSubmit {
+	background: #ff0040;
+	font-size: 25px;
+	color: white;
+	border: none;
+	border-radius: 10px;
+	padding: 5px 10px;
+	margin: 15px;
+}
+
+.checkBox {
+	font-size: 20px;
+}
+
+.interestRow {
+	width: 75%;
+	margin: auto;
+}
+
+#datetimepicker1 {
+	width: 200px;
+	margin: auto;
+}
+
+.form-group {
+	margin-bottom: 10px;
+}
+
+.profileRow {
+	width: 600px;
+	margin: auto;
+}
+
+.profilePic {
+	width: 100%;
+	border: 3px double #c2c2c2;
+}
+
+.profileBubbles {
+	border: 1px solid #aeadad;
+	border-radius: 10px;
+	margin: 10px 0;
+}
+
+.profileBubbles:hover {
+	background: #edeaea;
+}
+
+textarea {
+	width: 100%;
+	border-radius: 15px;
+	height: 150px;
+	padding: 10px;
+}
+
+@media screen and (max-width: 991px){
+	.profileRow {
+		width: 80%;
+	}
+}
+
+
+@media screen and (max-width: 767px){
+	.profileRow {
+		width: 100%;
+	}
+
+	.dashboardButtons {
+		display: none;
+	}
+
+	.placeholderBlock {
+		height: 85px;
+		margin-bottom: 15px;
+	}
+
+	.dashboardImgP {
+    	bottom: 22px;
+	}
+
+	.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+		border-color: #5c3838;
+	}
+
+	.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+		border-color: #ff547f;
+	}
+
+	.navbar-inverse .navbar-nav>li>a {
+		text-align: center;
+		font-size: 30px;
+	}
+
+	.checkBox {
+		font-size: 18px;
+	}
+
+	.interestRow {
+		width: 100%;
+	}
+}

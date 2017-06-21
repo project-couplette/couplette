@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Couplette Dashboard</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<link href="https://fonts.googleapis.com/css?family=Archivo+Narrow|Passion+One" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="assets/css/jquery-ui.min.css">	
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">	
+</head>
+<body>
+
+	<!-- Nav bar at the top of the page -->
+	<nav class="navbar navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Couplette</a>
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavBar" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+
+			<div class="collapse navbar-collapse" id="myNavBar">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#" class="envelope hidden-xs mailButton"><span class="glyphicon glyphicon-envelope"></span></a></li>
+					<li><a href="#" class="hidden-md hidden-sm hidden-lg mailButton">Mail</a></li>
+					<li><a href="#" class="profileNavButton">Profile</a></li>
+					<li><a href="#">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Main dashboard section -->
+	<div class="container mainContent dashboardBlock">
+		<div class="row topRow">
+			<div class="col-xs-12 col-sm-6">
+				<div class="placeholderBlock eventButton">
+					<img class=dashboardButtons src="assets/images/event.png">
+					<p class="dashboardImgP">Plan an Event</p>
+				</div>
+			</div>
+
+			<div class="col-xs-12 col-sm-6">
+				<div class="placeholderBlock findCoupleButton">
+					<img class=dashboardButtons src="assets/images/couple.png">
+					<p class="dashboardImgP">Find a Couple</p>
+				</div>
+			</div>
+		</div>
+
+		<hr>
+
+		<div class="row">
+			<div class="col-md-12 text-center upcomingEvents">
+				<h2>Upcoming Events</h2>
+				<div class="col-xs-12 text-center upcomingEventSection">
+
+				</div>
+			</div>
+		</div>
+
+		<hr>
+
+		<div class="row">
+			<div class="col-md-12 text-center upcomingEvents">
+				<h2>Past Events</h2>
+				<div class="col-xs-12 text-center eventSection">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Find couple event section that slides in  -->
+	<div class="container mainContent findCoupleBlock">
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<h2>Find a Couple</h2>
+			</div>
+
+			<div class="col-xs-12 text-center">
+				<h3>Max Distance of Couple</h3>
+				<select class="distanceCriteriaSelect">
+					<option value="DistanceDefault"></option>
+					<option value="NoCare">No Preference</option>
+					<option value="5">10 Miles</option>
+					<option value="10">25 Miles</option>
+					<option value="15">50 Miles</option>
+				</select>
+			</div>
+
+			<div class="col-xs-12 text-center">
+				<h3>Age Range of Couple</h3>
+				<select class="ageCriteriaSelect">
+					<option value="AgeDefault"></option>
+					<option value="NoCare">No Preference</option>
+					<option value="1825">18-25</option>
+					<option value="2535">25-35</option>
+					<option value="3545">35-45</option>
+					<option value="4555">45-55</option>
+					<option value="55+">55+</option>
+				</select>
+			</div>
+
+			<div class="col-xs-12 text-center">
+				<h3>Gender of Couple</h3>
+				<select class="genderCriteriaSelect">
+					<option value="GenderDefault"></option>
+					<option value="NoCare">No Preference</option>
+					<option value="MF">Male/Female</option>
+					<option value="MM">Male/Male</option>
+					<option value="FF">Female/Female</option>
+				</select>
+			</div>
+
+		</div>
+		<div class="row interestRow">
+			<div class="col-xs-12 text-center">
+				<h3>Interests</h3>
+			</div>
+			<div class="interestsSelect">
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="film" data-selected=false class="interest">Film</p>
+				</div>
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="sport" data-selected=false class="interest">Sports</p>
+				</div>
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="dining" data-selected=false class="interest">Dining</p>
+				</div>
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="music" data-selected=false class="interest">Music</p>
+				</div>
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="travel" data-selected=false class="interest">Travel</p>
+				</div>
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="outdoors" data-selected=false class="interest">Outdoors</p>
+				</div>
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="arts" data-selected=false class="interest">Arts</p>
+				</div>
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="gaming" data-selected=false class="interest">Gaming</p>
+				</div>
+			</div>
+			
+		</div>
+		<div class="col-xs-12 text-center">
+			<button class="friendFindSubmit">Submit</button>
+		</div>
+	</div>
+
+
+	<!-- Planning event section that slides in -->
+	<div class="container mainContent planEventBlock">
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<h2>Plan an Event</h2>
+			</div>
+
+			<div class="col-xs-12 text-center">
+				<h3>Event Date</h3>
+				<input type="text" name="date" id="dateEvent" class="inputField" readonly>
+			</div>
+
+			<div class="col-xs-12 text-center eventZipcode">
+				<h3>Location of Event (Zipcode)</h3>
+				<input type="number" name="Zip" class="inputField zipInp">
+			</div>
+
+			<div class="col-xs-12 text-center eventTypeBlock">
+				<h3>Event Type</h3>
+				<select class="minMargin eventType">
+					<option value="EventDefault"></option>
+					<option value="Film">Film</option>
+					<option value="Dining">Dining</option>
+					<option value="Other">Other</option>
+				</select>
+			</div>
+
+			<div class="col-xs-12 text-center">
+				<div class="filmEvent">
+					<h3>Theaters in Zipcode</h3>
+					<select class="theaterDrop">
+						<option value="Default"></option>
+					</select>
+				</div>
+				
+				<div class="films">
+					<h3>Movies Playing</h3>
+					<select>
+						<option value="Default"></option>
+						<option value="TestFilm">Test Film</option>
+					</select>
+				</div>
+
+				<div class="filmTimes">
+					<h3>Film Times</h3>
+					<select>
+						<option value="Default"></option>
+						<option value="TestTime">Test Film Time</option>
+					</select>
+				</div>
+				
+			</div>
+
+			<div class="col-xs-12 text-center">
+				<div class="diningType">
+					<h3>Type of Cuisine</h3>
+					<select class="cuisine">
+						<option value="Default"></option>
+						<option value="Italian">Italian</option>
+						<option value="Mexican">Mexican</option>
+						<option value="Chinese">Chinese</option>
+						<option value="American">American</option>
+						<option value="Korean">Korean</option>
+						<option value="Japanese">Japanese</option>
+						<option value="Vegan">Vegan</option>
+					</select>
+				</div>
+
+				<div class="diningEvent">
+					<h3>Dining in Zipcode</h3>
+					<select class="diningOptionsDrop">
+						<option value="Default"></option>
+					</select>
+				</div>
+				
+				<div class="diningTimes">
+					<h3>Available Times</h3>
+					<select>
+						<option value="Default"></option>
+					</select>
+				</div>
+
+				<div class="mapDiv">
+					
+				</div>
+				
+			</div>
+
+		</div>
+
+		<div class="col-xs-12 text-center">
+			<button class="eventSubmit">Submit</button>
+		</div>
+	</div>
+
+	<!-- Profile page slide in section -->
+	<div class="container mainContent profileBlock">
+		<div class="row profileRow">
+			<div class="col-xs-12 text-center">
+				<h2>Profile</h2>
+			</div>
+
+			<div class="col-xs-12 text-center">
+				<img class="profilePic" src="assets/images/tempCup1.jpeg">
+			</div>
+
+			<div class="col-xs-12 text-center profileBubbles">
+				<p>Username: <span class="myUsername">testName</span></p>
+			</div>
+
+			<div class="col-xs-12 text-center profileBubbles">
+				<p>Email: <span class="myEmail">test@gmail.com</span></p>
+			</div>
+
+			<div class="col-xs-12 text-center profileBubbles">
+				<p>Zipcode:</p>
+				<p class="myZip">00000</p>
+				
+			</div>
+
+			<div class="col-xs-6 text-center profileBubbles">
+				<h3>Partner 1</h3>
+				<p class="partner1Name">Jon Smith</p>
+				<p class="partner1Age">25</p>
+			</div>
+
+			<div class="col-xs-6 text-center profileBubbles">
+				<h3>Partner 2</h3>
+				<p class="partner2Name">Jane Smith</p>
+				<p class="partner2Age">20</p>
+			</div>
+
+			<div class="col-xs-12 text-center">
+				<h3>Couple Description</h3>
+				<textarea class="coupleDescription"></textarea>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12 text-center">
+					<h3>Interests</h3>
+				</div>
+
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="films" data-selected=false class="interest" id="profilefilms">Film</p>
+				</div>
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="sport" data-selected=false class="interest" id="profilesports">Sports</p>
+				</div>
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="dining" data-selected=false class="interest" id="profiledining">Dining</p>
+				</div>
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="music" data-selected=false class="interest" id="profilemusic">Music</p>
+				</div>
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="travel" data-selected=false class="interest" id="profiletravel">Travel</p>
+				</div>
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="outdoors" data-selected=false class="interest" id="profileoutdoors">Outdoors</p>
+				</div>
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="arts" data-selected=false class="interest" id="profilearts">Arts</p>
+				</div>
+				<div class="col-xs-6 col-sm-3 text-center checkBox">
+					<p data-interest="gaming" data-selected=false class="interest" id="profilegaming">Gaming</p>
+				</div>
+			</div>
+
+			<div class="col-xs-12 text-center">
+				<button class="saveChanges">Click To Save Changes</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="container mainContent chatBlock">
+		<div class="fluid-container chatContainer">
+			<div class="row">
+				<div class="col-xs-3 noPadRight">
+					<div class="row">
+						<div class="col-xs-12 text-center">
+							<div id="chat" class="tabs">
+								<p class="chatTab">Messages</p>
+							</div>
+						</div>
+
+						<div class="col-xs-12 text-center">
+							<div id="Friends" class="tabs">
+								<p class="chatTab">Friend Requests</p>
+							</div>
+						</div>
+
+						<div class="col-xs-12 text-center">
+							<div id="Events" class="tabs">
+								<p class="chatTab">Event Updates</p>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<div class="col-xs-9 noPadLeft">
+					<div class="placeholder chatSpace">
+					<!-- 	<div class="chatBoxSpace">
+							<p>Username49: Last line of text.</p>
+						</div>
+						<div class="chatBoxSpace">
+							<p>Coolname3: Last line of text.</p>
+						</div> -->
+					<form class="chatInputSubmit">
+						<input type="text" name="chatInput" class="chatInput"><input type="submit" class="chatSubmit" name="submit" value="submit">
+					</form>
+					
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="ohsnap"></div>
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA52ADkbHa1-oZzlIZuCk6PAACaPFOFe2A&libraries=places"></script>
+
+	<script src="assets/javascript/ohsnap.js"></script>
+	<script src="assets/javascript/moment.js"></script>
+	<script src="assets/javascript/jquery-ui.js"></script>
+	<script src="assets/javascript/app.js"></script>
+</body>
+</html>

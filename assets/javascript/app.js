@@ -8,9 +8,151 @@ $(function(){
 	    storageBucket: "couplette-b67ce.appspot.com",
 	    messagingSenderId: "934836634497"
 	};
+
+
+	// Jberry testing firebase
+	// var config = {
+	// 	apiKey: "AIzaSyDA-yVtB_lDDz6BiVDmC7Dm1BMACJdWFXQ",
+	// 	authDomain: "berrytendo.firebaseapp.com",
+	// 	databaseURL: "https://berrytendo.firebaseio.com",
+	// 	projectId: "berrytendo",
+	// 	storageBucket: "berrytendo.appspot.com",
+	// 	messagingSenderId: "328422244178"
+	// };
+
+
 	firebase.initializeApp(config);
 
-	var dataRef = firebase.database();
+	var dataRef = firebase.database(event);
+
+	// $(".loginEmailTest").on("click", function(){
+	// 	event.preventDefault();
+	// 	// firebase.auth().createUserWithEmailAndPassword($("#username").val(), $("#pass").val()).catch(function(error) {
+	// 	//   // Handle Errors here.
+	// 	//   var errorCode = error.code;
+	// 	//   var errorMessage = error.message;
+	// 	//   // ...
+
+	// 	// });
+
+	// 	firebase.auth().signInWithEmailAndPassword($("#username").val(), $("#pass").val()).catch(function(error) {
+	// 	  // Handle Errors here.
+	// 	  var errorCode = error.code;
+	// 	  var errorMessage = error.message;
+	// 	  // ...
+	// 	});
+	// })
+
+
+
+	// var myUserID;
+
+	// firebase.auth().onAuthStateChanged((user) => {
+	//   if (user) {
+	//     myUserID = user.uid;
+
+	//     dataRef.ref("Users/" + myUserID + "/events").on("child_added", function(snapshot){
+	//     	//adds events to user's dashboard
+	//     	var eventDiv = $("<div>").addClass("eventSection")
+	//     	.append("<h3>" + snapshot.val().eventName + "</h3>")
+	//     	.append("<h4>" + snapshot.val().eventDate + "</h4>")
+	//     	.append("<h4>" + snapshot.val().eventTime + "</h4>")
+	//     	.append("<h4>" + snapshot.val().eventAddress + "</h4>")
+	//     	.attr("data-UID", snapshot.key);
+	//     	$(".upcomingEventSection").append(eventDiv);
+	//     })
+
+	//     dataRef.ref("Users/" + myUserID).once("value").then(function(snapshot){
+	//     	//adds events to user's dashboard
+	//     	ohSnap('Welcome back, ' + snapshot.val().coupleUsername, {color: 'red'});
+	//     	$(".myUsername").text(snapshot.val().coupleUsername);
+	//     	$(".myEmail").text(snapshot.val().coupleEmail);
+	//     	$(".myZip").text(snapshot.val().zipcode);
+	//     	$(".partner1Name").text(snapshot.val().firstName1 + " " + snapshot.val().lastName1);
+	//     	$(".partner1Age").text(snapshot.val().age1);
+	//     	$(".partner2Name").text(snapshot.val().firstName2 + " " + snapshot.val().lastName2);
+	//     	$(".partner2Age").text(snapshot.val().age2);
+	//     	$(".coupleDescription").text(snapshot.val().description);
+
+	//     	var interestsKeys = Object.keys(snapshot.val().interests)
+
+	//     	for (var i = 0; i < interestsKeys.length; i++){
+	//     		console.log(interestsKeys[i] + ": " + snapshot.val().interests[interestsKeys[i]]);
+	//     		console.log()
+	//     		$("#profile" + interestsKeys[i]).attr("data-selected", snapshot.val().interests[interestsKeys[i]])
+	//     		if (snapshot.val().interests[interestsKeys[i]] === true){
+	// 	  			$("#profile" + interestsKeys[i]).css("background", "#ffa9be")
+	// 				.css("border", "1px solid #c4536f")
+	// 				.attr("data-selected", true);
+	//     		}
+	//     	}
+	//     })
+	//   }
+	// });
+
+	$("body").on("click", ".eventSection", function(){
+		var eventModal = $("<div>").addClass("modals");
+		var modalContent = $("<div>").addClass("modalContent").append("<span class='close'>&times;</span>")
+		var uid = $(this).attr("data-uid");
+		dataRef.ref("Users/" + myUserID + "/events/" + uid).once("value").then(function(snapshot){
+			modalContent.append("<h3>"+ snapshot.val().eventName + "</h3>")
+			.append("<button class='buttonStyle removeButton' data-eventID='" + uid + "'>Remove Event</button>")
+			.appendTo(eventModal);
+			eventModal.appendTo("body");
+			eventModal.fadeIn("fast", function(){
+				modalContent.show("clip", "fast");
+			})
+		})
+	
+	})
+
+	$("body").on("click", ".close", function(){
+		$(this).closest(".modalContent").hide("clip", "fast", function(){
+			$(this).closest(".modals").fadeOut("fast", function(){
+				$(this).closest(".modals").remove();
+			})
+		});
+	})
+
+	$("body").on("click", ".removeButton", function(){
+		// dataRef.ref("Users/" + myUserID + "/events/" + $(this).attr("data-eventID")).remove();
+		// $(".upcomingEventSection").find("[data-uid='" +  $(this).attr("data-eventID") + "']").remove()
+		ohSnap('This event has been deleted!', {color: 'red'});
+		// $(this).closest(".modalContent").hide("clip", "fast", function(){
+		// 	$(this).closest(".modals").fadeOut("fast", function(){
+		// 		$(this).closest(".modals").remove();
+		// 	})
+		// });
+	})
+
+
+ 	// dataRef.ref("Users/8hzc7ctaLHf4g6tvYXT6aprss2K2").set({
+		// 	firstName1: "Jib",
+		// 	firstName2: "Val",
+		// 	lastName1: "B",
+		// 	lastName2: "B",
+		// 	coupleEmail: "jonpber@gmail.com",
+		// 	zipcode: 94612,
+		// 	description: "blah blah blah",
+		// 	Interests: {
+		// 		Arts: true,
+		// 		Dining: true,
+		// 		Films: true,
+		// 		Music: true,
+		// 		Gaming: true,
+		// 		Outdoors: false,
+		// 		Travel: true,
+		// 		sports: false,
+		// 	},
+		// 	age1: 29,
+		// 	age2: 30,
+		// 	coupleUsername: "theBerrys",
+		// 	comment: "comment",
+		// 	// dateAdded: firebase.database.ServerValue.TIMESTAMP
+		// });
+
+
+
 	// Initial Values
 	var firstName1 = "";
 	var firstName2 = "";
@@ -33,6 +175,12 @@ $(function(){
 	var age = 0;
 	var comment = "";
 	var coupleUsername = "";
+	var cityArray = [];
+	var stateArray = [];
+	var latArray = [];
+	var lngarray = [];
+	var distanceArray = [];
+	var potentialMatch = [];
 
 	$("#button").on("click", function(event) {
 		event.preventDefault();
@@ -84,7 +232,128 @@ $(function(){
 			// dateAdded: firebase.database.ServerValue.TIMESTAMP
 		});
 	});
+
 	
+	var testZip1 = 91384;
+	
+	var googleQueryURL = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + testZip1 + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
+
+	//Google Maps API Call
+	function distanceMatrixCall() {
+		
+		$.ajax({
+		  crossDomain: true,
+		  url: googleQueryURL,
+		  method: "GET"
+		}).done(function(response) {
+			var city = response.results[0].address_components[1].long_name;
+			var state = response.results[0].address_components[2].long_name;
+			var testLatitude = parseInt(response.results[0].geometry.location.lat);
+			var testLongitude = parseInt(response.results[0].geometry.location.lng);
+			console.log(cityArray);
+			
+			zipCodeConverter()
+			  .then(function() {
+				// zipCodeMatcher();
+				// function zipCodeMatcher()
+				for (var j=0; j < cityArray.length; j++) {
+					console.log(cityArray[j]);
+					console.log("working");
+					var origin1 = new google.maps.LatLng(testLatitude, testLongitude);
+					var origin2 = "" + city + "," + "" + state;
+					var destinationA = "" + cityArray[j] + "," + "" + stateArray[j];
+					var destinationB = new google.maps.LatLng(lngarray[j], latArray[j]);
+					var service = new google.maps.DistanceMatrixService();
+					console.log(origin1, origin2, destinationB, destinationA);
+					service.getDistanceMatrix(
+					  {
+					  	origins: [origin1, origin2],
+		    			destinations: [destinationA, destinationB],
+					    travelMode: 'DRIVING',
+					    // s
+					  }, callback);
+
+					function callback(response, status) {
+						console.log(response, status);
+						var num = response.rows[0].elements[0].distance.text.replace(/[^0-9]/g,'');
+						distance.push(parseInt(num));
+					};
+				}
+			});
+				
+		});
+	};
+
+
+	distanceMatrixCall();
+
+
+	distanceMatrixCall();
+
+	function isDistanceMatch(){
+		for (var i=0; i<distanceArray.length; i++) {
+			if (distanceArray[i] > searchCriteria.distance) {
+				match = false;
+			} else {
+				match= true;
+			}
+		}
+
+	};
+
+	isDistanceMatch();
+
+	isDistanceMatch();
+	
+
+
+	function zipCodeConverter() {
+		// getFirebaseData();
+		var testZipCodeArray = [95050, 91350, 94110];
+		var zipPromises = [];
+		
+		for (var i=0; i<testZipCodeArray.length; i++) {
+			var googleQueryURLLoop = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + testZipCodeArray[i] + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
+		// sconsole.log(googleQueryURLLoop)
+		//Google Maps API Call
+			zip = $.ajax({
+			  crossDomain: true,
+			  url: googleQueryURLLoop,
+			  method: "GET"
+			}).done(function(response) {
+				var cityConverted = response.results[0].address_components[1].long_name;
+				var stateConverted = response.results[0].address_components[2].long_name;
+				var testLatitudeConverted = parseInt(response.results[0].geometry.location.lat);
+				var testLongitudeConverted = parseInt(response.results[0].geometry.location.lng);
+				cityArray.push(cityConverted);
+				stateArray.push(stateConverted);
+				latArray.push(testLatitudeConverted);
+				lngarray.push(testLongitudeConverted);
+			});
+			zipPromises.push(zip);
+		};
+
+
+		return Promise.all(zipPromises);
+
+	};
+
+	zipCodeConverter();
+
+
+	// 	return Promise.all(zipPromises);
+
+	// };
+
+
+	function getFirebaseData() {
+		var fireBaseZipCodes = [];
+		dataRef.ref().on("value", function(childSnapshot) {	
+	      	// Log everything that's coming out of snapshot
+		    fireBaseZipCodes.push(childSnapshot.val().zipCode);
+	      });
+		}
+
 	//Sample User Criteria
 	var userCriteria = {
 	    ageLow: 18,
@@ -142,7 +411,8 @@ $(function(){
 	    else {
 	        return false;
 	    };
-	}
+	};
+
 	function collectUser(criteria){
 	    dataRef.ref("users").once("value", function(snapshot){
 	        var users = snapshot.val();
@@ -155,8 +425,8 @@ $(function(){
 	        }
 	        console.log(namesThatMatch);
 	    })
-	}
-	collectUser(userCriteria);
+	};
+	// collectUser(userCriteria);
 
 	//add calendar date pick functionality to event page date input field
 	$("#dateEvent").datepicker({minDate: 0});
@@ -187,44 +457,100 @@ $(function(){
 
 	//adding dynamic page updates based on event select dropdown option
 	$(".eventType").on("change", function(){
-
 		if ($(this).val() === "EventDefault"){
 			$(".filmEvent").slideUp("fast");
-			$(".diningEvent").slideUp("fast");
+			$(".cuisine").slideUp("fast");
 		}
 
 		else if ($(this).val() === "Film"){
-			var movieZipURL = 'https://data.tmsapi.com/v1.1/theatres?zip=' + $('.zipInp').val() + '&api_key=n9dzsauzmnxaps66hbyawcuz';
-			// var movieZipURL = "http://data.tmsapi.com/v1.1/theatres?zip=78701&api_key=turvtrjxt4n6b9skn4ahnpgx"
+			var longitudeOfZip, latOfZip;
+			function initialize() {
+			var queryURLLongLat = "https://maps.googleapis.com/maps/api/geocode/json?address=" + $(".zipInp").val() + "&key=AIzaSyA52ADkbHa1-oZzlIZuCk6PAACaPFOFe2A";
+
 			$.ajax({
-				url: movieZipURL,
+				url: queryURLLongLat,
 				method: "GET"
 			}).done(function(response){
-				console.log(response);
-				$(".diningEvent").slideUp("fast", function(){
-				$(".filmEvent").slideDown("normal");
+				longitudeOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lat"]);
+				latOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lng"]);
+
+				var location = new google.maps.LatLng(longitudeOfZip, latOfZip);
+
+				var request = {
+					location: location,
+					radius: '1000',
+					query: 'cinema',
+				};
+
+				var service = new google.maps.places.PlacesService(document.createElement('div'));
+				service.textSearch(request, callback);
+
+				function callback(results, status) {
+					if (status == google.maps.places.PlacesServiceStatus.OK) {
+						$(".theaterDrop").empty().append("<option  value='Default'>")
+						for (var i = 0; i < results.length; i++) {
+							$(".theaterDrop").append("<option value=" + results[i].name + ">" + results[i].name + "</option");
+
+						}
+						$(".diningEvent").slideUp("fast", function(){
+						$(".filmEvent").slideDown("normal");
+					});
+					}
+				}
 			});
-			})
-
-			
-			
+	
 		}
-
+		initialize();
+	}
 		else if ($(this).val() === "Dining"){
-			// var diningURL = "https://developers.zomato.com/api/v2.1" + $('.zipInp').val() + '&api_key=9f66ce02ce13cacef3eaaefa8cc3fab7';
-			// var clientKey = "2vD3lQM9gR9SrTBk9GlSCn22KwOsvQRxlvBGlnQCf0uHT623NnWpKYruvgX17Ozt";
-			// zipURL = "https://www.zipcodeapi.com/rest/"+clientKey+"/info.json/" + $('.zipInp').val() + "/radians";
-			// // var diningURL = "https://developers.zomato.com/api/v2.1" +  + '&api_key=9f66ce02ce13cacef3eaaefa8cc3fab7';
-			$.ajax({
-				url: zipURL,
-				method: "GET"
-			}).done(function(response){
-				console.log(response);
-			})
+
 			$(".filmEvent").slideUp("fast", function(){
-				$(".diningEvent").slideDown("normal");
-			});
+				$(".diningType").slideDown("normal");
+				});
 		}
+	});
+
+	$(".cuisine").on("change", function(){
+		if ($(this).val() === "EventDefault"){
+
+		}
+		var longitudeOfZip, latOfZip;
+		function initialize() {
+		var queryURLLongLat = "https://maps.googleapis.com/maps/api/geocode/json?address=" + $(".zipInp").val() + "&key=AIzaSyA52ADkbHa1-oZzlIZuCk6PAACaPFOFe2A";
+
+		$.ajax({
+			url: queryURLLongLat,
+			method: "GET"
+		}).done(function(response){
+			longitudeOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lat"]);
+			latOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lng"]);
+
+			var location = new google.maps.LatLng(longitudeOfZip, latOfZip);
+
+			var request = {
+				location: location,
+				radius: '1000',
+				query: $(".cuisine").val() +  ' restaurant',
+			};
+
+			var service = new google.maps.places.PlacesService(document.createElement('div'));
+			service.textSearch(request, callback);
+
+			function callback(results, status) {
+				if (status == google.maps.places.PlacesServiceStatus.OK) {
+					$(".diningOptionsDrop").empty().append("<option  value='Default'>")
+					for (var i = 0; i < results.length; i++) {
+						var diningOption = $("<option>").attr("value", results[i].name).text(results[i].name);
+						$(".diningOptionsDrop").append(diningOption);
+						$(".diningEvent").slideDown("normal");
+					}					
+				}
+			}
+		});
+
+		}
+
+		initialize();
 	});
 
 	$(".filmEvent").on("change", function(){
@@ -234,7 +560,6 @@ $(function(){
 
 		else {
 			$(".films").slideDown("normal");
-			
 		}
 
 	});
@@ -246,7 +571,6 @@ $(function(){
 
 		else {
 			$(".filmTimes").slideDown("normal");
-			
 		}
 
 	});
@@ -277,4 +601,96 @@ $(function(){
 		}
 	})
 
+	function resetFields(){
+		$("input").val("");
+		$(".eventTypeBlock").hide();
+		$(".eventZipcode").hide();
+		$(".filmEvent").hide();
+		$(".films").hide();
+		$(".filmTimes").hide();
+		$(".diningEvent").hide();
+		$(".diningType").hide();
+	}
+
+	$("body").on("click", ".eventButton", function(){
+		$(".dashboardBlock").hide("clip", 400, function(){
+			$(".planEventBlock").show("drop", {direction: "left"}, 500);
+			currentPage = "event";
+		});
+	})
+
+	$("body").on("click", ".findCoupleButton", function(){
+		$(".dashboardBlock").hide("clip", 400, function(){
+			$(".findCoupleBlock").show("drop", {direction: "right"}, 500);
+			currentPage = "couple";
+		});
+	})
+
+	$("body").on("click", ".navbar-brand", function(){
+		if ("currentPage" !== "dashboard"){
+			$(".findCoupleBlock").hide("clip", 400);
+			$(".planEventBlock").hide("clip", 400);
+			$(".profileBlock").hide("clip", 400);
+			$(".chatBlock").hide("clip", 400);
+			resetFields();
+
+			setTimeout(function(){
+				$(".dashboardBlock").show("drop", {direction: "down"}, 400);
+				currentPage = "dashboard";
+			}, 500);
+		}
+
+	});
+
+	$("body").on("click", ".profileNavButton", function(){
+		$(".findCoupleBlock").hide("clip", 400);
+		$(".planEventBlock").hide("clip", 400);
+		$(".dashboardBlock").hide("clip", 400);
+		$(".chatBlock").hide("clip", 400);
+		resetFields();
+
+		setTimeout(function(){
+			$(".profileBlock").show("drop", {direction: "down"}, 400 );
+			currentPage = "profile";
+		}, 500);
+	});
+
+	$("body").on("click", ".mailButton", function(){
+		$(".findCoupleBlock").hide("clip", 400);
+		$(".planEventBlock").hide("clip", 400);
+		$(".dashboardBlock").hide("clip", 400);
+		$(".profileBlock").hide("clip", 400);
+		resetFields();
+
+		setTimeout(function(){
+			$(".chatBlock").show("drop", {direction: "down"}, 400 );
+			currentPage = "mail";
+		}, 500);
+	});
+
+	$(".friendFindSubmit").on("click", function(){
+		var distance = $(".distanceCriteriaSelect").val();
+		var age = $(".ageCriteriaSelect").val();
+		var gender = $(".genderCriteriaSelect").val().toLowerCase();
+		var interests = $(".interestsSelect").children().children();
+		var interestsObj = {}
+
+		for (var i = 0; i < interests.length; i++){
+			interestsObj[$(interests[i]).text().toLowerCase()] = $(interests[i]).attr("data-selected");
+		}
+
+		var searchCriteria = {
+			ageLow: age[0] + age[1],
+			ageHigh: age[2] + age[3],
+			gender: gender,
+			distance: distance,
+			interest: interestsObj
+		}
+
+		console.log(searchCriteria);
+	})
+
 })
+
+
+

@@ -38,10 +38,9 @@
   </nav>
 <!-- my code -->
   <div class="container mainContent">
-   <!-- <div class="container"> -->
-      
     <div class="wrap-signUp">
-     <div id="sign-image" class="text-center">
+    </div> <!--end of wrap-signUp -->
+      <div id="sign-image" class="text-center">
       <img src="assets/images/friendship-1.jpg" alt="Friendship Image" />
     </div>
 
@@ -56,6 +55,34 @@
         </div><!-- end of class row5 -->
   
         <div class="form-group">
+          <label for="username" class="col-sm-2 control-label">Username</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="username" placeholder="Username" required>
+          </div><!-- end col-->
+        </div> <!-- end of form-group -->
+
+        <div class="form-group">
+          <label for="email-address" class="col-sm-2 control-label">Email:</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="email-address" placeholder="Email" required>
+          </div><!-- end col-->
+        </div> <!-- end of form-group -->
+        
+        <div class="form-group">
+          <label for="pass" class="col-sm-2 control-label">Password</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="pass" placeholder="Password">
+          </div><!-- end col-->
+        </div> <!-- end of form-group -->
+
+        <div class="form-group">
+         <label for="confirmpass" class="col-sm-2 control-label">Confirm Password</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="confirmpass" placeholder="Confirm  Password">
+          </div><!-- end col-->
+        </div> <!-- end of form-group -->
+
+        <div class="form-group">
           <label for="partner1-first" class="col-sm-2 control-label">Name:</label>
           <div class="col-sm-10">  
             <input type="text" class="form-control" id="partner1-first" placeholder="Partner-1 Firstname">
@@ -68,27 +95,6 @@
             <input type="text" class="form-control" id="partner1-last" placeholder="Partner-1 Lastname">
           </div>
         </div> <!-- end form group -->     
-        
-        <div class="form-group">
-          <label for="email-address" class="col-sm-2 control-label">Email:</label>
-          <div class="col-sm-10">
-            <input type="email" class="form-control" id="email-address" placeholder="Email">
-          </div><!-- end col-->
-        </div> <!-- end of form-group -->
-        
-        <div class="form-group">
-          <label for="pass" class="col-sm-2 control-label">Password</label>
-          <div class="col-sm-10">
-            <input type="password" class="form-control" id="pass" placeholder="Password">
-          </div><!-- end col-->
-        </div> <!-- end of form-group -->
-        
-        <div class="form-group">
-         <label for="confirmpass" class="col-sm-2 control-label">Confirm Password</label>
-          <div class="col-sm-10">
-            <input type="password" class="form-control" id="confirmpass" placeholder="Confirm  Password">
-          </div><!-- end col-->
-        </div> <!-- end of form-group -->
 
         <div class="form-group">
          <label for="city-input" class="col-sm-2 control-label">City</label>
@@ -103,27 +109,7 @@
            <input type="text" class="form-control" id="state-input" placeholder="State">
           </div><!-- end col-->
         </div> <!-- end of form-group -->
-
-        <!--<div class="form-group">
-          <label for="pic-file1" class="col-sm-2 control-label">Insert File</label>
-          <div class="col-sm-10">
-          <input type="file" id="pic-file1" > -->
-         
-          <!--</div> end col-->
-        <!--</div>  end of form-group -->
-        
-        <div class="form-group">
-          <label for="" class="col-sm-2 control-label">Upload Image </label>
-          <div class="col-sm-10">
-            
-            <input type="file" accept="image/*" 
-            onchange="document.getElementById('upload').src = window.URL.createObjectURL(this.files[0])">
-            <div id="drop"  > 
-              <img id="upload" width="360" height="200">
-            </div>
-          </div><!-- end col-->
-        </div> <!-- end of form-group -->
-                 
+    
         <div class="row">
           <h3>Partner-2 Details</h3>
         </div><!-- end of class row5 -->
@@ -150,25 +136,18 @@
             <div id="drop-2"  > 
               <img id="upload-img" width="360" height="200">
             </div>
-            </div><!-- end col-->
-          </div> <!-- end of form-group -->
+          </div><!-- end col-->
+        </div> <!-- end of form-group -->
             
           <div>
-            <label for="comment" class="col-sm-2 control-label">Couple comments </label>
+            <label for="comment" class="col-sm-2 control-label">Description </label>
             <textarea type="text" name="" cols="55" rows=""  class="comment-input">Text Input</textarea>
          </div>
-
-         
         <button type="submit" class="btn btn-primary">Join Us</button>
-       
-
        </form>
+    </div>
+ 
 
-      
-      
-
-        </div> <!--end of signUp -->
-    
   </div><!--  end of main content -->             
   
   <!-- script -->
