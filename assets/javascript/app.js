@@ -401,7 +401,7 @@ $(function(){
 		// console.log(googleQueryURL);
 
 		$.ajax({
-			url: "https://www.zipcodeapi.com/rest/aGAWdlBPe49SCqrwuJqnsNFxLWCKtRaDyKAM6cBlgLdScFpGpP3RDJooG199TjNr/distance./94612/90210/miles.",
+			url: "https://www.zipcodeapi.com/rest/aGAWdlBPe49SCqrwuJqnsNFxLWCKtRaDyKAM6cBlgLdScFpGpP3RDJooG199TjNr/distance.json/94612/90210/miles.",
 			method: "GET"
 		}).done(function(response){
 			console.log(response);
