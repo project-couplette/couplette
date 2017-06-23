@@ -419,8 +419,8 @@ $(function(){
 		    	.appendTo(".couplesFoundModal")
 		        $(".couplesFound").show("fade")	
 		        $(".couplesFoundModal").show("clip")	
-					};
-				};
+					;
+				}
 		})
 
 		// $.ajax({
