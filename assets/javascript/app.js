@@ -72,12 +72,13 @@ $(function(){
 	    		}
 	    	}
 	    })
+
 	  }
 	});
 
 	$("body").on("click", ".eventSection", function(){
 		var eventModal = $("<div>").addClass("modals");
-		var modalContent = $("<div>").addClass("modalContent").append("<span class='close'>&times;</span>")
+		var modalContent = $("<div>").addClass("modalContent").append("<span class='close eventmodalClose'>&times;</span>")
 		var uid = $(this).attr("data-uid");
 		dataRef.ref("Users/" + myUserID + "/events/" + uid).once("value").then(function(snapshot){
 			modalContent.append("<h3>"+ snapshot.val().eventName + "</h3>")
@@ -89,10 +90,9 @@ $(function(){
 				modalContent.show("clip", "fast");
 			})
 		})
-	
 	})
 
-	$("body").on("click", ".close", function(){
+	$("body").on("click", ".eventmodalClose", function(){
 		$(this).closest(".modalContent").hide("clip", "fast", function(){
 			$(this).closest(".modals").fadeOut("fast", function(){
 				$(this).closest(".modals").remove();
@@ -707,17 +707,70 @@ $(function(){
 	});
 
 	$("body").on("click", ".mailButton", function(){
-		$(".findCoupleBlock").hide("clip", 400);
-		$(".planEventBlock").hide("clip", 400);
-		$(".dashboardBlock").hide("clip", 400);
-		$(".profileBlock").hide("clip", 400);
-		resetFields();
+		// $(".findCoupleBlock").hide("clip", 400);
+		// $(".planEventBlock").hide("clip", 400);
+		// $(".dashboardBlock").hide("clip", 400);
+		// $(".profileBlock").hide("clip", 400);
+		// resetFields();
 
-		setTimeout(function(){
-			$(".chatBlock").show("drop", {direction: "down"}, 400 );
-			currentPage = "mail";
-		}, 500);
+		// setTimeout(function(){
+		// 	$(".chatBlock").show("drop", {direction: "down"}, 400 );
+		// 	currentPage = "mail";
+		// }, 500);
 	});
+
+	dataRef.ref('Users/' + myUserID + "/friends").on("value", function(snapshot){
+		if (snapshot.val() !== null){
+			$(".friendModalContent").empty().append("<span class='close friendClose'>&times;</span>")
+			.append("<h2>Friend List</h2>")
+			var names = Object.keys(snapshot.val());
+
+			dataRef.ref("Users").once("value").then(function(snap1){
+				for (var i = 0; i < names.length; i++){
+					var friendDiv = $("<div>").addClass("friendDiv")
+					.append("<img src=" + snap1.val()[names[i]].profile + " class='smallProfile'>")
+					.append("<h3 class='friendUN'>"+ snap1.val()[names[i]].username + "</h3>")
+					.attr("data-uid", names[i])
+					.appendTo($(".friendModalContent"))
+				}
+			})
+		}
+	})
+
+	$("body").on("click", ".friendsNavButton", function(){
+		$(".friendList").fadeIn("fast", function(){
+			$(".friendModalContent").show("clip", "fast");
+		})
+	});
+
+	$("body").on("click", ".friendClose", function(){
+		$(this).closest(".modalContent").hide("clip", "fast", function(){
+			$(this).closest(".modals").fadeOut("fast", function(){
+			})
+		});
+	})
+
+	$("body").on("click", ".friendDiv", function(){
+		var uid = $(this).attr("data-uid");
+		$(this).closest(".friendModalContent").hide("clip", "fast", function(){
+			dataRef.ref("Users/" + uid).once("value").then(function(snapshot){
+			$(".friendUsername").text(snapshot.val().username);
+			$(".friendProfilePic").attr("src", snapshot.val().profile)
+			$(".friendProfile").show("clip", "fast")
+			})
+			
+		});
+	})
+
+	$("body").on("click", ".friendBack", function(){
+		$(this).closest(".friendProfile").hide("clip", "fast", function(){
+			$(".friendModalContent").show("clip", "fast")
+		});
+	})
+
+
+
+
 
 	$(".friendFindSubmit").on("click", function(){
 		var distance = $(".distanceCriteriaSelect").val();
@@ -779,8 +832,16 @@ $(function(){
 		dataRef.ref("Users/" + myUserID).update({
 			imgURL: $(".inputField").val()
 		})
+	})
 
-		
+	$(".logOut").on("click", function(event){
+		console.log("click")
+
+		firebase.auth().signOut().then(function() {
+			window.location = "index.html"
+		}, function(error) {
+			
+		});
 	})
 
 })
