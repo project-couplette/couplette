@@ -357,6 +357,12 @@ $(function(){
 	        }
 	    }
 
+	    distanceMatrixCall(myZipCode, zipcode2);
+
+	    if (distanceArray > criteria.distance){
+	    	match = false;
+	    };
+
 	    if (match){
 	        return true;
 	    }
