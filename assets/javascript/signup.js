@@ -60,8 +60,8 @@ $("#btnSubmit").on("click", function(event) {
 		// var outdoor = $("#outdoorBox").val().trim();
 		// var travel = $("#travelBox").val().trim();
 		// var other = $("#otherBox").val().trim();
-		// // var age = $("#age-input").val().trim();
-		// var description = $("#comment-input").text();
+		// var age = $("#age-input").val().trim();
+		var description = $("#comment-input").text();
 		// var coupleUsername = $("#couple-username").val().trim();
 		// Code for the push
 		firebase.auth().createUserWithEmailAndPassword(email, password);
@@ -72,26 +72,25 @@ $("#btnSubmit").on("click", function(event) {
 
 		firebase.auth().onAuthStateChanged(user => {
 			if(user) {
-				window.location = "dashboardMega.html";
-				console.log(user.uid);
 
 				dataRef.ref("Users/" + user.uid).set({
-						coupleUsername: $("#username").val().trim(),
-						firstName1: $("#partner1-first").val().trim(),
-						firstName2: $("#partner2-first").val().trim(),
-						lastName1: $("#partner1-last").val().trim(),
-						lastName2: $("#partner2-last").val().trim(),
-						email: $("#email-address").val().trim(),
-						age1: $(".partner1-age-inputOne").val.trim(),
-						age2: $(".partner2-age-input").val.trim(),
-						zipcode: $("#zipcode").val().trim(),
+						coupleUsername: $("#username").val(),
+						firstName1: $("#partner1-first").val(),
+						firstName2: $("#partner2-first").val(),
+						lastName1: $("#partner1-last").val(),
+						lastName2: $("#partner2-last").val(),
+						email: $("#email-address").val(),
+						age1: $("#partner1-age-inputOne").val(),
+						age2: $("#partner2-age-input").val(),
+						zipcode: $("#zipcode").val(),
 						gender: $(".genderSelect").val(),
+						imgURL: $(".signupProfileURL").val(),
 
 						// password: $("#pass").val().trim(),
 						// confirmPassword: $("#confirmpass").val().trim(),
 						// city: $("#city-input").val().trim(),
 						// state: $("#state-input").val().trim(),
-						description: $("#comment-input").text(),
+						description: $(".comment-input").val(),
 						interests: {
 								arts: $("#artBox").val(),
 								dining: $("#diningBox").val(),
@@ -109,6 +108,7 @@ $("#btnSubmit").on("click", function(event) {
 						dateAdded: firebase.database.ServerValue.TIMESTAMP
 					})
 				// User is signed in.
+				window.location = "dashboardMega.html";
 			}
 		});
 

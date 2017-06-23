@@ -61,6 +61,7 @@ $(function(){
 	    	$(".myEmail").text(snapshot.val().coupleEmail);
 	    	$(".myZip").val(snapshot.val().zipcode);
 	    	$(".profilePic").attr("src", snapshot.val().imgURL);
+	    	$(".profileIMGURL").val(snapshot.val().imgURL);
 	    	$(".partner1FName").val(snapshot.val().firstName1);
 	    	$(".partner1LName").val(snapshot.val().lastName1);
 	    	$(".partner1Age").val(snapshot.val().age1);
@@ -250,7 +251,7 @@ $(function(){
 	});
 
 	//Google Maps API Call
-	function distanceMatrixCall(myZipCode, zipcode2) {
+	function distanceMatrixCall(zipcode2) {
 		var googleQueryURL = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + myZipCode + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
 		// console.log(googleQueryURL);
 		var zipcode2city = "";
@@ -361,6 +362,10 @@ $(function(){
 
 	        }
 	    }
+
+	    if (match === false){
+	    	console.log("no interest match");
+	    }
 	    //check for age
 
 
@@ -394,22 +399,22 @@ $(function(){
 	        }
 	    }
 
-	   var distanceBetween = distanceMatrixCall(myZipCode, userToComp.zipcode);
+	   var distanceBetween = distanceMatrixCall(userToComp.zipcode);
 
 	   setTimeout(function(){
 	   	if (distanceBetween > criteria.distance && criteria.distance !== "NoCare" && criteria.distance !== null){
 	   		match = false;
 	   	}
 	    if (match){
-	    	console.log("match found")
 	        $(".friendsFound").append("<h2>" + userToComp.username + "</h2>");
+	        console.log("adding " + userToComp.username)
 	    }
 
 	    else {
 		console.log("not match");
 	    }
 
-	   }, 2000);
+	   }, 1000);
 
 
 	    // if (distance > criteria.distance){
@@ -423,9 +428,10 @@ $(function(){
 	    dataRef.ref("Users").once("value", function(snapshot){
 	        var users = snapshot.val();
 	        var userNameArray = Object.keys(users);
-	        var namesThatMatch = []
+	        console.log(userNameArray);
 	        for (var i = 0; i < userNameArray.length; i++){
 	        	if (myUserID !== userNameArray[i]){
+	        		console.log("testing " + users[userNameArray[i]].coupleUsername)
 		        	// console.log(users[userNameArray[i]]);
 		            matchUser(criteria, users[userNameArray[i]]);
 	       		}
@@ -462,22 +468,7 @@ $(function(){
 		}
 	})
 
-	dataRef.ref("Users/fhdjksfhdls").update({
-		zipcode: 94615,
-		gender: "mf",
-		age1: 18,
-		age2: 25,
-		interests: {
-				arts: true,
-				dining: false,
-				films: false,
-				music: true,
-				gaming: true,
-				outdoors: false,
-				travel: true,
-				sports: false,
-			},
-	});
+
 
 	//adding dynamic page updates based on event select dropdown option
 	$(".eventType").on("change", function(){
