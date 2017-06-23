@@ -1,31 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-  <title>Test-Sign UP</title>
-
-  <title>Sign UP</title>
-
+  <title>Sign-Up</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <!-- Optional theme -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-
-  <link href="https://fonts.googleapis.com/css?family=Archivo+Narrow|Passion+One" rel="stylesheet">
-
-  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-
  
   <link href="https://fonts.googleapis.com/css?family=Archivo+Narrow|Passion+One" rel="stylesheet">
 
   <link rel="stylesheet" type="text/css" href="assets/css/style.css"> 
-
 </head>
 <body>
-
 <nav class="navbar navbar-inverse">
     <div class="container">
       <div class="navbar-header">
@@ -42,10 +30,12 @@
         <ul class="nav navbar-nav navbar-right">
           <li><a href="#" class="envelope hidden-xs"><span class="glyphicon glyphicon-envelope"></span></a></li>
           <li><a href="#" class="hidden-md hidden-sm hidden-lg">Mail</a></li>
-          <li><a href="profile.html">Profile</a></li>
-          <li><a href="index.html">Logout</a></li>
+          <li><a href="#">Profile</a></li>
+          <li><a href="#">Logout</a></li>
         </ul>
       </div>
+    </div>
+  </nav>
 <!-- my code -->
   <div class="container mainContent">
 
@@ -137,15 +127,24 @@
 
           <div class="form-group">
             <div class="col-xs-12">
-              <input type="text" class="input-line form-control" id="city-input" placeholder="City" required>
+              <input type="number" class="input-line form-control" id="zipcode" placeholder="Zip Code" required>
             </div><!-- end col-->
           </div> <!-- end of form-group -->
           
+          <div class="row">
+            <h3>Gender</h3>
+          </div><!-- end of class row5 -->
           <div class="form-group">
-            <div class="col-sm-12">
-             <input type="text" class="input-line form-control" id="state-input" placeholder="State" required>
+            <div class="col-xs-12 input-line">
+                <select class="genderCriteriaSelect ">
+                <option value="GenderDefault"></option>
+                <option value="MF">Male/Female</option>
+                <option value="MM">Male/Male</option>
+                <option value="FF">Female/Female</option>
+              </select>
             </div><!-- end col-->
           </div> <!-- end of form-group -->
+
       
           <div class="form-group">
             <div class="col-xs-12">
@@ -175,7 +174,7 @@
   
 
   </div><!--  end of main content -->             
-  
+
 
   <!-- script -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -192,8 +191,7 @@
     });
 });
   </script>
-</body>
-</html>
+
 
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA52ADkbHa1-oZzlIZuCk6PAACaPFOFe2A&libraries=places"></script>
 
