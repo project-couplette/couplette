@@ -25,9 +25,11 @@ $(function(){
 
 	var dataRef = firebase.database(event);
 
-
 	var myUserID;
 	var myZipCode;
+	var status = "dashboard";
+
+	var eventInvite = {};
 
 	firebase.auth().onAuthStateChanged((user) => {
 	  if (user) {
@@ -80,7 +82,14 @@ $(function(){
 		var eventModal = $("<div>").addClass("modals");
 		var modalContent = $("<div>").addClass("modalContent").append("<span class='close eventmodalClose'>&times;</span>")
 		var uid = $(this).attr("data-uid");
+
 		dataRef.ref("Users/" + myUserID + "/events/" + uid).once("value").then(function(snapshot){
+			eventInvite = {
+				eventName: snapshot.val().eventName,
+				eventDate: snapshot.val().eventDate,
+				eventTime: snapshot.val().eventTime,
+				eventAddress: snapshot.val().eventAddress
+			}
 			modalContent.append("<h3>"+ snapshot.val().eventName + "</h3>")
 			.append("<button class='buttonStyle removeButton' data-eventID='" + uid + "'>Remove Event</button>")
 			.append("<button class='buttonStyle inviteButton' data-eventID='" + uid + "'>Invite Couple</button>")
@@ -91,6 +100,22 @@ $(function(){
 			})
 		})
 	})
+
+	$("body").on("click", ".inviteButton", function(){
+		$(this).closest(".modalContent").hide("clip", "fast", function(){
+			$(this).closest(".modals").fadeOut("fast", function(){
+				$(this).closest(".modals").remove();
+				$(".friendList").fadeIn("fast", function(){
+					$(".friendModalContent").show("clip", "fast");
+				})
+			})
+		});
+
+		status = "eventInvite";
+		
+	})
+
+
 
 	$("body").on("click", ".eventmodalClose", function(){
 		$(this).closest(".modalContent").hide("clip", "fast", function(){
@@ -392,6 +417,7 @@ $(function(){
 	        }
 	    }
 
+
 	    if (match){
 	        return true;
 	    }
@@ -462,31 +488,6 @@ $(function(){
 			}).done(function(response){
 				longitudeOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lat"]);
 				latOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lng"]);
-
-				// console.log(latOfZip + "," + longitudeOfZip);
-
-				// $.ajax({
-				// 	url: "https://api.cinepass.de/v4/cinemas/",
-				// 	type: "GET",
-				// 	data: {
-				// 	// "location": latOfZip + "," + longitudeOfZip,
-				// 	"location": "-122.26,37.81",
-				// 	"distance": "500"
-				// 	},
-				// 	headers: {
-				// 	"X-API-Key": "cZXFWHhuyCzLTfxJmLt5BHpNNNwXDdYW",
-				// 	},
-				// })
-				// .done(function(data, textStatus, jqXHR) {
-				// 	console.log("HTTP Request Succeeded: " + jqXHR.status);
-				// 	console.log(data);
-				// })
-				// .fail(function(jqXHR, textStatus, errorThrown) {
-				// console.log("HTTP Request Failed" + errorThrown);
-				// })
-				// .always(function() {
-				// /* ... */
-				// });
 
 				var location = new google.maps.LatLng(longitudeOfZip, latOfZip);
 
@@ -649,8 +650,6 @@ $(function(){
 		}, 500);
 
 		ohSnap("Event Added!", {color: 'red'});
-
-
 	})
 
 	function resetFields(){
@@ -750,16 +749,30 @@ $(function(){
 		});
 	})
 
+	dataRef.ref("Users/" + myUserID)
+
 	$("body").on("click", ".friendDiv", function(){
 		var uid = $(this).attr("data-uid");
+		if (status === "eventInvite"){
+			ohSnap("Your friend is invited!", {color: "red"})
+			dataRef.ref("Users/" + uid + "/eventRequests").push(eventInvite);
+			$(this).closest(".modalContent").hide("clip", "fast", function(){
+				$(this).closest(".modals").fadeOut("fast", function(){
+			})
+
+			status = "dashboard";
+		});
+		}
+
+		else {
 		$(this).closest(".friendModalContent").hide("clip", "fast", function(){
 			dataRef.ref("Users/" + uid).once("value").then(function(snapshot){
 			$(".friendUsername").text(snapshot.val().username);
 			$(".friendProfilePic").attr("src", snapshot.val().profile)
 			$(".friendProfile").show("clip", "fast")
 			})
-			
 		});
+		}
 	})
 
 	$("body").on("click", ".friendBack", function(){
@@ -767,10 +780,6 @@ $(function(){
 			$(".friendModalContent").show("clip", "fast")
 		});
 	})
-
-
-
-
 
 	$(".friendFindSubmit").on("click", function(){
 		var distance = $(".distanceCriteriaSelect").val();
