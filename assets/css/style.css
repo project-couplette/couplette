@@ -67,7 +67,7 @@ margin: 0 auto;
 
 /******sign up page ***********************/
 #drop {
-	border:2px dotted pink;
+	
 	padding:20px;
 	margin-bottom: 20px;
 	width: 450px;
@@ -75,6 +75,14 @@ margin: 0 auto;
 	color:#bdc3c7;
 }
 
+.img-responsive {
+	margin: 0 auto;
+}
+.form-horizontal{
+    display:block;
+    width:100%;
+    margin:0 auto;
+}
 /******* add a box to the image file**********/
 
 h3 {
@@ -97,7 +105,6 @@ a, p, h2, h3, h4, .checkBox {
 	font-family: 'Archivo Narrow', sans-serif;
 }
 
-p {
 	font-size: 18px;
 	margin: 10px;
 }
@@ -486,5 +493,33 @@ textarea {
 
 	.interestRow {
 		width: 100%;
+	}
+	.wrap-login {
+		width: 100%;
+	}
+	.input-line {
+		margin-left: 5px;
+		padding-left: 1px;
+		width: 80%;
+	}
+	.form-horizontal {
+		width:100%;
+		margin-left: -93px;
+	}
+	.img-responsive {
+		margin-left: 5px;
+		padding:2px;
+		width: 80%;
+	}
+	.row {
+		margin-left: 6px;
+		padding:2px;
+		width: 25%;
+	}
+	#drop
+	{
+		margin-left: 5px;
+		padding:2px;
+		width: 55%;
 	}
 }
