@@ -41,8 +41,7 @@ h2 {
 
 .btn {
 	margin-top: 10px;
-	float:right;
-	width: 33.3%
+	
 	border: none;
 }
 .page-reset {
@@ -68,7 +67,7 @@ margin: 0 auto;
 
 /******sign up page ***********************/
 #drop {
-	border:2px dotted pink;
+	
 	padding:20px;
 	margin-bottom: 20px;
 	width: 450px;
@@ -76,6 +75,14 @@ margin: 0 auto;
 	color:#bdc3c7;
 }
 
+.img-responsive {
+	margin: 0 auto;
+}
+.form-horizontal{
+    display:block;
+    width:100%;
+    margin:0 auto;
+}
 /******* add a box to the image file**********/
 
 h3 {
@@ -98,7 +105,6 @@ a, p, h2, h3, h4, .checkBox {
 	font-family: 'Archivo Narrow', sans-serif;
 }
 
-p {
 	font-size: 18px;
 	margin: 10px;
 }
@@ -302,7 +308,7 @@ label {
 }
 
 textarea {
-	width: 100%;
+	width: 50%;
 	border-radius: 15px;
 	height: 150px;
 	padding: 10px;
@@ -435,6 +441,15 @@ textarea {
 	background-color: #E9573F;
 }
 
+
+.input-line {
+ 	margin-left: 175px;
+    margin-right: auto;
+    text-align: center;
+    padding-left: 20px;
+    width: 250px;
+}
+
 .friendDiv {
 	border: 1px solid #8c8c8c;
 	border-radius: 10px;
@@ -457,6 +472,7 @@ textarea {
 .friendUN {
 	display: inline;
 }
+
 
 
 @media screen and (max-width: 991px){
@@ -508,5 +524,33 @@ textarea {
 
 	.interestRow {
 		width: 100%;
+	}
+	.wrap-login {
+		width: 100%;
+	}
+	.input-line {
+		margin-left: 5px;
+		padding-left: 1px;
+		width: 80%;
+	}
+	.form-horizontal {
+		width:100%;
+		margin-left: -93px;
+	}
+	.img-responsive {
+		margin-left: 5px;
+		padding:2px;
+		width: 80%;
+	}
+	.row {
+		margin-left: 6px;
+		padding:2px;
+		width: 25%;
+	}
+	#drop
+	{
+		margin-left: 5px;
+		padding:2px;
+		width: 55%;
 	}
 }
