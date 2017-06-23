@@ -435,6 +435,29 @@ textarea {
 	background-color: #E9573F;
 }
 
+.friendDiv {
+	border: 1px solid #8c8c8c;
+	border-radius: 10px;
+	width: 50%;
+	margin: 10px auto;
+	padding: 10px;
+}
+
+.friendDiv:hover{
+	background: #e7e7e7;
+}
+
+.smallProfile {
+	height: 50px;
+	width: 50px;
+	border-radius: 25px;
+	margin-right: 10px;
+}
+
+.friendUN {
+	display: inline;
+}
+
 
 @media screen and (max-width: 991px){
 	.profileRow {
