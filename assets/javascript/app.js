@@ -408,7 +408,19 @@ $(function(){
 			url: "https://www.zipcodeapi.com/rest/js-yRVPK4c0dFARFe2ZU0sFK0ClegRY8m8He4wZ8J0moBd4Pg3Jhwp2x1nLieJqBS8Q/distance.json/" + myZipCode + "/" + userToComp.zipcode +"/miles",
 			dataType: "json"
 		}).done(function(response){
-			console.log(response);
+			// console.log(response);
+			if (response.distance > criteria.distance && criteria.distance !== "NoCare" && criteria.distance !== null){
+		   		match = false;
+		   	}
+
+		    if (match){
+		    	console.log(userToComp.coupleUsername + " is a match");
+		    	var div = $("<div>").append("<h3>" + userToComp.coupleUsername + "</h3>")
+		    	.appendTo(".couplesFoundModal")
+		        $(".couplesFound").show("fade")	
+		        $(".couplesFoundModal").show("clip")	
+					};
+				};
 		})
 
 		// $.ajax({
