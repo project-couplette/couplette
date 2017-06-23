@@ -31,10 +31,11 @@
 
 			<div class="collapse navbar-collapse" id="myNavBar">
 				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#" class="friendsNavButton">Friends</a></li>
 					<li><a href="#" class="envelope hidden-xs mailButton"><span class="glyphicon glyphicon-envelope"></span></a></li>
 					<li><a href="#" class="hidden-md hidden-sm hidden-lg mailButton">Mail</a></li>
 					<li><a href="#" class="profileNavButton">Profile</a></li>
-					<li><a href="#">Logout</a></li>
+					<li><a href="#" class="logOut">Logout</a></li>
 				</ul>
 			</div>
 		</div>
@@ -262,6 +263,11 @@
 			</div>
 
 			<div class="col-xs-12 text-center profileBubbles">
+				<p>Profile Image URL:</p>
+				<input name="profileIMG" class="inputField profileIMGURL">
+			</div>
+
+			<div class="col-xs-12 text-center profileBubbles">
 				<p>Username: <span class="myUsername">testName</span></p>
 			</div>
 
@@ -324,7 +330,6 @@
 						<p data-interest="gaming" data-selected=false class="interest" id="profilegaming">Gaming</p>
 					</div>
 				</div>
-				
 			</div>
 
 			<div class="col-xs-12 text-center">
@@ -369,15 +374,25 @@
 					<form class="chatInputSubmit">
 						<input type="text" name="chatInput" class="chatInput"><input type="submit" class="chatSubmit" name="submit" value="submit">
 					</form>
-					
 
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
 	<div id="ohsnap"></div>
+
+	<div class="modals friendList">
+		<div class="modalContent friendModalContent">
+			<span class='close friendClose'>&times;</span>
+			<h2>Friend List</h2>
+		</div>
+		<div class="modalContent friendProfile">
+			<span class='close friendBack'>Back</span>
+			<h2 class="friendUsername"></h2>
+			<img class="profilePic friendProfilePic" src="assets/images/tempCup1.jpeg">
+		</div>
+	</div>
 
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

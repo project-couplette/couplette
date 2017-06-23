@@ -10,10 +10,16 @@
 	  firebase.initializeApp(config);
 
 		//Get elements
-		const txtEmail = document.getElementById('txtEmail');
-		const txtPassword = document.getElementById('txtPassword');
+		const txtFirstName1 = document.getElementById('partner1-first');
+		const txtFirstName2 = document.getElementById('partner1-last');
+		const txtCoupleEmail = document.getElementById('txtCoupleEmail');
+		const txtPassword = document.getElementById('pass');
+		const txtConfirmPassword = document.getElementById('confirmpass');
+		const txtCity = document.getElementById('city-input');
+		const txtState = document.getElementById('state-input');
 		const btnLogin = document.getElementById('btnLogin');
 		const btnSignUp = document.getElementById('btnSignUp');
+		const btnSubmit = document.getElementById('btnSubmit');
 		const btnLogout = document.getElementById('btnLogout');
 
 		//Add login event
@@ -28,16 +34,27 @@
 		});
 
 		//Add signup event
-		btnSignUp.addEventListener('click', e => {
+		btnSubmit.addEventListener('click', e => {
 			//Get email and password
-			//TODO: check for real emal addresses
-			const email = txtEmail.value;
-			const pass = txtPassword.value;
+			//Sign Up
+			const txtFirstName1 = document.getElementById('partner1-first');
+			const txtLastName1 = document.getElementById('lastName1');
+			const txtCoupleEmail = document.getElementById('email-address');
+			const txtPassword = document.getElementById('pass');
+			const txtConfirmPassword = document.getElementById('confirmpass');
+			const txtCity = document.getElementById('city-input');
+			const txtState = document.getElementById('state-input');
+			//Spouse
+			const txtFirstName2 = document.getElementById('partner2-first');
+			const txtLastName2 = document.getElementById('partner2-last');
+			const photoURL = document.getElementById('pic-file1')
+			//Interests
+
+			const btnSubmit = document.getElementById('btnSubmit');
 			const auth = firebase.auth();
-			//Sign in
+
 			const promise = auth.createUserWithEmailAndPassword(email, pass);
-			promise
-			.catch(e => console.log(e.message));
+			promise.catch(e => console.log(e.message));
 		});
 
 		btnLogout.addEventListener('click', e => {
@@ -63,102 +80,124 @@
 		//Sync object changes
 		dbRefObject.on('value', snap => console.log(snap.val()));
 
-	// firebase.auth().signInWithEmailAndPassword(provider).then(function(result) {
+		firebase.auth().onAuthStateChanged((user) => {
+			console.log(user.uid);
+		});
+
+	// 	var user = firebase.auth().firebaseUser;
+	// 	var name, email, photoURL, uid, emailVerified;
 	//
-	//         // This gives you a Google Access Token. You can use it to access the Google API.
-	//         var token = result.credential.accessToken;
-	//         // The signed-in user info.
-	//         coupleUsername = result.coupleUsername;
-	//         coupleNames = user.firstName1, user.firstName2;
-	//         coupleEmail = user.coupleEmail;
-	//         photo = user.photoURL;
-	//         uid = user.uid;
-	//         $('#pic').attr("src", user.photoURL);
-	//         $('#couple-username').text(user.coupleUsername);
-	//         $("#name-input, #name-input2, #couple-username, #confirm-pass").show();
-	//         $("#login").hide();
-	//         console.log("logged in");
-	//         // ...
-	//       }).catch(function(error) {
-	//         // Handle Errors here.
-	//         var errorCode = error.code;
-	//         var errorMessage = error.message;
-	//         // The email of the user's account used.
-	//         var email = error.email;
-	//         // The firebase.auth.AuthCredential type that was used.
-	//         var credential = error.credential;
-	//         // ...
-	//       });
+	// 	if (user !=null) {
+	// 	user.providerData.forEach(function (profile) {
+  //   console.log("Sign-in provider: "+profile.providerId);
+  //   console.log("  Provider-specific UID: "+profile.uid);
+  //   console.log("  Name: "+profile.displayName);
+  //   console.log("  Email: "+profile.email);
+  //   console.log("  Photo URL: "+profile.photoURL);
+	// 		name = user.firstName1 + " and " + user.firstName2;
+	// 		email = user.coupleEmail;
+	// 		photoURL = user.photoURL;
+	// 		emailVerified = user.photoURL;
+	// 		uid = user.coupleUsername;
+	// 	});
+	// }
+
+	firebase.auth().signInWithEmailAndPassword(provider).then(function(result) {
+
+	        // This gives you a Google Access Token. You can use it to access the Google API.
+	        var token = result.credential.accessToken;
+	        // The signed-in user info.
+	        coupleUsername = result.coupleUsername;
+	        coupleNames = user.firstName1, user.firstName2;
+	        coupleEmail = user.coupleEmail;
+	        photo = user.photoURL;
+	        uid = user.uid;
+	        $('#pic').attr("src", user.photoURL);
+	        $('#couple-username').text(user.coupleUsername);
+	        $("#name-input, #name-input2, #couple-username, #confirm-pass").show();
+	        $("#login").hide();
+	        console.log("logged in");
+	        // ...
+	      }).catch(function(error) {
+	        // Handle Errors here.
+	        var errorCode = error.code;
+	        var errorMessage = error.message;
+	        // The email of the user's account used.
+	        var email = error.email;
+	        // The firebase.auth.AuthCredential type that was used.
+	        var credential = error.credential;
+	        // ...
+	      });
 
 
-// 	var dataRef = firebase.database();
-// 	// Initial Values
-// 	var firstName1 = "";
-// 	var firstName2 = "";
-// 	var lastName1 = "";
-// 	var lastName2 = "";
-// 	var coupleEmail = "";
-// 	var password = "";
-// 	var confirmPassword = "";
-// 	var zipcode = "";
-// 	var picture = "";
-// 	var description = "";
-// 	var arts = ""
-// 	var dining = "";
-// 	var films = "";
-// 	var music = "";
-// 	var gaming = "";
-// 	var outdoor = "";
-// 	var travel = "";
-// 	var other = "";
-// 	var age = 0;
-// 	var comment = "";
-// 	var coupleUsername = "";
-//
-// 	$("#button").on("click", function(event) {
-// 		event.preventDefault();
-// 		// Code in the logic for storing and retrieving the most recent user.
-// 		firstName1 = $("#name-input").val().trim();
-// 		firstName2 = $("#name-input2").val().trim();
-// 		lastName1 = $("#last-input").val().trim();
-// 		lastName2 = $("#last-input2").val().trim();
-// 		coupleEmail = $("#email-address").val().trim();
-// 		password = $("#pass").val().trim();
-// 		confirmPassword = $("#confirm-pass").val().trim();
-// 		zipcode = $("#zipcode").val().trim();
-// 		description = $("#textarea").val().trim();
-// 		arts = $("#artsbox").val().trim();
-// 		dining = $("#diningbox").val().trim();
-// 		films = $("#filmsbox").val().trim();
-// 		music = $("#musicbox").val().trim();
-// 		gaming = $("#gamingbox").val().trim();
-// 		outdoor = $("#outdoorbox").val().trim();
-// 		travel = $("#travelbox").val().trim();
-// 		other = $("#otherbox").val().trim();
-// 		age = $("#age-input").val().trim();
-// 		comment = $("#comment-input").val().trim();
-// 		coupleUsername = $("#couple-username").val().trim();
-// 		// Code for the push
-// 		dataRef.ref().push({
-// 			firstName1: firstName1,
-// 			firstName2: firstName2,
-// 			lastName1: lastName1,
-// 			lastName2: lastName2,
-// 			coupleEmail: coupleEmail,
-// 			password: password,
-// 			confirmPassword: confirmPassword,
-// 			zipcode: zipcode,
-// 			description: description,
-// 			Interests: {
-// 				Arts: arts,
-// 				Dining: dining,
-// 				Films: films,
-// 				Music: music,
-// 				Gaming: gaming,
-// 				Outdoors: outdoor,
-// 				Travel: travel,
-// 				other: other,
-// 			},
+	var dataRef = firebase.database();
+	// Initial Values
+	var firstName1 = "";
+	var firstName2 = "";
+	var lastName1 = "";
+	var lastName2 = "";
+	var coupleEmail = "";
+	var password = "";
+	var confirmPassword = "";
+	var zipcode = "";
+	var picture = "";
+	var description = "";
+	var arts = ""
+	var dining = "";
+	var films = "";
+	var music = "";
+	var gaming = "";
+	var outdoor = "";
+	var travel = "";
+	var other = "";
+	var age = 0;
+	var comment = "";
+	var coupleUsername = "";
+
+	$("#button").on("click", function(event) {
+		event.preventDefault();
+		// Code in the logic for storing and retrieving the most recent user.
+		firstName1 = $("#name-input").val().trim();
+		firstName2 = $("#name-input2").val().trim();
+		lastName1 = $("#last-input").val().trim();
+		lastName2 = $("#last-input2").val().trim();
+		coupleEmail = $("#email-address").val().trim();
+		password = $("#pass").val().trim();
+		confirmPassword = $("#confirm-pass").val().trim();
+		zipcode = $("#zipcode").val().trim();
+		description = $("#textarea").val().trim();
+		arts = $("#artsbox").val().trim();
+		dining = $("#diningbox").val().trim();
+		films = $("#filmsbox").val().trim();
+		music = $("#musicbox").val().trim();
+		gaming = $("#gamingbox").val().trim();
+		outdoor = $("#outdoorbox").val().trim();
+		travel = $("#travelbox").val().trim();
+		other = $("#otherbox").val().trim();
+		age = $("#age-input").val().trim();
+		comment = $("#comment-input").val().trim();
+		coupleUsername = $("#couple-username").val().trim();
+		// Code for the push
+		dataRef.ref().push({
+			firstName1: firstName1,
+			firstName2: firstName2,
+			lastName1: lastName1,
+			lastName2: lastName2,
+			coupleEmail: coupleEmail,
+			password: password,
+			confirmPassword: confirmPassword,
+			zipcode: zipcode,
+			description: description,
+			Interests: {
+				Arts: arts,
+				Dining: dining,
+				Films: films,
+				Music: music,
+				Gaming: gaming,
+				Outdoors: outdoor,
+				Travel: travel,
+				other: other,
+			},
 // 			age: age,
 // 			coupleUsername: coupleUsername,
 // 			comment: comment,

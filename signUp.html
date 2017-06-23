@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+  <title>Test-Sign UP</title>
+
   <title>Sign UP</title>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <!-- Optional theme -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+
+  <link href="https://fonts.googleapis.com/css?family=Archivo+Narrow|Passion+One" rel="stylesheet">
+
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
  
   <link href="https://fonts.googleapis.com/css?family=Archivo+Narrow|Passion+One" rel="stylesheet">
 
   <link rel="stylesheet" type="text/css" href="assets/css/style.css"> 
+
 </head>
 <body>
+
 <nav class="navbar navbar-inverse">
     <div class="container">
       <div class="navbar-header">
@@ -34,15 +46,15 @@
           <li><a href="index.html">Logout</a></li>
         </ul>
       </div>
-    </div>
-  </nav>
 <!-- my code -->
   <div class="container mainContent">
+
     
     <div id="sign-image" class="center-block">
       <img src="assets/images/friendship-1.jpg" class="img-responsive" alt="Friendship Image" />
-    </div>
-            
+    <div class="wrap-signUp">
+    </div> <!--end of wrap-signUp -->
+
     <div class="col-xs-12 col-xs-offset-3">
       <form class="form-horizontal">
         <div class="row">
@@ -83,6 +95,7 @@
               <input type="text" class=" input-line form-control" id="partner1-first" placeholder="Partner-1 Firstname" required>
             </div>
           </div> <!-- end form Group --> 
+
 
           <div class="form-group">
             <div class="col-xs-12">   
@@ -156,17 +169,39 @@
             <button type="submit" class="btn btn-primary">Join Us</button>
           </div>
       </form>
+
+        
     </div>
   
 
   </div><!--  end of main content -->             
   
+
   <!-- script -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-  <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
-  <script src="assets/javascript/app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+
+  <script src="assets/javascript/signup.js"></script>
+  <script type="text/javascript">
+  $(document).on('ready', function() {
+    $("#pic-file1").fileinput({
+        uploadUrl: '/file-upload-batch/2',
+        maxFilePreviewSize: 10240
+    });
+});
+  </script>
+</body>
+</html>
+
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA52ADkbHa1-oZzlIZuCk6PAACaPFOFe2A&libraries=places"></script>
+
+  <script src="assets/javascript/ohsnap.js"></script>
+  <script src="assets/javascript/moment.js"></script>
+  <script src="assets/javascript/jquery-ui.js"></script>
+  <script src="signup.js"></script>
   
 </body>
 </html>
+
