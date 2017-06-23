@@ -405,7 +405,7 @@ $(function(){
 		// console.log(googleQueryURL);
 
 		$.ajax({
-			url: "https://www.zipcodeapi.com/rest/js-yRVPK4c0dFARFe2ZU0sFK0ClegRY8m8He4wZ8J0moBd4Pg3Jhwp2x1nLieJqBS8Q/distance.json/94612/90210/miles",
+			url: "https://www.zipcodeapi.com/rest/js-yRVPK4c0dFARFe2ZU0sFK0ClegRY8m8He4wZ8J0moBd4Pg3Jhwp2x1nLieJqBS8Q/distance.json/" + myZip + "/ " + userToComp.zipcode +"/miles",
 			dataType: "json"
 		}).done(function(response){
 			console.log(response);
