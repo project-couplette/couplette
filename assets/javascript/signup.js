@@ -42,6 +42,7 @@ var age2 = $("#partner2-age-input").text();
 // var description = $("#comment-input").text();
 var coupleUsername = $("#username").text();
 
+//Make sure the passwords match//
 $('#pass, #confirmpass').on('keyup', function () {
 	if ($('#pass').val() == "") {
   	$('#message').html("Field Must Be Filled").css('color', 'green');
@@ -51,12 +52,21 @@ $('#pass, #confirmpass').on('keyup', function () {
     $('#message').html("Password Doesn't Match").css('color', 'red');
 });
 
+//Prompts users to fields that are required to be filled//
 $('#username, #email-address').on('keyup', function () {
 	if ($('#username, #email-address').val() == "") {
 		$('#message').html("Field Must Be Filled").css('color', 'green');
 		return false;
 	}
 });
+
+    function IsValidZipCode(zipcode) {
+        var isValid = /^[0-9]{5}(?:-[0-9]{4})?$/.test(zipcode);
+        if (!isValid){
+       $('#message2').html('Invalid ZipCode').css('color', 'red');
+      document.getElementById("zipcode").value = ""
+    }
+    }
 
 $("#btnSubmit").on("click", function(event) {
 		event.preventDefault();
