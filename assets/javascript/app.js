@@ -23,7 +23,7 @@ $(function(){
 
 	firebase.initializeApp(config);
 
-	var dataRef = firebase.database(event);
+	var dataRef = firebase.database();
 
 	var myUserID;
 	var myZipCode;
@@ -353,43 +353,43 @@ $(function(){
 	}
 
 	function matchUser (criteria, userToComp){
-		console.log(criteria);
 	    var match = false;
 	    var tempArray = Object.keys(criteria.interests);
-	    console.log(tempArray);
 	    for (var i = 0; i < tempArray.length; i++){
-	        if (userToComp.interests[tempArray[i]].toString() == criteria.interests[tempArray[i]].toString()){
+	        if (userToComp.interests[tempArray[i]].toString() == criteria.interests[tempArray[i]].toString() && criteria.interests[tempArray[i]].toString() === "true"){
 	            match = true;
 
 	        }
 	    }
 	    //check for age
+
+
 	    if (criteria.ageLow !== "No"){
 	        if (criteria.ageLow === 55){
 	            if (!(criteria.ageLow <= userToComp.age1)){
-	            	// console.log("age is not match")
+	            	console.log("age is not match")
 	                match = false;
 	            }
 	            if (!(criteria.ageLow <= userToComp.age2)){
-	            	// console.log("age is not match")
+	            	console.log("age is not match")
 	                match = false;
 	            }
 	        }
 	        else {
 	            // console.log(((criteria.ageLow <= userToComp.Age2 <= criteria.ageHigh)));
 	            if (!(criteria.ageLow <= userToComp.age1 && userToComp.age1 <= criteria.ageHigh)){
-	            	// console.log("age is not match")
+	            	console.log("age is not match")
 	            match = false
 	            }
 	            if (!(criteria.ageLow <= userToComp.age2 && userToComp.age2 <=criteria.ageHigh)){
-	            	// console.log("age is not match")
+	            	console.log("age is not match")
 	            match = false
 	            }
 	        }
 	    }
 	    if (criteria.gender !== "nocare"){
 	        if (criteria.gender !== userToComp.gender){
-	        	// console.log("gender is not match")
+	        	console.log("gender is not match")
 	            match = false;
 	        }
 	    }
@@ -403,6 +403,10 @@ $(function(){
 	    if (match){
 	    	console.log("match found")
 	        $(".friendsFound").append("<h2>" + userToComp.username + "</h2>");
+	    }
+
+	    else {
+		console.log("not match");
 	    }
 
 	   }, 2000);
@@ -421,9 +425,10 @@ $(function(){
 	        var userNameArray = Object.keys(users);
 	        var namesThatMatch = []
 	        for (var i = 0; i < userNameArray.length; i++){
-	        	// console.log(users[userNameArray[i]]);
-	        	console.log(users[userNameArray[i]]);
-	            matchUser(criteria, users[userNameArray[i]]);
+	        	if (myUserID !== userNameArray[i]){
+		        	// console.log(users[userNameArray[i]]);
+		            matchUser(criteria, users[userNameArray[i]]);
+	       		}
 	        }
 	       
 	    })
