@@ -24,8 +24,8 @@ dataRef = firebase.database();
 // var lastName1 = $("#partner1-last").val().trim();
 // var lastName2 = $("#partner2-last").val().trim();
 // var email = $("#email-address").val().trim();
-// var password = $("#pass").val().trim();
-// var confirmPassword = $("#confirmpass").val().trim();
+var password = $("#pass").val().trim();
+var confirmPassword = $("#confirmpass").val().trim();
 // var city = $("#city-input").val().trim();
 // var state = $("#state-input").val().trim();
 // var arts = $("#artBox").val().trim();
@@ -39,6 +39,13 @@ dataRef = firebase.database();
 // var age = $("#age-input").text();
 // var description = $("#comment-input").text();
 // var coupleUsername = $("#couple-username").text();
+
+$('#pass, #confirmpass').on('keyup', function () {
+  if ($('#pass').val() == $('#confirmpass').val()) {
+    $('#message').html('Password Matches!').css('color', 'green');
+  } else
+    $('#message').html("Password Doesn't Match").css('color', 'red');
+});
 
 $("#btnSubmit").on("click", function(event) {
 		event.preventDefault();
