@@ -1,35 +1,44 @@
 // Initialize Firebase
-var config = {
-	apiKey: "AIzaSyD8rUvWOtA4Zfr0LjKe-ICppOrwILQ-l6w",
-	authDomain: "couplette-test.firebaseapp.com",
-	databaseURL: "https://couplette-test.firebaseio.com",
-	projectId: "couplette-test",
-	storageBucket: "couplette-test.appspot.com",
-	messagingSenderId: "686070390184"
-};
+// var config = {
+// 	apiKey: "AIzaSyD8rUvWOtA4Zfr0LjKe-ICppOrwILQ-l6w",
+// 	authDomain: "couplette-test.firebaseapp.com",
+// 	databaseURL: "https://couplette-test.firebaseio.com",
+// 	projectId: "couplette-test",
+// 	storageBucket: "couplette-test.appspot.com",
+// 	messagingSenderId: "686070390184"
+// };
+
+	var config = {
+		apiKey: "AIzaSyDA-yVtB_lDDz6BiVDmC7Dm1BMACJdWFXQ",
+		authDomain: "berrytendo.firebaseapp.com",
+		databaseURL: "https://berrytendo.firebaseio.com",
+		projectId: "berrytendo",
+		storageBucket: "berrytendo.appspot.com",
+		messagingSenderId: "328422244178"
+	};
 firebase.initializeApp(config);
 dataRef = firebase.database();
 
-var firstName1 = $("#partner1-first").val().trim();
-var firstName2 = $("#partner2-first").val().trim();
-var lastName1 = $("#partner1-last").val().trim();
-var lastName2 = $("#partner2-last").val().trim();
-var email = $("#email-address").val().trim();
-var password = $("#pass").val().trim();
-var confirmPassword = $("#confirmpass").val().trim();
-var city = $("#city-input").val().trim();
-var state = $("#state-input").val().trim();
-var arts = $("#artBox").val().trim();
-var dining = $("#diningBox").val().trim();
-var films = $("#filmBox").val().trim();
-var music = $("#musicBox").val().trim();
-var gaming = $("#gamingBox").val().trim();
-var outdoor = $("#outdoorBox").val().trim();
-var travel = $("#travelBox").val().trim();
-var other = $("#otherBox").val().trim();
-var age = $("#age-input").text();
-var description = $("#comment-input").text();
-var coupleUsername = $("#couple-username").text();
+// var firstName1 = $("#partner1-first").val().trim();
+// var firstName2 = $("#partner2-first").val().trim();
+// var lastName1 = $("#partner1-last").val().trim();
+// var lastName2 = $("#partner2-last").val().trim();
+// var email = $("#email-address").val().trim();
+// var password = $("#pass").val().trim();
+// var confirmPassword = $("#confirmpass").val().trim();
+// var city = $("#city-input").val().trim();
+// var state = $("#state-input").val().trim();
+// var arts = $("#artBox").val().trim();
+// var dining = $("#diningBox").val().trim();
+// var films = $("#filmBox").val().trim();
+// var music = $("#musicBox").val().trim();
+// var gaming = $("#gamingBox").val().trim();
+// var outdoor = $("#outdoorBox").val().trim();
+// var travel = $("#travelBox").val().trim();
+// var other = $("#otherBox").val().trim();
+// var age = $("#age-input").text();
+// var description = $("#comment-input").text();
+// var coupleUsername = $("#couple-username").text();
 
 $("#btnSubmit").on("click", function(event) {
 		event.preventDefault();
@@ -63,6 +72,7 @@ $("#btnSubmit").on("click", function(event) {
 
 		firebase.auth().onAuthStateChanged(user => {
 			if(user) {
+				window.location = "dashboardMega.html";
 				console.log(user.uid);
 
 				dataRef.ref("Users/" + user.uid).set({
@@ -168,3 +178,16 @@ $("#btnSubmit").on("click", function(event) {
 //listener return UI
 //Push to user info to db
 //database.ref('users/' + uid).set('info-object');
+
+
+
+
+
+//
+$(".logInPage").on("click", function(event){
+	event.preventDefault();
+	var uEmail = $("#username").val();
+	var uPass = $("#pass").val();
+	firebase.auth().signInWithEmailAndPassword(uEmail, uPass);
+
+})
