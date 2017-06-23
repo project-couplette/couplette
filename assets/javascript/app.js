@@ -244,122 +244,87 @@ $(function(){
 		});
 	});
 
-	
-	var testZip1 = 91384;
-	
-	var googleQueryURL = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + testZip1 + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
-
 	//Google Maps API Call
-	function distanceMatrixCall() {
-		
+	function distanceMatrixCall(myZipCode, zipcode2) {
+		var googleQueryURL = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + myZipCode + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
+		// console.log(googleQueryURL);
+		var zipcode2city = "";
+		var zipcode2state = "";
+		var zipcode2lat = [];
+		var zipcode2long = [];
 		$.ajax({
 		  crossDomain: true,
 		  url: googleQueryURL,
 		  method: "GET"
 		}).done(function(response) {
-			var city = response.results[0].address_components[1].long_name;
-			var state = response.results[0].address_components[2].long_name;
-			var testLatitude = parseInt(response.results[0].geometry.location.lat);
-			var testLongitude = parseInt(response.results[0].geometry.location.lng);
-			console.log(cityArray);
-			
-			zipCodeConverter()
+			// console.log('working');
+			var zipcode1city = response.results[0].address_components[1].long_name;
+			var zipcode1state = response.results[0].address_components[2].long_name;
+			var zipcode1lat = parseInt(response.results[0].geometry.location.lat);
+			var zipcode1long = parseInt(response.results[0].geometry.location.lng);
+			zipCodeConverter(zipcode2)
 			  .then(function() {
 				// zipCodeMatcher();
 				// function zipCodeMatcher()
-				for (var j=0; j < cityArray.length; j++) {
-					console.log(cityArray[j]);
-					console.log("working");
-					var origin1 = new google.maps.LatLng(testLatitude, testLongitude);
-					var origin2 = "" + city + "," + "" + state;
-					var destinationA = "" + cityArray[j] + "," + "" + stateArray[j];
-					var destinationB = new google.maps.LatLng(lngarray[j], latArray[j]);
-					var service = new google.maps.DistanceMatrixService();
-					console.log(origin1, origin2, destinationB, destinationA);
-					service.getDistanceMatrix(
-					  {
-					  	origins: [origin1, origin2],
-		    			destinations: [destinationA, destinationB],
-					    travelMode: 'DRIVING',
-					    // s
-					  }, callback);
+				// for (var j=0; j < cityArray.length; j++) {
+				// console.log(cityArray[j]);
+				// console.log("working");
+				var origin1 = new google.maps.LatLng(zipcode1lat, zipcode1long);
+				var origin2 = "" + zipcode1city + "," + "" + zipcode1state;
+				var destinationA = "" + zip.responseJSON.results[0].address_components[1].short_name + "," + "" + zip.responseJSON.results[0].address_components[3].short_name;
+				var destinationB = new google.maps.LatLng(zip.responseJSON.results[0].geometry.location.lat, zip.responseJSON.results[0].geometry.location.lng);
+				var service = new google.maps.DistanceMatrixService();
+				console.log(origin1, origin2, destinationB, destinationA);
+				service.getDistanceMatrix(
+				  {
+				  	origins: [origin1, origin2],
+	    			destinations: [destinationA, destinationB],
+				    travelMode: 'DRIVING',
+				  }, callback);
 
-					function callback(response, status) {
-						console.log(response, status);
-						var num = response.rows[0].elements[0].distance.text.replace(/[^0-9]/g,'');
-						distance.push(parseInt(num));
-					};
-				}
+				function callback(response, status) {
+					console.log(response, status);
+					var num = response.rows[0].elements[0].distance.text.replace(/[^0-9]/g,'');
+					var milesConverted = (parseInt(num)*0.621371);
+					distanceArray.push(parseInt(milesConverted));
+					console.log(distanceArray);
+				};
 			});
-				
 		});
 	};
 
-
 	distanceMatrixCall();
 
-
-	distanceMatrixCall();
-
-	function isDistanceMatch(){
-		for (var i=0; i<distanceArray.length; i++) {
-			if (distanceArray[i] > searchCriteria.distance) {
-				match = false;
-			} else {
-				match= true;
-			}
-		}
-
-	};
-
-	isDistanceMatch();
-
-	isDistanceMatch();
-	
-
-
-	function zipCodeConverter() {
+	function zipCodeConverter(zipcode2) {
 		// getFirebaseData();
-		var testZipCodeArray = [95050, 91350, 94110];
+		// var testZipCodeArray = [95050, 91350, 94110];
 		var zipPromises = [];
-		
-		for (var i=0; i<testZipCodeArray.length; i++) {
-			var googleQueryURLLoop = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + testZipCodeArray[i] + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
-		// sconsole.log(googleQueryURLLoop)
+		// for (var i=0; i<testZipCodeArray.length; i++) {
+		// var googleQueryURLLoop = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + testZipCodeArray[i] + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
+		var googleQueryURLLoop = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + zipcode2 + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
 		//Google Maps API Call
 			zip = $.ajax({
 			  crossDomain: true,
 			  url: googleQueryURLLoop,
 			  method: "GET"
 			}).done(function(response) {
-				var cityConverted = response.results[0].address_components[1].long_name;
-				var stateConverted = response.results[0].address_components[2].long_name;
-				var testLatitudeConverted = parseInt(response.results[0].geometry.location.lat);
-				var testLongitudeConverted = parseInt(response.results[0].geometry.location.lng);
-				cityArray.push(cityConverted);
-				stateArray.push(stateConverted);
-				latArray.push(testLatitudeConverted);
-				lngarray.push(testLongitudeConverted);
+				var zipcode2city = response.results[0].address_components[1].long_name;
+				var zipcode2state = response.results[0].address_components[2].long_name;
+				var zipcode2lat = parseFloat(response.results[0].geometry.location.lat);
+				var zipcode2long = parseFloat(response.results[0].geometry.location.lng);
+				// cityArray.push(cityConverted);
+				// stateArray.push(stateConverted);
+				// latArray.push(latitude);
+				// lngarray.push(longitude);
 			});
 			zipPromises.push(zip);
+
+			return Promise.all(zipPromises);
 		};
-
-
-		return Promise.all(zipPromises);
-
-	};
-
-	zipCodeConverter();
-
-
-	// 	return Promise.all(zipPromises);
-
-	// };
-
 
 	function getFirebaseData() {
 		var fireBaseZipCodes = [];
-		dataRef.ref().on("value", function(childSnapshot) {	
+		dataRef.ref().on("value", function(childSnapshot) {
 	      	// Log everything that's coming out of snapshot
 		    fireBaseZipCodes.push(childSnapshot.val().zipCode);
 	      });
@@ -416,6 +381,12 @@ $(function(){
 	            match = false;
 	        }
 	    }
+
+	    distanceMatrixCall(myZipCode, zipcode2);
+
+	    if (distanceArray > criteria.distance){
+	    	match = false;
+	    };
 
 
 	    if (match){
@@ -481,7 +452,6 @@ $(function(){
 			var longitudeOfZip, latOfZip;
 			function initialize() {
 			var queryURLLongLat = "https://maps.googleapis.com/maps/api/geocode/json?address=" + $(".zipInp").val() + "&key=AIzaSyA52ADkbHa1-oZzlIZuCk6PAACaPFOFe2A";
-			
 			$.ajax({
 				url: queryURLLongLat,
 				method: "GET"
@@ -513,7 +483,6 @@ $(function(){
 					}
 				}
 			});
-	
 		}
 		initialize();
 	}
@@ -557,7 +526,7 @@ $(function(){
 						var diningOption = $("<option>").attr("value", results[i].name).text(results[i].name);
 						$(".diningOptionsDrop").append(diningOption);
 						$(".diningEvent").slideDown("normal");
-					}					
+					}
 				}
 			}
 		});
@@ -832,7 +801,6 @@ $(function(){
 			myZipCode = $(".myZip").val();
 		})
 		ohSnap('Profile Updated!', {color: 'red'});
-		
 	})
 
 	$(".signUpButton").on("click", function(event){
@@ -849,7 +817,6 @@ $(function(){
 		firebase.auth().signOut().then(function() {
 			window.location = "index.html"
 		}, function(error) {
-			
 		});
 	})
 
