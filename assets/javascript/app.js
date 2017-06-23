@@ -61,6 +61,7 @@ $(function(){
 	    	$(".myEmail").text(snapshot.val().coupleEmail);
 	    	$(".myZip").val(snapshot.val().zipcode);
 	    	$(".profilePic").attr("src", snapshot.val().imgURL);
+	    	$(".profileIMGURL").val(snapshot.val().imgURL);
 	    	$(".partner1FName").val(snapshot.val().firstName1);
 	    	$(".partner1LName").val(snapshot.val().lastName1);
 	    	$(".partner1Age").val(snapshot.val().age1);
@@ -250,13 +251,14 @@ $(function(){
 	});
 
 	//Google Maps API Call
-	function distanceMatrixCall(myZipCode, zipcode2) {
+	function distanceMatrixCall(zipcode2) {
 		var googleQueryURL = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + myZipCode + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
 		// console.log(googleQueryURL);
 		var zipcode2city = "";
 		var zipcode2state = "";
 		var zipcode2lat = [];
 		var zipcode2long = [];
+		console.log(zipcode2);
 		$.ajax({
 		  crossDomain: true,
 		  url: googleQueryURL,
@@ -276,7 +278,7 @@ $(function(){
 				// console.log("working");
 				var origin1 = new google.maps.LatLng(zipcode1lat, zipcode1long);
 				var origin2 = "" + zipcode1city + "," + "" + zipcode1state;
-				var destinationA = "" + zip.responseJSON.results[0].address_components[1].short_name + "," + "" + zip.responseJSON.results[0].address_components[3].short_name;
+				var destinationA = zip.responseJSON.results[0].address_components[1].short_name + "," + zip.responseJSON.results[0].address_components[3].short_name;
 				var destinationB = new google.maps.LatLng(zip.responseJSON.results[0].geometry.location.lat, zip.responseJSON.results[0].geometry.location.lng);
 				var service = new google.maps.DistanceMatrixService();
 				// console.log(origin1, origin2, destinationB, destinationA);
@@ -292,6 +294,7 @@ $(function(){
 					var num = response.rows[0].elements[0].distance.text.replace(/[^0-9]/g,'');
 					var milesConverted = (parseInt(num)*0.621371);
 					distanceOfUsers = milesConverted;
+					console.log(distanceOfUsers);
 					return milesConverted;
 					// console.log(distanceArray);
 				};
@@ -361,8 +364,8 @@ $(function(){
 
 	        }
 	    }
-	    //check for age
 
+	    //check for age
 
 	    if (criteria.ageLow !== "No"){
 	        if (criteria.ageLow === 55){
@@ -393,29 +396,64 @@ $(function(){
 	            match = false;
 	        }
 	    }
+	    //toCompareDistances
+		var googleQueryURL = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + myZipCode + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
+		// console.log(googleQueryURL);
 
-	   var distanceBetween = distanceMatrixCall(myZipCode, userToComp.zipcode);
+		$.ajax({
+			url: "http://www.zipcodeapi.com/rest/aGAWdlBPe49SCqrwuJqnsNFxLWCKtRaDyKAM6cBlgLdScFpGpP3RDJooG199TjNr/distance./94612/90210/miles.",
+			method: "GET"
+		}).done(function(response){
+			console.log(response);
+		})
 
-	   setTimeout(function(){
-	   	if (distanceBetween > criteria.distance && criteria.distance !== "NoCare" && criteria.distance !== null){
-	   		match = false;
-	   	}
-	    if (match){
-	    	console.log("match found")
-	        $(".friendsFound").append("<h2>" + userToComp.username + "</h2>");
-	    }
+	// 	$.ajax({
+	// 	  crossDomain: true,
+	// 	  url: googleQueryURL,
+	// 	  method: "GET"
+	// 	}).done(function(response) {
+	// 		// console.log('working');
+	// 		var zipcode1city = response.results[0].address_components[1].long_name;
+	// 		var zipcode1state = response.results[0].address_components[2].long_name;
+	// 		var zipcode1lat = parseInt(response.results[0].geometry.location.lat);
+	// 		var zipcode1long = parseInt(response.results[0].geometry.location.lng);
+	// 		zipCodeConverter(userToComp.zipcode)
+	// 		  .then(function() {
+	// 			var origin1 = new google.maps.LatLng(zipcode1lat, zipcode1long);
+	// 			var origin2 = "" + zipcode1city + "," + "" + zipcode1state;
+	// 			var destinationA = zip.responseJSON.results[0].address_components[1].short_name + "," + zip.responseJSON.results[0].address_components[3].short_name;
+	// 			var destinationB = new google.maps.LatLng(zip.responseJSON.results[0].geometry.location.lat, zip.responseJSON.results[0].geometry.location.lng);
+	// 			var service = new google.maps.DistanceMatrixService();
+	// 			// console.log(origin1, origin2, destinationB, destinationA);
+	// 			service.getDistanceMatrix(
+	// 			  {
+	// 			  	origins: [origin1, origin2],
+	//     			destinations: [destinationA, destinationB],
+	// 			    travelMode: 'DRIVING',
+	// 			  }, callback);
 
-	    else {
-		console.log("not match");
-	    }
+	// 			function callback(response, status) {
+	// 				// console.log(response.rows[0].elements[0]);
+	// 				var num = response.rows[0].elements[0].distance.text.replace(/[^0-9]/g,'');
+	// 				var milesConverted = (parseInt(num)*0.621371);
+	// 				console.log(userToComp.zipcode)
+	// 				console.log(milesConverted);
 
-	   }, 2000);
+	// 				if (milesConverted > criteria.distance && criteria.distance !== "NoCare" && criteria.distance !== null){
+	// 			   		match = false;
+	// 			   	}
 
+	// 			    if (match){
+	// 			        $(".friendsFound").append("<h2>" + userToComp.coupleUsername + "</h2>");
+	// 			        console.log("adding " + userToComp.coupleUsername)
 
-	    // if (distance > criteria.distance){
-	    // 	match = false;
-	    // };
-	};
+	// 							// console.log(distanceArray);
+	// 						};
+	// 					};
+	// 	});
+
+	// })
+}
 
 
 
@@ -423,11 +461,14 @@ $(function(){
 	    dataRef.ref("Users").once("value", function(snapshot){
 	        var users = snapshot.val();
 	        var userNameArray = Object.keys(users);
-	        var namesThatMatch = []
 	        for (var i = 0; i < userNameArray.length; i++){
 	        	if (myUserID !== userNameArray[i]){
-		        	// console.log(users[userNameArray[i]]);
-		            matchUser(criteria, users[userNameArray[i]]);
+	        		// console.log("testing " + users[userNameArray[i]].coupleUsername)
+	        		var key = userNameArray[i];
+	        		console.log(users[key])
+	        		var userToCheck = users[userNameArray[i]]
+	        		console.log("testing " + userToCheck.coupleUsername)
+		            matchUser(criteria, userToCheck);
 	       		}
 	        }
 	       
@@ -462,22 +503,7 @@ $(function(){
 		}
 	})
 
-	dataRef.ref("Users/fhdjksfhdls").update({
-		zipcode: 94615,
-		gender: "mf",
-		age1: 18,
-		age2: 25,
-		interests: {
-				arts: true,
-				dining: false,
-				films: false,
-				music: true,
-				gaming: true,
-				outdoors: false,
-				travel: true,
-				sports: false,
-			},
-	});
+
 
 	//adding dynamic page updates based on event select dropdown option
 	$(".eventType").on("change", function(){
