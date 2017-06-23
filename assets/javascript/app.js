@@ -38,12 +38,37 @@ $(function(){
 
     	dataRef.ref("Users/" + myUserID + "/friendRequests").on("child_added", function(snapshot){
 		// console.log(snapshot.val());
-		dataRef.ref("Users/" + snapshot.val().inviter).once("value").then(function(snapshot1){
-			var friendDiv = $("<div>").append("<h3 class='requestDiv'>" + snapshot1.val().coupleUsername + "</h3>")
+			dataRef.ref("Users/" + snapshot.val().inviter).once("value").then(function(snapshot1){
+				var friendDiv = $("<div>").append("<h3 class='requestDiv'>" + snapshot1.val().coupleUsername + "</h3>")
+				.attr("data-key", snapshot.val().inviter)
+				.appendTo(".friendRequestsDiv");
+
+				dataRef.ref("Users/" + myUserID + "/friendRequests").once("value").then(function(snap2){
+					var numOfRequests = Object.keys(snap2);
+					if (numOfRequests.length === 1){
+						$(".glyphicon-envelope").css("color", "#ffb880")
+						ohSnap("You have a new request!", {color: "red"})
+					}
+
+					else if (numOfRequests.length >= 1) {
+						$(".glyphicon-envelope").css("color", "#ffb880")
+					}
+
+					else {
+						$(".glyphicon-envelope").css("color", "white")
+					}
+				})
+			})
+
+		})
+
+	   	dataRef.ref("Users/" + myUserID + "/eventRequests").on("child_added", function(snapshot){
+			var eventDiv = $("<div>").append("<h3 class='requestDiv'>" + snapshot1.val().eventName + " at " + snapshot1.val().eventAddress + 
+			" on " + snapshot1.val().eventDate + "</h3>")
 			.attr("data-key", snapshot.val().inviter)
 			.appendTo(".friendRequestsDiv");
 
-			dataRef.ref("Users/" + myUserID + "/friendRequests").once("value").then(function(snap2){
+			dataRef.ref("Users/" + myUserID + "/eventRequests").once("value").then(function(snap2){
 				var numOfRequests = Object.keys(snap2);
 				if (numOfRequests.length === 1){
 					$(".glyphicon-envelope").css("color", "#ffb880")
@@ -58,11 +83,8 @@ $(function(){
 					$(".glyphicon-envelope").css("color", "white")
 				}
 			})
-		})
 
 
-		
-		// $(".friendRequestsModalContent").
 		})
 
 	    dataRef.ref("Users/" + myUserID + "/events").on("child_added", function(snapshot){
@@ -105,6 +127,25 @@ $(function(){
 	    		}
 	    	}
 	    })
+
+    	dataRef.ref('Users/' + myUserID + "/friends").on("value", function(snapshot){
+			if (snapshot.val() !== null){
+				$(".friendModalContent").empty().append("<span class='close friendClose'>&times;</span>")
+				.append("<h2>Friend List</h2>")
+				var names = Object.keys(snapshot.val());
+				console.log(names);
+
+				dataRef.ref("Users").once("value").then(function(snap1){
+					for (var i = 0; i < names.length; i++){
+						var friendDiv = $("<div>").addClass("friendDiv")
+						.append("<img src=" + snap1.val()[names[i]].imgURL + " class='smallProfile'>")
+						.append("<h3 class='friendUN'>"+ snap1.val()[names[i]].coupleUsername + "</h3>")
+						.attr("data-uid", names[i])
+						.appendTo($(".friendModalContent"))
+					}
+				})
+			}
+		})
 
 	  }
 	});
@@ -848,23 +889,6 @@ $(function(){
 		})
 	});
 
-	dataRef.ref('Users/' + myUserID + "/friends").on("value", function(snapshot){
-		if (snapshot.val() !== null){
-			$(".friendModalContent").empty().append("<span class='close friendClose'>&times;</span>")
-			.append("<h2>Friend List</h2>")
-			var names = Object.keys(snapshot.val());
-
-			dataRef.ref("Users").once("value").then(function(snap1){
-				for (var i = 0; i < names.length; i++){
-					var friendDiv = $("<div>").addClass("friendDiv")
-					.append("<img src=" + snap1.val()[names[i]].profile + " class='smallProfile'>")
-					.append("<h3 class='friendUN'>"+ snap1.val()[names[i]].username + "</h3>")
-					.attr("data-uid", names[i])
-					.appendTo($(".friendModalContent"))
-				}
-			})
-		}
-	})
 
 	$("body").on("click", ".friendsNavButton", function(){
 		$(".friendList").fadeIn("fast", function(){
