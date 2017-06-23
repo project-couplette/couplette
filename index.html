@@ -16,14 +16,9 @@
 <body>
 	<nav class="navbar navbar-inverse">
 		<div class="navbar-header">
-				<a class="navbar-brand">Couplette</a>
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavBar" aria-expanded="false">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-			</div>
+			<a class="navbar-brand" href="index.html">Couplette</a>
+		</div>
+
 	</nav>
 			
 <!-- my code -->
@@ -39,7 +34,7 @@
 						<span class="input-group-addon">
 							<span class="glyphicon glyphicon-user"></span>
 						</span>
-						<input type="text" class="form-control" id="username" required placeholder="Username">
+						<input type="text" class="form-control" id="username" required placeholder="Username" required>
 					</div>
 							
 					<div class="form-group input-group">
@@ -56,12 +51,23 @@
 					</div> <!-- end of checkbox -->
 						
 					
-					<button type="submit" class="main-btn">Log In</button> 
+					<button type="submit" class="main-btn logInPage">Log In</button> 
 					<p class="text-center">
 						<a href="recovery.html"> Forgot Password?</a>
 					</p>
 				</form>
 			</div> <!-- end of wrap-->
 		</div> <!-- end of container-->
+		
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA52ADkbHa1-oZzlIZuCk6PAACaPFOFe2A&libraries=places"></script>
+
+	<script src="assets/javascript/ohsnap.js"></script>
+	<script src="assets/javascript/moment.js"></script>
+	<script src="assets/javascript/jquery-ui.js"></script>
+	<script src="signup.js"></script>
 </body>
 </html>

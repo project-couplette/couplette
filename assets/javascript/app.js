@@ -23,14 +23,22 @@ $(function(){
 
 	firebase.initializeApp(config);
 
-	var dataRef = firebase.database(event);
+	var dataRef = firebase.database();
 
+	var myUserID;
+	var myZipCode;
+	var status = "dashboard";
 
-	// var myUserID;
+	var eventInvite = {};
+	var distanceOfUsers = "";
 
 	firebase.auth().onAuthStateChanged((user) => {
 	  if (user) {
 	    myUserID = user.uid;
+
+	    	dataRef.ref('Users/' + myUserID + '/interests/film').remove();
+			dataRef.ref('Users/' + myUserID + '/interests/').update({films: true});
+			dataRef.ref('Users/' + myUserID).update({username: "theBerrys"});
 
 	    dataRef.ref("Users/" + myUserID + "/events").on("child_added", function(snapshot){
 	    	//adds events to user's dashboard
@@ -46,12 +54,14 @@ $(function(){
 	    dataRef.ref("Users/" + myUserID).once("value").then(function(snapshot){
 	    	//adds events to user's dashboard
 	    	ohSnap('Welcome back, ' + snapshot.val().coupleUsername, {color: 'red'});
+	    	myZipCode = snapshot.val().zipcode;
 
 	    	//update profile page to latest version of profile
 	    	$(".myUsername").text(snapshot.val().coupleUsername);
 	    	$(".myEmail").text(snapshot.val().coupleEmail);
 	    	$(".myZip").val(snapshot.val().zipcode);
 	    	$(".profilePic").attr("src", snapshot.val().imgURL);
+	    	$(".profileIMGURL").val(snapshot.val().imgURL);
 	    	$(".partner1FName").val(snapshot.val().firstName1);
 	    	$(".partner1LName").val(snapshot.val().lastName1);
 	    	$(".partner1Age").val(snapshot.val().age1);
@@ -70,14 +80,22 @@ $(function(){
 	    		}
 	    	}
 	    })
+
 	  }
 	});
 
 	$("body").on("click", ".eventSection", function(){
 		var eventModal = $("<div>").addClass("modals");
-		var modalContent = $("<div>").addClass("modalContent").append("<span class='close'>&times;</span>")
+		var modalContent = $("<div>").addClass("modalContent").append("<span class='close eventmodalClose'>&times;</span>")
 		var uid = $(this).attr("data-uid");
+
 		dataRef.ref("Users/" + myUserID + "/events/" + uid).once("value").then(function(snapshot){
+			eventInvite = {
+				eventName: snapshot.val().eventName,
+				eventDate: snapshot.val().eventDate,
+				eventTime: snapshot.val().eventTime,
+				eventAddress: snapshot.val().eventAddress
+			}
 			modalContent.append("<h3>"+ snapshot.val().eventName + "</h3>")
 			.append("<button class='buttonStyle removeButton' data-eventID='" + uid + "'>Remove Event</button>")
 			.append("<button class='buttonStyle inviteButton' data-eventID='" + uid + "'>Invite Couple</button>")
@@ -87,10 +105,25 @@ $(function(){
 				modalContent.show("clip", "fast");
 			})
 		})
-	
 	})
 
-	$("body").on("click", ".close", function(){
+	$("body").on("click", ".inviteButton", function(){
+		$(this).closest(".modalContent").hide("clip", "fast", function(){
+			$(this).closest(".modals").fadeOut("fast", function(){
+				$(this).closest(".modals").remove();
+				$(".friendList").fadeIn("fast", function(){
+					$(".friendModalContent").show("clip", "fast");
+				})
+			})
+		});
+
+		status = "eventInvite";
+		
+	})
+
+
+
+	$("body").on("click", ".eventmodalClose", function(){
 		$(this).closest(".modalContent").hide("clip", "fast", function(){
 			$(this).closest(".modals").fadeOut("fast", function(){
 				$(this).closest(".modals").remove();
@@ -217,122 +250,88 @@ $(function(){
 		});
 	});
 
-	
-	var testZip1 = 91384;
-	
-	var googleQueryURL = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + testZip1 + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
-
 	//Google Maps API Call
-	function distanceMatrixCall() {
-		
+	function distanceMatrixCall(zipcode2) {
+		var googleQueryURL = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + myZipCode + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
+		// console.log(googleQueryURL);
+		var zipcode2city = "";
+		var zipcode2state = "";
+		var zipcode2lat = [];
+		var zipcode2long = [];
+		console.log(zipcode2);
 		$.ajax({
 		  crossDomain: true,
 		  url: googleQueryURL,
 		  method: "GET"
 		}).done(function(response) {
-			var city = response.results[0].address_components[1].long_name;
-			var state = response.results[0].address_components[2].long_name;
-			var testLatitude = parseInt(response.results[0].geometry.location.lat);
-			var testLongitude = parseInt(response.results[0].geometry.location.lng);
-			console.log(cityArray);
-			
-			zipCodeConverter()
+			// console.log('working');
+			var zipcode1city = response.results[0].address_components[1].long_name;
+			var zipcode1state = response.results[0].address_components[2].long_name;
+			var zipcode1lat = parseInt(response.results[0].geometry.location.lat);
+			var zipcode1long = parseInt(response.results[0].geometry.location.lng);
+			zipCodeConverter(zipcode2)
 			  .then(function() {
 				// zipCodeMatcher();
 				// function zipCodeMatcher()
-				for (var j=0; j < cityArray.length; j++) {
-					console.log(cityArray[j]);
-					console.log("working");
-					var origin1 = new google.maps.LatLng(testLatitude, testLongitude);
-					var origin2 = "" + city + "," + "" + state;
-					var destinationA = "" + cityArray[j] + "," + "" + stateArray[j];
-					var destinationB = new google.maps.LatLng(lngarray[j], latArray[j]);
-					var service = new google.maps.DistanceMatrixService();
-					console.log(origin1, origin2, destinationB, destinationA);
-					service.getDistanceMatrix(
-					  {
-					  	origins: [origin1, origin2],
-		    			destinations: [destinationA, destinationB],
-					    travelMode: 'DRIVING',
-					    // s
-					  }, callback);
+				// for (var j=0; j < cityArray.length; j++) {
+				// console.log(cityArray[j]);
+				// console.log("working");
+				var origin1 = new google.maps.LatLng(zipcode1lat, zipcode1long);
+				var origin2 = "" + zipcode1city + "," + "" + zipcode1state;
+				var destinationA = zip.responseJSON.results[0].address_components[1].short_name + "," + zip.responseJSON.results[0].address_components[3].short_name;
+				var destinationB = new google.maps.LatLng(zip.responseJSON.results[0].geometry.location.lat, zip.responseJSON.results[0].geometry.location.lng);
+				var service = new google.maps.DistanceMatrixService();
+				// console.log(origin1, origin2, destinationB, destinationA);
+				service.getDistanceMatrix(
+				  {
+				  	origins: [origin1, origin2],
+	    			destinations: [destinationA, destinationB],
+				    travelMode: 'DRIVING',
+				  }, callback);
 
-					function callback(response, status) {
-						console.log(response, status);
-						var num = response.rows[0].elements[0].distance.text.replace(/[^0-9]/g,'');
-						distance.push(parseInt(num));
-					};
-				}
+				function callback(response, status) {
+					// console.log(response.rows[0].elements[0]);
+					var num = response.rows[0].elements[0].distance.text.replace(/[^0-9]/g,'');
+					var milesConverted = (parseInt(num)*0.621371);
+					distanceOfUsers = milesConverted;
+					console.log(distanceOfUsers);
+					return milesConverted;
+					// console.log(distanceArray);
+				};
 			});
-				
 		});
 	};
 
-
-	distanceMatrixCall();
-
-
-	distanceMatrixCall();
-
-	function isDistanceMatch(){
-		for (var i=0; i<distanceArray.length; i++) {
-			if (distanceArray[i] > searchCriteria.distance) {
-				match = false;
-			} else {
-				match= true;
-			}
-		}
-
-	};
-
-	isDistanceMatch();
-
-	isDistanceMatch();
-	
-
-
-	function zipCodeConverter() {
+	function zipCodeConverter(zipcode2) {
 		// getFirebaseData();
-		var testZipCodeArray = [95050, 91350, 94110];
+		// var testZipCodeArray = [95050, 91350, 94110];
 		var zipPromises = [];
-		
-		for (var i=0; i<testZipCodeArray.length; i++) {
-			var googleQueryURLLoop = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + testZipCodeArray[i] + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
-		// sconsole.log(googleQueryURLLoop)
+		// for (var i=0; i<testZipCodeArray.length; i++) {
+		// var googleQueryURLLoop = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + testZipCodeArray[i] + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
+		var googleQueryURLLoop = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + zipcode2 + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
 		//Google Maps API Call
 			zip = $.ajax({
 			  crossDomain: true,
 			  url: googleQueryURLLoop,
 			  method: "GET"
 			}).done(function(response) {
-				var cityConverted = response.results[0].address_components[1].long_name;
-				var stateConverted = response.results[0].address_components[2].long_name;
-				var testLatitudeConverted = parseInt(response.results[0].geometry.location.lat);
-				var testLongitudeConverted = parseInt(response.results[0].geometry.location.lng);
-				cityArray.push(cityConverted);
-				stateArray.push(stateConverted);
-				latArray.push(testLatitudeConverted);
-				lngarray.push(testLongitudeConverted);
+				var zipcode2city = response.results[0].address_components[1].long_name;
+				var zipcode2state = response.results[0].address_components[2].long_name;
+				var zipcode2lat = parseFloat(response.results[0].geometry.location.lat);
+				var zipcode2long = parseFloat(response.results[0].geometry.location.lng);
+				// cityArray.push(cityConverted);
+				// stateArray.push(stateConverted);
+				// latArray.push(latitude);
+				// lngarray.push(longitude);
 			});
 			zipPromises.push(zip);
+
+			return Promise.all(zipPromises);
 		};
-
-
-		return Promise.all(zipPromises);
-
-	};
-
-	zipCodeConverter();
-
-
-	// 	return Promise.all(zipPromises);
-
-	// };
-
 
 	function getFirebaseData() {
 		var fireBaseZipCodes = [];
-		dataRef.ref().on("value", function(childSnapshot) {	
+		dataRef.ref().on("value", function(childSnapshot) {
 	      	// Log everything that's coming out of snapshot
 		    fireBaseZipCodes.push(childSnapshot.val().zipCode);
 	      });
@@ -357,58 +356,128 @@ $(function(){
 	}
 
 	function matchUser (criteria, userToComp){
+		console.log(userToComp.coupleUsername)
 	    var match = false;
 	    var tempArray = Object.keys(criteria.interests);
 	    for (var i = 0; i < tempArray.length; i++){
-	        if (userToComp.interests[tempArray[i]] === criteria.interests[tempArray[i]]){
+	        if (userToComp.interests[tempArray[i]].toString() == criteria.interests[tempArray[i]].toString() && criteria.interests[tempArray[i]].toString() === "true"){
 	            match = true;
 	        }
 	    }
+
+	    if (!match){
+
+	    }
+
 	    //check for age
-	    if (criteria.ageLow !== null){
+
+	    if (criteria.ageLow !== "No"){
 	        if (criteria.ageLow === 55){
 	            if (!(criteria.ageLow <= userToComp.age1)){
+	            	console.log("age is not match")
 	                match = false;
 	            }
 	            if (!(criteria.ageLow <= userToComp.age2)){
+	            	console.log("age is not match")
 	                match = false;
 	            }
 	        }
 	        else {
 	            // console.log(((criteria.ageLow <= userToComp.Age2 <= criteria.ageHigh)));
 	            if (!(criteria.ageLow <= userToComp.age1 && userToComp.age1 <= criteria.ageHigh)){
+	            	console.log("age is not match")
 	            match = false
 	            }
 	            if (!(criteria.ageLow <= userToComp.age2 && userToComp.age2 <=criteria.ageHigh)){
+	            	console.log("age is not match")
 	            match = false
 	            }
 	        }
 	    }
-	    if (criteria.gender !== null){
+	    if (criteria.gender !== "nocare"){
 	        if (criteria.gender !== userToComp.gender){
+	        	console.log("gender is not match")
 	            match = false;
 	        }
 	    }
+	    //toCompareDistances
+		var googleQueryURL = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + myZipCode + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
+		// console.log(googleQueryURL);
 
-	    if (match){
-	        return true;
-	    }
-	    else {
-	        return false;
-	    };
-	};
+		$.ajax({
+			url: "https://www.zipcodeapi.com/rest/js-yRVPK4c0dFARFe2ZU0sFK0ClegRY8m8He4wZ8J0moBd4Pg3Jhwp2x1nLieJqBS8Q/distance.json/" + myZipCode + "/" + userToComp.zipcode +"/miles",
+			dataType: "json"
+		}).done(function(response){
+			console.log(response);
+		})
+
+		// $.ajax({
+		//   crossDomain: true,
+		//   url: googleQueryURL,
+		//   method: "GET"
+		// }).done(function(response) {
+		// 	// console.log('working');
+		// 	var zipcode1city = response.results[0].address_components[1].long_name;
+		// 	var zipcode1state = response.results[0].address_components[2].long_name;
+		// 	var zipcode1lat = parseInt(response.results[0].geometry.location.lat);
+		// 	var zipcode1long = parseInt(response.results[0].geometry.location.lng);
+		// 	zipCodeConverter(userToComp.zipcode)
+		// 	  .then(function() {
+		// 		var origin1 = new google.maps.LatLng(zipcode1lat, zipcode1long);
+		// 		var origin2 = "" + zipcode1city + "," + "" + zipcode1state;
+		// 		var destinationA = zip.responseJSON.results[0].address_components[1].short_name + "," + zip.responseJSON.results[0].address_components[3].short_name;
+		// 		var destinationB = new google.maps.LatLng(zip.responseJSON.results[0].geometry.location.lat, zip.responseJSON.results[0].geometry.location.lng);
+		// 		var service = new google.maps.DistanceMatrixService();
+		// 		// console.log(origin1, origin2, destinationB, destinationA);
+		// 		service.getDistanceMatrix(
+		// 		  {
+		// 		  	origins: [origin1, origin2],
+	 //    			destinations: [destinationA, destinationB],
+		// 		    travelMode: 'DRIVING',
+		// 		  }, callback);
+
+		// 		function callback(response, status) {
+		// 			// console.log(response.rows[0].elements[0]);
+		// 			var num = response.rows[0].elements[0].distance.text.replace(/[^0-9]/g,'');
+		// 			var milesConverted = (parseInt(num)*0.621371);
+		// 			console.log(userToComp.zipcode)
+		// 			console.log(milesConverted);
+
+		// 			if (milesConverted > criteria.distance && criteria.distance !== "NoCare" && criteria.distance !== null){
+		// 		   		match = false;
+		// 		   	}
+
+		// 		    if (match){
+		// 		    	console.log(userToComp.coupleUsername + " is a match");
+		// 		    	var div = $("<div>").append("<h3>" + userToComp.coupleUsername + "</h3>")
+		// 		    	.appendTo(".couplesFoundModal")
+		// 		        $(".couplesFound").show("fade")	
+		// 		        $(".couplesFoundModal").show("clip")	
+		// 						// console.log(distanceArray);
+		// 					};
+		// 				};
+		// });
+
+	// })
+}
+
+
 
 	function collectUser(criteria){
-	    dataRef.ref("users").once("value", function(snapshot){
+	    dataRef.ref("Users").once("value", function(snapshot){
 	        var users = snapshot.val();
 	        var userNameArray = Object.keys(users);
-	        var namesThatMatch = []
 	        for (var i = 0; i < userNameArray.length; i++){
-	            if (matchUser(criteria, users[userNameArray[i]])){
-	                namesThatMatch.push(users[userNameArray[i]].username);
-	            }
+	        	if (myUserID !== userNameArray[i]){
+	        		// console.log("testing " + users[userNameArray[i]].coupleUsername)
+	        		var key = userNameArray[i];
+	        		console.log(users[key])
+	        		var userToCheck = users[userNameArray[i]]
+	        		console.log("testing " + userToCheck.coupleUsername)
+		            matchUser(criteria, userToCheck);
+	       		}
 	        }
-	        console.log(namesThatMatch);
+	       
 	    })
 	};
 	// collectUser(userCriteria);
@@ -440,6 +509,8 @@ $(function(){
 		}
 	})
 
+
+
 	//adding dynamic page updates based on event select dropdown option
 	$(".eventType").on("change", function(){
 		$(".filmEvent").slideUp("fast");
@@ -453,38 +524,12 @@ $(function(){
 			var longitudeOfZip, latOfZip;
 			function initialize() {
 			var queryURLLongLat = "https://maps.googleapis.com/maps/api/geocode/json?address=" + $(".zipInp").val() + "&key=AIzaSyA52ADkbHa1-oZzlIZuCk6PAACaPFOFe2A";
-			
 			$.ajax({
 				url: queryURLLongLat,
 				method: "GET"
 			}).done(function(response){
 				longitudeOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lat"]);
 				latOfZip = parseFloat(response["results"][0]["geometry"]["location"]["lng"]);
-
-				// console.log(latOfZip + "," + longitudeOfZip);
-
-				// $.ajax({
-				// 	url: "https://api.cinepass.de/v4/cinemas/",
-				// 	type: "GET",
-				// 	data: {
-				// 	// "location": latOfZip + "," + longitudeOfZip,
-				// 	"location": "-122.26,37.81",
-				// 	"distance": "500"
-				// 	},
-				// 	headers: {
-				// 	"X-API-Key": "cZXFWHhuyCzLTfxJmLt5BHpNNNwXDdYW",
-				// 	},
-				// })
-				// .done(function(data, textStatus, jqXHR) {
-				// 	console.log("HTTP Request Succeeded: " + jqXHR.status);
-				// 	console.log(data);
-				// })
-				// .fail(function(jqXHR, textStatus, errorThrown) {
-				// console.log("HTTP Request Failed" + errorThrown);
-				// })
-				// .always(function() {
-				// /* ... */
-				// });
 
 				var location = new google.maps.LatLng(longitudeOfZip, latOfZip);
 
@@ -510,7 +555,6 @@ $(function(){
 					}
 				}
 			});
-	
 		}
 		initialize();
 	}
@@ -554,7 +598,7 @@ $(function(){
 						var diningOption = $("<option>").attr("value", results[i].name).text(results[i].name);
 						$(".diningOptionsDrop").append(diningOption);
 						$(".diningEvent").slideDown("normal");
-					}					
+					}
 				}
 			}
 		});
@@ -647,8 +691,6 @@ $(function(){
 		}, 500);
 
 		ohSnap("Event Added!", {color: 'red'});
-
-
 	})
 
 	function resetFields(){
@@ -705,19 +747,84 @@ $(function(){
 	});
 
 	$("body").on("click", ".mailButton", function(){
-		$(".findCoupleBlock").hide("clip", 400);
-		$(".planEventBlock").hide("clip", 400);
-		$(".dashboardBlock").hide("clip", 400);
-		$(".profileBlock").hide("clip", 400);
-		resetFields();
+		// $(".findCoupleBlock").hide("clip", 400);
+		// $(".planEventBlock").hide("clip", 400);
+		// $(".dashboardBlock").hide("clip", 400);
+		// $(".profileBlock").hide("clip", 400);
+		// resetFields();
 
-		setTimeout(function(){
-			$(".chatBlock").show("drop", {direction: "down"}, 400 );
-			currentPage = "mail";
-		}, 500);
+		// setTimeout(function(){
+		// 	$(".chatBlock").show("drop", {direction: "down"}, 400 );
+		// 	currentPage = "mail";
+		// }, 500);
 	});
 
+	dataRef.ref('Users/' + myUserID + "/friends").on("value", function(snapshot){
+		if (snapshot.val() !== null){
+			$(".friendModalContent").empty().append("<span class='close friendClose'>&times;</span>")
+			.append("<h2>Friend List</h2>")
+			var names = Object.keys(snapshot.val());
+
+			dataRef.ref("Users").once("value").then(function(snap1){
+				for (var i = 0; i < names.length; i++){
+					var friendDiv = $("<div>").addClass("friendDiv")
+					.append("<img src=" + snap1.val()[names[i]].profile + " class='smallProfile'>")
+					.append("<h3 class='friendUN'>"+ snap1.val()[names[i]].username + "</h3>")
+					.attr("data-uid", names[i])
+					.appendTo($(".friendModalContent"))
+				}
+			})
+		}
+	})
+
+	$("body").on("click", ".friendsNavButton", function(){
+		$(".friendList").fadeIn("fast", function(){
+			$(".friendModalContent").show("clip", "fast");
+		})
+	});
+
+	$("body").on("click", ".friendClose", function(){
+		$(this).closest(".modalContent").hide("clip", "fast", function(){
+			$(this).closest(".modals").fadeOut("fast", function(){
+			})
+		});
+	})
+
+	dataRef.ref("Users/" + myUserID)
+
+	$("body").on("click", ".friendDiv", function(){
+		var uid = $(this).attr("data-uid");
+		if (status === "eventInvite"){
+			ohSnap("Your friend is invited!", {color: "red"})
+			dataRef.ref("Users/" + uid + "/eventRequests").push(eventInvite);
+			$(this).closest(".modalContent").hide("clip", "fast", function(){
+				$(this).closest(".modals").fadeOut("fast", function(){
+			})
+
+			status = "dashboard";
+		});
+		}
+
+		else {
+		$(this).closest(".friendModalContent").hide("clip", "fast", function(){
+			dataRef.ref("Users/" + uid).once("value").then(function(snapshot){
+			$(".friendUsername").text(snapshot.val().username);
+			$(".friendProfilePic").attr("src", snapshot.val().profile)
+			$(".friendProfile").show("clip", "fast")
+			})
+		});
+		}
+	})
+
+	$("body").on("click", ".friendBack", function(){
+		$(this).closest(".friendProfile").hide("clip", "fast", function(){
+			$(".friendModalContent").show("clip", "fast")
+		});
+	})
+
 	$(".friendFindSubmit").on("click", function(){
+		// console.log(distanceMatrixCall(94612, 91384));
+
 		var distance = $(".distanceCriteriaSelect").val();
 		var age = $(".ageCriteriaSelect").val();
 		var gender = $(".genderCriteriaSelect").val().toLowerCase();
@@ -733,10 +840,11 @@ $(function(){
 			ageHigh: age[2] + age[3],
 			gender: gender,
 			distance: distance,
-			interest: interestsObj
+			interests: interestsObj
 		}
 
-		console.log(searchCriteria);
+		collectUser(searchCriteria)
+		
 	})
 
 	$("body").on("click", ".saveChanges", function(){
@@ -765,9 +873,9 @@ $(function(){
 			}
 			dataRef.ref("Users/" + myUserID).update(updateProfileInfo);
 			$(".profilePic").attr("src", $(".profileIMGURL").val());
+			myZipCode = $(".myZip").val();
 		})
 		ohSnap('Profile Updated!', {color: 'red'});
-		
 	})
 
 	$(".signUpButton").on("click", function(event){
@@ -776,8 +884,15 @@ $(function(){
 		dataRef.ref("Users/" + myUserID).update({
 			imgURL: $(".inputField").val()
 		})
+	})
 
-		
+	$(".logOut").on("click", function(event){
+		console.log("click")
+
+		firebase.auth().signOut().then(function() {
+			window.location = "index.html"
+		}, function(error) {
+		});
 	})
 
 })
