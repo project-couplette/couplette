@@ -30,10 +30,15 @@ $(function(){
 	var status = "dashboard";
 
 	var eventInvite = {};
+	var distanceOfUsers = "";
 
 	firebase.auth().onAuthStateChanged((user) => {
 	  if (user) {
 	    myUserID = user.uid;
+
+	    	dataRef.ref('Users/' + myUserID + '/interests/film').remove();
+			dataRef.ref('Users/' + myUserID + '/interests/').update({films: true});
+			dataRef.ref('Users/' + myUserID).update({username: "theBerrys"});
 
 	    dataRef.ref("Users/" + myUserID + "/events").on("child_added", function(snapshot){
 	    	//adds events to user's dashboard
@@ -274,7 +279,7 @@ $(function(){
 				var destinationA = "" + zip.responseJSON.results[0].address_components[1].short_name + "," + "" + zip.responseJSON.results[0].address_components[3].short_name;
 				var destinationB = new google.maps.LatLng(zip.responseJSON.results[0].geometry.location.lat, zip.responseJSON.results[0].geometry.location.lng);
 				var service = new google.maps.DistanceMatrixService();
-				console.log(origin1, origin2, destinationB, destinationA);
+				// console.log(origin1, origin2, destinationB, destinationA);
 				service.getDistanceMatrix(
 				  {
 				  	origins: [origin1, origin2],
@@ -283,17 +288,16 @@ $(function(){
 				  }, callback);
 
 				function callback(response, status) {
-					console.log(response, status);
+					// console.log(response.rows[0].elements[0]);
 					var num = response.rows[0].elements[0].distance.text.replace(/[^0-9]/g,'');
 					var milesConverted = (parseInt(num)*0.621371);
-					distanceArray.push(parseInt(milesConverted));
-					console.log(distanceArray);
+					distanceOfUsers = milesConverted;
+					return milesConverted;
+					// console.log(distanceArray);
 				};
 			});
 		});
 	};
-
-	distanceMatrixCall();
 
 	function zipCodeConverter(zipcode2) {
 		// getFirebaseData();
@@ -349,65 +353,79 @@ $(function(){
 	}
 
 	function matchUser (criteria, userToComp){
+		console.log(criteria);
 	    var match = false;
 	    var tempArray = Object.keys(criteria.interests);
+	    console.log(tempArray);
 	    for (var i = 0; i < tempArray.length; i++){
-	        if (userToComp.interests[tempArray[i]] === criteria.interests[tempArray[i]]){
+	        if (userToComp.interests[tempArray[i]].toString() == criteria.interests[tempArray[i]].toString()){
 	            match = true;
+
 	        }
 	    }
 	    //check for age
-	    if (criteria.ageLow !== null){
+	    if (criteria.ageLow !== "No"){
 	        if (criteria.ageLow === 55){
 	            if (!(criteria.ageLow <= userToComp.age1)){
+	            	// console.log("age is not match")
 	                match = false;
 	            }
 	            if (!(criteria.ageLow <= userToComp.age2)){
+	            	// console.log("age is not match")
 	                match = false;
 	            }
 	        }
 	        else {
 	            // console.log(((criteria.ageLow <= userToComp.Age2 <= criteria.ageHigh)));
 	            if (!(criteria.ageLow <= userToComp.age1 && userToComp.age1 <= criteria.ageHigh)){
+	            	// console.log("age is not match")
 	            match = false
 	            }
 	            if (!(criteria.ageLow <= userToComp.age2 && userToComp.age2 <=criteria.ageHigh)){
+	            	// console.log("age is not match")
 	            match = false
 	            }
 	        }
 	    }
-	    if (criteria.gender !== null){
+	    if (criteria.gender !== "nocare"){
 	        if (criteria.gender !== userToComp.gender){
+	        	// console.log("gender is not match")
 	            match = false;
 	        }
 	    }
 
-	    distanceMatrixCall(myZipCode, zipcode2);
+	   var distanceBetween = distanceMatrixCall(myZipCode, userToComp.zipcode);
 
-	    if (distanceArray > criteria.distance){
-	    	match = false;
-	    };
-
-
+	   setTimeout(function(){
+	   	if (distanceBetween > criteria.distance && criteria.distance !== "NoCare" && criteria.distance !== null){
+	   		match = false;
+	   	}
 	    if (match){
-	        return true;
+	    	console.log("match found")
+	        $(".friendsFound").append("<h2>" + userToComp.username + "</h2>");
 	    }
-	    else {
-	        return false;
-	    };
+
+	   }, 2000);
+
+
+	    // if (distance > criteria.distance){
+	    // 	match = false;
+	    // };
 	};
 
+
+
 	function collectUser(criteria){
-	    dataRef.ref("users").once("value", function(snapshot){
+	    dataRef.ref("Users").once("value", function(snapshot){
 	        var users = snapshot.val();
 	        var userNameArray = Object.keys(users);
 	        var namesThatMatch = []
 	        for (var i = 0; i < userNameArray.length; i++){
-	            if (matchUser(criteria, users[userNameArray[i]])){
-	                namesThatMatch.push(users[userNameArray[i]].username);
-	            }
+	        	// console.log(users[userNameArray[i]]);
+	        	console.log(users[userNameArray[i]]);
+	            matchUser(criteria, users[userNameArray[i]]);
 	        }
-	        console.log(namesThatMatch);
+	       
 	    })
 	};
 	// collectUser(userCriteria);
@@ -438,6 +456,23 @@ $(function(){
 
 		}
 	})
+
+	dataRef.ref("Users/fhdjksfhdls").update({
+		zipcode: 94615,
+		gender: "mf",
+		age1: 18,
+		age2: 25,
+		interests: {
+				arts: true,
+				dining: false,
+				films: false,
+				music: true,
+				gaming: true,
+				outdoors: false,
+				travel: true,
+				sports: false,
+			},
+	});
 
 	//adding dynamic page updates based on event select dropdown option
 	$(".eventType").on("change", function(){
@@ -751,6 +786,8 @@ $(function(){
 	})
 
 	$(".friendFindSubmit").on("click", function(){
+		// console.log(distanceMatrixCall(94612, 91384));
+
 		var distance = $(".distanceCriteriaSelect").val();
 		var age = $(".ageCriteriaSelect").val();
 		var gender = $(".genderCriteriaSelect").val().toLowerCase();
@@ -766,10 +803,16 @@ $(function(){
 			ageHigh: age[2] + age[3],
 			gender: gender,
 			distance: distance,
-			interest: interestsObj
+			interests: interestsObj
 		}
 
-		console.log(searchCriteria);
+		dataRef.ref("Users/" + myUserID).once("value").then(function(snapshot){
+			dataRef.ref("Users/fhdjksfhdls").once("value").then(function(snapshot1){
+				// console.log(snapshot1.val())
+				collectUser(searchCriteria)
+			})
+		})
+		
 	})
 
 	$("body").on("click", ".saveChanges", function(){
