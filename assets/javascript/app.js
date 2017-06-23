@@ -36,9 +36,34 @@ $(function(){
 	  if (user) {
 	    myUserID = user.uid;
 
-	    	dataRef.ref('Users/' + myUserID + '/interests/film').remove();
-			dataRef.ref('Users/' + myUserID + '/interests/').update({films: true});
-			dataRef.ref('Users/' + myUserID).update({username: "theBerrys"});
+    	dataRef.ref("Users/" + myUserID + "/friendRequests").on("child_added", function(snapshot){
+		// console.log(snapshot.val());
+		dataRef.ref("Users/" + snapshot.val().inviter).once("value").then(function(snapshot1){
+			var friendDiv = $("<div>").append("<h3 class='requestDiv'>" + snapshot1.val().coupleUsername + "</h3>")
+			.attr("data-key", snapshot.val().inviter)
+			.appendTo(".friendRequestsDiv");
+
+			dataRef.ref("Users/" + myUserID + "/friendRequests").once("value").then(function(snap2){
+				var numOfRequests = Object.keys(snap2);
+				if (numOfRequests.length === 1){
+					$(".glyphicon-envelope").css("color", "#ffb880")
+					ohSnap("You have a new request!", {color: "red"})
+				}
+
+				else if (numOfRequests.length >= 1) {
+					$(".glyphicon-envelope").css("color", "#ffb880")
+				}
+
+				else {
+					$(".glyphicon-envelope").css("color", "white")
+				}
+			})
+		})
+
+
+		
+		// $(".friendRequestsModalContent").
+		})
 
 	    dataRef.ref("Users/" + myUserID + "/events").on("child_added", function(snapshot){
 	    	//adds events to user's dashboard
@@ -53,7 +78,7 @@ $(function(){
 
 	    dataRef.ref("Users/" + myUserID).once("value").then(function(snapshot){
 	    	//adds events to user's dashboard
-	    	ohSnap('Welcome back, ' + snapshot.val().coupleUsername, {color: 'red'});
+	    	ohSnap('Welcome back, ' + snapshot.val().coupleUsername, {color: 'red', duration: 2500});
 	    	myZipCode = snapshot.val().zipcode;
 
 	    	//update profile page to latest version of profile
@@ -355,7 +380,7 @@ $(function(){
 	    }
 	}
 
-	function matchUser (criteria, userToComp){
+	function matchUser (criteria, userToComp, userkey){
 		console.log(userToComp.coupleUsername)
 	    var match = false;
 	    var tempArray = Object.keys(criteria.interests);
@@ -414,12 +439,16 @@ $(function(){
 		   	}
 
 		    if (match){
-		    	console.log(userToComp.coupleUsername + " is a match");
+		    	console.log(userToComp);
 		    	var div = $("<div>").append("<h3>" + userToComp.coupleUsername + "</h3>")
-		    	.appendTo(".couplesFoundModal")
-		        $(".couplesFound").show("fade")	
-		        $(".couplesFoundModal").show("clip")	
-					;
+		    	.addClass("userSearchDiv")
+		    	.attr("data-key", userkey)
+		    	.appendTo(".couplesFoundModalContent")
+
+		    	setTimeout(function(){
+					$(".couplesFound").show("fade")	
+			        $(".couplesFoundModal").show("clip")	
+		    	}, 500)
 				}
 		})
 
@@ -471,11 +500,37 @@ $(function(){
 		// });
 
 	// })
-}
+	}
 
+	$("body").on("click", ".userSearchDiv", function(){
+		var key = $(this).attr("data-key")
+		dataRef.ref("Users/" + key).once("value").then(function(snap1){
+			$(".userProfile").empty()
+			.append("<h2>" + snap1.val().coupleUsername + "</h2>")
+			.append("<button class='addFriend buttonStyle' data-keyToInvite='" + key + "' data-keyInviter='" + myUserID + "'>Add Friend</button>")
+			$(".couplesFoundModal").hide("clip", function(){
+				$(".searchProfileModal").show("clip")
+			})
+			
+		})
+	})
 
+	$("body").on("click", ".addFriend", function(){
+		dataRef.ref("Users/" + $(this).attr("data-keyToInvite") + "/friendRequests").push({
+			inviter: $(this).attr("data-keyInviter")
+		})
+
+		ohSnap("Friend request sent!")
+	})
+
+	$("body").on("click", ".searchBack", function(){
+		$(".searchProfileModal").hide("clip", function(){
+			$(".couplesFoundModal").show("clip")
+		})
+	})
 
 	function collectUser(criteria){
+		$(".couplesFoundModalContent").empty();
 	    dataRef.ref("Users").once("value", function(snapshot){
 	        var users = snapshot.val();
 	        var userNameArray = Object.keys(users);
@@ -483,10 +538,8 @@ $(function(){
 	        	if (myUserID !== userNameArray[i]){
 	        		// console.log("testing " + users[userNameArray[i]].coupleUsername)
 	        		var key = userNameArray[i];
-	        		console.log(users[key])
 	        		var userToCheck = users[userNameArray[i]]
-	        		console.log("testing " + userToCheck.coupleUsername)
-		            matchUser(criteria, userToCheck);
+		            matchUser(criteria, userToCheck, userNameArray[i]);
 	       		}
 	        }
 	       
@@ -723,6 +776,37 @@ $(function(){
 		});
 	})
 
+	$("body").on("click", ".requestDiv", function(){
+		var key = $(this).parent().attr("data-key");
+		dataRef.ref("Users/" + key).once("value").then(function(snap1){
+			$(".friendRUsername").text(snap1.val().username)
+			$(".friendRProfilePic").attr("src", snap1.val().imgURL)
+			$(".friendRequestsModalContent").hide("clip", function(){
+			$(".friendRProfile").show("clip")
+			$(".coupleAdd").attr("data-key", key);
+		})
+		})
+	})
+
+	$(".coupleAdd").on("click", function(){
+		var key = $(this).attr("data-key");
+		dataRef.ref("Users/" + myUserID + "/friends/" + key).set(true);
+		dataRef.ref("Users/" + key + "/friends/" + myUserID).set(true);
+
+		dataRef.ref('Users/' + myUserID + "/friendRequests").once("child_added").then(function(snap1){
+			console.log(snap1.key)
+			if (key == snap1.val().inviter){
+				dataRef.ref('Users/' + myUserID + "/friendRequests/" + snap1.key).remove();
+			}
+		})
+	})
+
+	$("body").on("click", ".friendRBack", function(){
+		$(".friendRProfile").hide("clip", "fast", function(){
+			$(".friendRequestsModalContent").show("clip") 
+		});
+	})
+
 	$("body").on("click", ".findCoupleButton", function(){
 		$(".dashboardBlock").hide("clip", 400, function(){
 			$(".findCoupleBlock").show("drop", {direction: "right"}, 500);
@@ -759,16 +843,9 @@ $(function(){
 	});
 
 	$("body").on("click", ".mailButton", function(){
-		// $(".findCoupleBlock").hide("clip", 400);
-		// $(".planEventBlock").hide("clip", 400);
-		// $(".dashboardBlock").hide("clip", 400);
-		// $(".profileBlock").hide("clip", 400);
-		// resetFields();
-
-		// setTimeout(function(){
-		// 	$(".chatBlock").show("drop", {direction: "down"}, 400 );
-		// 	currentPage = "mail";
-		// }, 500);
+		$(".friendRequests").fadeIn("fast", function(){
+			$(".friendRequestsModalContent").show("clip", "fast");
+		})
 	});
 
 	dataRef.ref('Users/' + myUserID + "/friends").on("value", function(snapshot){
@@ -796,6 +873,13 @@ $(function(){
 	});
 
 	$("body").on("click", ".friendClose", function(){
+		$(this).closest(".modalContent").hide("clip", "fast", function(){
+			$(this).closest(".modals").fadeOut("fast", function(){
+			})
+		});
+	})
+
+	$("body").on("click", ".searchCLose", function(){
 		$(this).closest(".modalContent").hide("clip", "fast", function(){
 			$(this).closest(".modals").fadeOut("fast", function(){
 			})

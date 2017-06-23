@@ -157,13 +157,23 @@
 			
 		</div>
 		<div class="col-xs-12 text-center">
-			<button class="friendFindSubmit">Submit</button>
+			<button class="friendFindSubmit">Search</button>
 		</div>
 
 		<div class="modals couplesFound">
 			<div class="modalContent couplesFoundModal">
-				<span class='close friendClose'>&times;</span>
+				<span class='close searchCLose'>&times;</span>
 				<h2>Couple Matches</h2>
+
+				<div class="couplesFoundModalContent">
+					
+				</div>
+			</div>
+	
+			<div class="modalContent searchProfileModal">
+				<span class='close searchBack'>&times;</span>
+				<div class="userProfile">
+				</div>
 			</div>
 		</div>
 	</div>
@@ -400,6 +410,25 @@
 			<img class="profilePic friendProfilePic" src="assets/images/tempCup1.jpeg">
 		</div>
 	</div>
+
+	<div class="modals friendRequests">
+		<div class="modalContent friendRequestsModalContent">
+			<span class='close friendClose'>&times;</span>
+			<h2>Friend Requests</h2>
+
+			<div class="friendRequestsDiv">
+			</div>
+		</div>
+
+		<div class="modalContent friendRProfile">
+			<span class='close friendRBack'>Back</span>
+			<h2 class="friendRUsername"></h2>
+			<img class="profilePic friendRProfilePic" src="assets/images/tempCup1.jpeg">
+			<button class="coupleAdd">Add Couple to Friends</button>
+		</div>
+	</div>
+
+
 
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
