@@ -29,12 +29,12 @@
       </div>
 
       <div class="col-xs-12 col-xs-offset-3">
-        <form class="form-horizontal">
+        <form action="/action_page.php" class="form-horizontal">
           <div class="row">
               <h3>Profile Info</h3>
               <br>
           </div><!-- end of class row -->
-
+          <span id='message'></span>
           <div class="form-group">
             <div class="col-xs-12">
               <input type="text" class="input-line form-control" id="username" placeholder="Couple Username" required>
@@ -79,7 +79,7 @@
 
           <div class="form-group">
             <div class="col-xs-12">
-              <input type="number" class="input-line form-control" id="partner1-age-inputOne" placeholder="Age" required>
+              <input type="number" class="input-line form-control" id="partner1-age-input" placeholder="Age" required>
             </div><!-- end col-->
           </div> <!-- end of form-group -->
 
@@ -121,7 +121,7 @@
 
           <div class="form-group">
             <div class="col-xs-12 input-line">
-              <select class="genderSelect">
+              <select id="gender" class="genderSelect">
                 <option value="GenderDefault"></option>
                 <option value="mf">Male/Female</option>
                 <option value="mm">Male/Male</option>

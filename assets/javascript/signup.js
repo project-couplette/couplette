@@ -23,9 +23,10 @@ dataRef = firebase.database();
 // var firstName2 = $("#partner2-first").val().trim();
 // var lastName1 = $("#partner1-last").val().trim();
 // var lastName2 = $("#partner2-last").val().trim();
-// var email = $("#email-address").val().trim();
-// var password = $("#pass").val().trim();
-// var confirmPassword = $("#confirmpass").val().trim();
+var email = $("#email-address").val().trim();
+var password = $("#pass").val().trim();
+var confirmPassword = $("#confirmpass").val().trim();
+// var zipcode: $("#zipcode").text();
 // var city = $("#city-input").val().trim();
 // var state = $("#state-input").val().trim();
 // var arts = $("#artBox").val().trim();
@@ -36,9 +37,26 @@ dataRef = firebase.database();
 // var outdoor = $("#outdoorBox").val().trim();
 // var travel = $("#travelBox").val().trim();
 // var other = $("#otherBox").val().trim();
-// var age = $("#age-input").text();
+var age1 = $("#partner1-age-input").text();
+var age2 = $("#partner2-age-input").text();
 // var description = $("#comment-input").text();
-// var coupleUsername = $("#couple-username").text();
+var coupleUsername = $("#username").text();
+
+$('#pass, #confirmpass').on('keyup', function () {
+	if ($('#pass').val() == "") {
+  	$('#message').html("Field Must Be Filled").css('color', 'green');
+  } else if ($('#pass').val() == $('#confirmpass').val()) {
+	$('#message').html('Password Matches!').css('color', 'green');
+  }else
+    $('#message').html("Password Doesn't Match").css('color', 'red');
+});
+
+$('#username, #email-address').on('keyup', function () {
+	if ($('#username, #email-address').val() == "") {
+		$('#message').html("Field Must Be Filled").css('color', 'green');
+		return false;
+	}
+});
 
 $("#btnSubmit").on("click", function(event) {
 		event.preventDefault();
@@ -62,7 +80,7 @@ $("#btnSubmit").on("click", function(event) {
 		// var other = $("#otherBox").val().trim();
 		// var age = $("#age-input").val().trim();
 		var description = $("#comment-input").text();
-		// var coupleUsername = $("#couple-username").val().trim();
+		// var coupleUsername = $("#username").val().trim();
 		// Code for the push
 		firebase.auth().createUserWithEmailAndPassword(email, password);
 		setTimeout(function(){
