@@ -413,7 +413,6 @@ $(function(){
 	}
 
 	function matchUser (criteria, userToComp, userkey){
-		console.log(userToComp.coupleUsername)
 	    var match = false;
 	    var tempArray = Object.keys(criteria.interests);
 	    for (var i = 0; i < tempArray.length; i++){
@@ -431,29 +430,25 @@ $(function(){
 	    if (criteria.ageLow !== "No"){
 	        if (criteria.ageLow === 55){
 	            if (!(criteria.ageLow <= userToComp.age1)){
-	            	console.log("age is not match")
+
 	                match = false;
 	            }
 	            if (!(criteria.ageLow <= userToComp.age2)){
-	            	console.log("age is not match")
 	                match = false;
 	            }
 	        }
 	        else {
 	            // console.log(((criteria.ageLow <= userToComp.Age2 <= criteria.ageHigh)));
 	            if (!(criteria.ageLow <= userToComp.age1 && userToComp.age1 <= criteria.ageHigh)){
-	            	console.log("age is not match")
 	            match = false
 	            }
 	            if (!(criteria.ageLow <= userToComp.age2 && userToComp.age2 <=criteria.ageHigh)){
-	            	console.log("age is not match")
 	            match = false
 	            }
 	        }
 	    }
 	    if (criteria.gender !== "nocare"){
 	        if (criteria.gender !== userToComp.gender){
-	        	console.log("gender is not match")
 	            match = false;
 	        }
 	    }
@@ -490,13 +485,16 @@ $(function(){
 	$("body").on("click", ".userSearchDiv", function(){
 		var key = $(this).attr("data-key")
 		dataRef.ref("Users/" + key).once("value").then(function(snap1){
-			$(".userProfile").empty()
-			.append("<h2>" + snap1.val().coupleUsername + "</h2>")
-			.append("<button class='addFriend buttonStyle' data-keyToInvite='" + key + "' data-keyInviter='" + myUserID + "'>Send Friend Request</button>")
+			$(".friendFProfilePic").attr("src", snap1.val().imgURL);
+			$(".friendRUsername").text(snap1.val().coupleUsername);
+			$(".Fp1Name").text(snap1.val().firstName1 + " " + snap1.val().lastName1);
+			$(".Fp2Name").text(snap1.val().firstName2 + " " + snap1.val().lastName2);
+			$(".FcoupleRDescription").text(snap1.val().description);
+			$(".addFriend").attr("data-keyToInvite", key)
+			.attr("data-keyInviter", myUserID);
 			$(".couplesFoundModal").hide("clip", function(){
-				$(".searchProfileModal").show("clip")
+				$(".searchProfileModal").show("clip");
 			})
-			
 		})
 	})
 
@@ -598,7 +596,6 @@ $(function(){
 			$(".diningType").slideUp("fast");
 			$(".eventSubmit").slideUp("fast");
 			$(".eventName").slideUp("fast");
-
 		}
 	})
 
@@ -818,8 +815,8 @@ $(function(){
 	$("body").on("click", ".requestDiv", function(){
 		var key = $(this).parent().attr("data-key");
 		dataRef.ref("Users/" + key).once("value").then(function(snap1){
-			$(".friendRUsername").text(snap1.val().username)
-			$(".friendRProfilePic").attr("src", snap1.val().imgURL)
+			$(".friendRUsername").text(snap1.val().coupleUsername);
+			$(".friendRProfilePic").attr("src", snap1.val().imgURL);
 			$(".p1Name").text(snap1.val().firstName1 + " " + snap1.val().lastName1);
 			$(".p2Name").text(snap1.val().firstName2 + " " + snap1.val().lastName2);
 			$(".coupleRDescription").text(snap1.val().description);
@@ -945,7 +942,7 @@ $(function(){
 		else {
 		$(this).closest(".friendModalContent").hide("clip", "fast", function(){
 			dataRef.ref("Users/" + uid).once("value").then(function(snapshot){
-			$(".friendUsername").text(snapshot.val().username);
+			$(".friendUsername").text(snapshot.val().coupleUsername);
 			$(".p1Name").text(snapshot.val().firstName1 + " " + snapshot.val().lastName1);
 			$(".p2Name").text(snapshot.val().firstName2 + " " + snapshot.val().lastName2);
 			$(".coupleRDescription").text(snapshot.val().description);
