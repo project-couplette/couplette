@@ -452,20 +452,8 @@ $(function(){
 	            match = false;
 	        }
 	    }
-	    //toCompareDistances
-		var googleQueryURL = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + myZipCode + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
-		// console.log(googleQueryURL);
 
-		$.ajax({
-			url: "https://www.zipcodeapi.com/rest/js-yRVPK4c0dFARFe2ZU0sFK0ClegRY8m8He4wZ8J0moBd4Pg3Jhwp2x1nLieJqBS8Q/distance.json/" + myZipCode + "/" + userToComp.zipcode +"/miles",
-			dataType: "json"
-		}).done(function(response){
-			// console.log(response);
-			if (response.distance > criteria.distance && criteria.distance !== "NoCare" && criteria.distance !== null){
-		   		match = false;
-		   	}
-
-		    if (match){
+	    if (match){
 		    	var div = $("<div>").append("<img src=" + userToComp.imgURL + " class='smallProfile'>")
 		    	.append("<h3>" + userToComp.coupleUsername + "</h3>")
 		    	.addClass("userSearchDiv")
@@ -476,8 +464,33 @@ $(function(){
 					$(".couplesFound").show("fade")	
 			        $(".couplesFoundModal").show("clip")	
 		    	}, 500)
-				}
-		})
+			}
+	    //toCompareDistances
+		var googleQueryURL = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + myZipCode + "&key=AIzaSyBh0G9RiMPn-rZTMnKHh5i8aPNGMrVHifE";
+		// console.log(googleQueryURL);
+
+		// $.ajax({
+		// 	url: "https://www.zipcodeapi.com/rest/js-yRVPK4c0dFARFe2ZU0sFK0ClegRY8m8He4wZ8J0moBd4Pg3Jhwp2x1nLieJqBS8Q/distance.json/" + myZipCode + "/" + userToComp.zipcode +"/miles",
+		// 	dataType: "json"
+		// }).done(function(response){
+		// 	// console.log(response);
+		// 	if (response.distance > criteria.distance && criteria.distance !== "NoCare" && criteria.distance !== null){
+		//    		match = false;
+		//    	}
+
+		//     if (match){
+		//     	var div = $("<div>").append("<img src=" + userToComp.imgURL + " class='smallProfile'>")
+		//     	.append("<h3>" + userToComp.coupleUsername + "</h3>")
+		//     	.addClass("userSearchDiv")
+		//     	.attr("data-key", userkey)
+		//     	.appendTo(".couplesFoundModalContent")
+
+		//     	setTimeout(function(){
+		// 			$(".couplesFound").show("fade")	
+		// 	        $(".couplesFoundModal").show("clip")	
+		//     	}, 500)
+		// 	}
+		// })
 
 		
 	}
