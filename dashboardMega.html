@@ -256,7 +256,11 @@
 				<div class="meetingTimes">
 					<h3>Meeting Time</h3>
 					<input type="text" name="meetingTime" class="inputField meetingTimeInput">
-					
+				</div>
+
+				<div class="eventName">
+					<h3>Event Name</h3>
+					<input type="text" name="eventName" class="inputField eventNameInput">
 				</div>
 				
 			</div>
@@ -402,18 +406,30 @@
 	<div class="modals friendList">
 		<div class="modalContent friendModalContent">
 			<span class='close friendClose'>&times;</span>
+			<br>
 			<h2>Friend List</h2>
 		</div>
 		<div class="modalContent friendProfile">
 			<span class='close friendBack'>Back</span>
+			<br>
 			<h2 class="friendUsername"></h2>
 			<img class="profilePic friendProfilePic" src="assets/images/tempCup1.jpeg">
+			<div class="row">
+				<div class="col-xs-6">
+					<h4 class="p1Name">Jon</h4>
+				</div>
+				<div class="col-xs-6">
+					<h4 class="p2Name">Jane</h4>
+				</div>
+			</div>
+			<h4 class="coupleRDescription">Hey guys</h4>
 		</div>
 	</div>
 
 	<div class="modals friendRequests">
 		<div class="modalContent friendRequestsModalContent">
 			<span class='close friendClose'>&times;</span>
+			<br>
 			<h2>Friend Requests</h2>
 
 			<div class="friendRequestsDiv">
@@ -429,9 +445,20 @@
 
 		<div class="modalContent friendRProfile">
 			<span class='close friendRBack'>Back</span>
+			<br>
+			<br>
 			<h2 class="friendRUsername"></h2>
 			<img class="profilePic friendRProfilePic" src="assets/images/tempCup1.jpeg">
-			<button class="coupleAdd">Add Couple to Friends</button>
+			<div class="row">
+				<div class="col-xs-6">
+					<h4 class="p1Name">Jon</h4>
+				</div>
+				<div class="col-xs-6">
+					<h4 class="p2Name">Jane</h4>
+				</div>
+			</div>
+			<h4 class="coupleRDescription">Hey guys</h4>
+			<button class="coupleAdd buttonStyle">Add Couple to Friends</button>
 		</div>
 
 		<div class="modalContent eventProfile">
