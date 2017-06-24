@@ -807,7 +807,7 @@ $(function(){
 	})
 
 	function resetFields(){
-		$("input").val("");
+		// $("input").val("");
 		$(".eventTypeBlock").hide();
 		$(".eventZipcode").hide();
 		$(".filmEvent").hide();
