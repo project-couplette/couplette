@@ -63,10 +63,15 @@ $(function(){
 		})
 
 	   	dataRef.ref("Users/" + myUserID + "/eventRequests").on("child_added", function(snapshot){
-			var eventDiv = $("<div>").append("<h3 class='requestDiv'>" + snapshot1.val().eventName + " at " + snapshot1.val().eventAddress + 
-			" on " + snapshot1.val().eventDate + "</h3>")
-			.attr("data-key", snapshot.val().inviter)
-			.appendTo(".friendRequestsDiv");
+			var eventDiv = $("<div>").attr("data-key", snapshot.val().inviter)
+	    	.attr("data-name", snapshot.val().eventName)
+	    	.attr("data-date", snapshot.val().eventDate)
+	    	.attr("data-time", snapshot.val().eventTime)
+	    	.attr("data-UID", snapshot.key)
+	    	.attr("data-address", snapshot.val().eventAddress).append("<h3 class='RequestEventDiv'>" + snapshot.val().eventName + " at " + snapshot.val().eventAddress + 
+			" on " + snapshot.val().eventDate + "</h3>")
+	
+			.appendTo(".eventRequestsDiv");
 
 			dataRef.ref("Users/" + myUserID + "/eventRequests").once("value").then(function(snap2){
 				var numOfRequests = Object.keys(snap2);
@@ -83,8 +88,6 @@ $(function(){
 					$(".glyphicon-envelope").css("color", "white")
 				}
 			})
-
-
 		})
 
 	    dataRef.ref("Users/" + myUserID + "/events").on("child_added", function(snapshot){
@@ -94,7 +97,7 @@ $(function(){
 	    	.append("<h4>" + snapshot.val().eventDate + "</h4>")
 	    	.append("<h4>" + snapshot.val().eventTime + "</h4>")
 	    	.append("<h4>" + snapshot.val().eventAddress + "</h4>")
-	    	.attr("data-UID", snapshot.key);
+	    	.attr("data-UID", snapshot.key)
 	    	$(".upcomingEventSection").append(eventDiv);
 	    })
 
@@ -133,7 +136,6 @@ $(function(){
 				$(".friendModalContent").empty().append("<span class='close friendClose'>&times;</span>")
 				.append("<h2>Friend List</h2>")
 				var names = Object.keys(snapshot.val());
-				console.log(names);
 
 				dataRef.ref("Users").once("value").then(function(snap1){
 					for (var i = 0; i < names.length; i++){
@@ -207,32 +209,6 @@ $(function(){
 			})
 		});
 	})
-
-
- 	// dataRef.ref("Users/8hzc7ctaLHf4g6tvYXT6aprss2K2").set({
-		// 	firstName1: "Jib",
-		// 	firstName2: "Val",
-		// 	lastName1: "B",
-		// 	lastName2: "B",
-		// 	coupleEmail: "jonpber@gmail.com",
-		// 	zipcode: 94612,
-		// 	description: "blah blah blah",
-		// 	Interests: {
-		// 		Arts: true,
-		// 		Dining: true,
-		// 		Films: true,
-		// 		Music: true,
-		// 		Gaming: true,
-		// 		Outdoors: false,
-		// 		Travel: true,
-		// 		sports: false,
-		// 	},
-		// 	age1: 29,
-		// 	age2: 30,
-		// 	coupleUsername: "theBerrys",
-		// 	comment: "comment",
-		// 	// dateAdded: firebase.database.ServerValue.TIMESTAMP
-		// });
 
 
 
@@ -570,6 +546,46 @@ $(function(){
 		})
 	})
 
+	$("body").on("click", ".RequestEventDiv", function(){
+		$(".eventName").text($(this).parent().attr("data-name"));
+		$(".eventDate").text($(this).parent().attr("data-date"));
+		$(".eventTime").text($(this).parent().attr("data-time"));
+		$(".eventAddress").text($(this).parent().attr("data-address"));
+
+		$(".eventAdd").attr("data-key", $(this).parent().attr("data-uid"));
+		$(".eventAdd").attr("data-date", $(this).parent().attr("data-date"));
+		$(".eventAdd").attr("data-time", $(this).parent().attr("data-time"));
+		$(".eventAdd").attr("data-name", $(this).parent().attr("data-name"));
+		$(".eventAdd").attr("data-address", $(this).parent().attr("data-address"));
+
+		
+		$(".friendRequestsModalContent").hide("clip", function(){
+			$(".eventProfile").show("clip")
+		})
+	})
+
+	$("body").on("click", ".eventAdd", function(){
+		var time = $(this).attr("data-time");
+		var key = $(this).attr("data-key");
+		console.log(key);
+		var name = $(this).attr("data-name");
+		var date = $(this).attr("data-date");
+		var address = $(this).attr("data-address");
+		dataRef.ref("Users/" + myUserID + "/eventRequests/" + key).remove();
+
+		dataRef.ref("Users/" + myUserID + "/events").push({
+			eventTime: time,
+			eventDate: date,
+			eventAddress: address,
+			eventName: name
+		});
+
+		ohSnap("Event Added!", {color: "red", duration: 2500})
+		$(".friendRequestsModalContent").hide("clip", function(){
+		})
+		$(".friendRequests").hide("fade")
+	})
+
 	function collectUser(criteria){
 		$(".couplesFoundModalContent").empty();
 	    dataRef.ref("Users").once("value", function(snapshot){
@@ -829,13 +845,24 @@ $(function(){
 		})
 	})
 
+	$("body").on("click", ".eventRequestDiv", function(){
+		var key = $(this).parent().attr("data-key");
+		dataRef.ref("Users/" + key).once("value").then(function(snap1){
+			$(".friendRUsername").text(snap1.val().username)
+			$(".friendRProfilePic").attr("src", snap1.val().imgURL)
+			$(".friendRequestsModalContent").hide("clip", function(){
+			$(".friendRProfile").show("clip")
+			$(".coupleAdd").attr("data-key", key);
+		})
+		})
+	})
+
 	$(".coupleAdd").on("click", function(){
 		var key = $(this).attr("data-key");
 		dataRef.ref("Users/" + myUserID + "/friends/" + key).set(true);
 		dataRef.ref("Users/" + key + "/friends/" + myUserID).set(true);
 
 		dataRef.ref('Users/' + myUserID + "/friendRequests").once("child_added").then(function(snap1){
-			console.log(snap1.key)
 			if (key == snap1.val().inviter){
 				dataRef.ref('Users/' + myUserID + "/friendRequests/" + snap1.key).remove();
 			}
@@ -843,6 +870,9 @@ $(function(){
 	})
 
 	$("body").on("click", ".friendRBack", function(){
+		$(".eventProfile").hide("clip", "fast", function(){
+			$(".friendRequestsModalContent").show("clip") 
+		});
 		$(".friendRProfile").hide("clip", "fast", function(){
 			$(".friendRequestsModalContent").show("clip") 
 		});
